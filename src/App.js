@@ -1,26 +1,38 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import LoginPage from './containers/LoginPage/LoginPage';
+import RegisterPage from './containers/RegisterPage/RegisterPage';
+import HomePage from './containers/HomePage/Homepage';
+import { connect } from 'react-redux';
 
-function App() {
+function App(props) {
+  const {loggedIn} = props;
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+        <Switch>
+          <Route exact path="/">
+            {loggedIn ? <Redirect to="/home" /> : <Redirect to="/login" />}
+          </Route>
+          <Route exact path="/register" component={RegisterPage} />
+          <Route exact path="/login" component={LoginPage} />
+          <Route exact path="/home"> 
+            {loggedIn ? <HomePage/> : <Redirect to="/login" />}
+          </Route>
+          {/* <Route exact path="/update"> 
+            {loggedIn ? <UpdateInfoPage/> : <Redirect to="/login" />}
+          </Route>
+          <Route exact path="/changepass"> 
+            {loggedIn ? <ChangePassPage/> : <Redirect to="/login" />}
+          </Route>
+          <Route exact path="/game">
+            {loggedIn ? <Game /> : <Redirect to="/login" />}
+          </Route> */}
+        </Switch>
   );
 }
 
-export default App;
+const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn
+})
+
+export default connect(mapStateToProps)(App)

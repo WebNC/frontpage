@@ -1,0 +1,51 @@
+  .register-form {
+    max-width: 400px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 15px 0px 15px;
+    background: rgba(0, 0, 0, 0.04); /* Black background with 0.5 opacity */
+  }
+
+  .register-form-forgot {
+    float: right;
+  }
+  
+  .register-form-button {
+    width: 50%;
+    margin-left: 25% ;
+  }
+
+  .registerform-component {
+    display: block;
+    background-size: cover;
+    padding: 80px 0px 100px 0px;
+    background-image: url("../../images/background-login.jpg");
+  }
+  
+  .ant-form-explain {
+    text-align: center;
+    margin-top: 5px;
+  }
+  
+  .error-message {
+    height: 35px;
+    background-color: #e8b3b3;
+    color: #7d0200;
+    border-radius:5px ;
+    line-height: 35px;
+    padding-left: 10px;
+  }
+  
+  .success-message {
+    height: 35px;
+    background-color: #bee8b3;
+    color: #1a4a0d;
+    border-radius:5px;
+    line-height: 35px;
+    padding-left: 10px;
+  }
+  
+  h1, h2, h5, p{
+    text-align: center;
+  }
