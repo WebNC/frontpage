@@ -1,0 +1,39 @@
+  .header {
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px 0px 20px;
+    text-align: center;
+    background-color: black;
+    width: 100%;
+    height: 60px;
+  }
+
+  .tab-component {
+    float: left;
+  }
+
+  .user-component {
+    float: right;
+  }
+
+  .tab-component a {
+      margin-left: 20px;
+      color: white;
+      font-weight: bold;
+  }
+
+  .user-component a {
+      margin-right: 20px;
+      color: white;
+      font-weight: bold;
+  }
+  
+  .search-bar {
+    width: 400px;
+  }
+  h1, h2, h5, p{
+    text-align: center;
+  }

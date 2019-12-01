@@ -1,9 +1,10 @@
 import React from 'react';
 import { Form, Input, Button, Icon, Checkbox} from 'antd';
+import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import 'antd/dist/antd.css';
 import './style.css';
- import{ connect } from 'react-redux';
- import {userActions} from '../../actions/user.actions'
+import{ connect } from 'react-redux';
+import {userActions} from '../../actions/user.actions';
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -39,6 +40,10 @@ class LoginForm extends React.Component {
       });
 
       this.setState({isFirstLoad:false});
+    }
+
+    responseFacebook = (response) => {
+      console.log(response);
     }
 
     // handleLoginFacebook = e => {
@@ -101,8 +106,8 @@ class LoginForm extends React.Component {
               {getFieldDecorator('remember', {
                 valuePropName: 'checked',
                 initialValue: true,
-              })(<Checkbox>Remember me</Checkbox>)}
-              <a className="login-form-forgot" href="">
+              })}
+              <a className="login-form-forgot" href="#">
                 Quên mật khẩu?
               </a>
               <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={pending ? pending : false}>

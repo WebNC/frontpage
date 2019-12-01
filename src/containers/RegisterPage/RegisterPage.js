@@ -1,11 +1,12 @@
 import React from 'react';
-import { Form, Input, Button, Icon} from 'antd';
+import { Form, Input, Button, Icon, Select} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions'
+import {history} from '../../helper'
 // import moment from 'moment';
-// const { Option } = Select;
+const { Option } = Select;
 // const dateFormat = 'DD-MM-YYYY';
 
 function hasErrors(fieldsError) {
@@ -31,6 +32,9 @@ class RegistrationForm extends React.Component {
       
       const values = getFieldsValue();
       
+      if (values.type === "Người dạy") {
+        history.push('/teacher-register');
+      }
       this.props.register({
           email: values.email,
           password: values.password,
@@ -64,10 +68,7 @@ class RegistrationForm extends React.Component {
     const passwordError = isFieldTouched('password') && getFieldError('password');
     const confirmError = isFieldTouched('confirm') && getFieldError('confirm');
     const usernameError = isFieldTouched('username') && getFieldError('username');
-    // const ageError = isFieldTouched('age') && getFieldError('age');
-    // const sexError = isFieldTouched('sex') && getFieldError('sex');
-    // const degreeError = isFieldTouched('degree') && getFieldError('degree');
-    // const phoneError = isFieldTouched('phone') && getFieldError('phone');
+    const typeError = isFieldTouched('type') && getFieldError('type');
 
     return (
       <div className="registerform-component">
@@ -92,63 +93,6 @@ class RegistrationForm extends React.Component {
                 />
                 )}
             </Form.Item>
-            {/* <Form.Item validateStatus={ageError ? 'error' : ''} help={ageError || ''}>
-              {getFieldDecorator('age', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập ngày sinh!',
-                  },
-                ],
-              })(<DatePicker placeholder='Ngày sinh' format={dateFormat} style={{width:370}}/>
-                )}
-            </Form.Item>
-            <Form.Item validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
-              {getFieldDecorator('phone', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Vui lòng nhập số điện thoại!',
-                  },
-                ],
-              })(<Input
-                prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Số điện thoại"
-                />
-                )}
-            </Form.Item>
-            <Form.Item validateStatus={sexError ? 'error' : ''} help={sexError || ''}>
-              {getFieldDecorator('sex', {
-                rules: [{ 
-                  required: true, 
-                  message: 'Vui lòng chọn giới tính!' 
-                }],
-              })(
-                <Select placeholder="Giới tính">
-                  <Option value="nam">Nam</Option>
-                  <Option value="nu">Nữ</Option>
-                  <Option value="khac">Khác</Option>
-                </Select>,
-              )}
-            </Form.Item>
-            <Form.Item validateStatus={degreeError ? 'error' : ''} help={degreeError || ''}>
-              {getFieldDecorator('degree', {
-                rules: [
-                  {
-                    required: true,
-                    message: 'Vui lòng chọn trình độ!',
-                  },
-                ],
-              })(<Select placeholder="Trình độ">
-                  <Option value="th">Tiểu học</Option>
-                  <Option value="thcs">THCS</Option>
-                  <Option value="thpt">THPT</Option>
-                  <Option value="cd">Cao đẳng</Option>
-                  <Option value="dh">Đại học</Option>
-                  <Option value="khac">Khác</Option>
-                </Select>,
-                )}
-            </Form.Item> */}
             <Form.Item validateStatus={emailError ? 'error' : ''} help={emailError || ''}>
               {getFieldDecorator('email', {
                 rules: [
@@ -193,6 +137,19 @@ class RegistrationForm extends React.Component {
               type="password"
               placeholder="Nhập lại mật khẩu"
               />)}
+            </Form.Item>
+            <Form.Item validateStatus={typeError ? 'error' : ''} help={typeError || ''}>
+              {getFieldDecorator('type', {
+                rules: [{ 
+                  required: true,
+                  message: "Vui lòng chọn vai trò bạn mong muốn!"
+                }],
+              })(
+                <Select placeholder="Bạn tham gia với vai trò">
+                  <Option value="Người học">Người học</Option>
+                  <Option value="Người dạy">Người dạy</Option>
+                </Select>,
+              )}
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())} loading = {pending ? pending : false}>
