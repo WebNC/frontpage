@@ -1,25 +1,31 @@
 import React from 'react';
 import './style.css';
-import {Button} from 'antd';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
-import {history} from '../../helper';
 import Header from '../../components/Header/Header'
+import NavBar from '../../components/NavBar/NavBar'
+import Poster from '../../components/Poster/Poster'
+import Content from '../../components/Content/Content'
+
+const categories = ['Web Dev', 'Mobile Dev', 'Design', 'Quality Control', 'Quality Assurance', 'Tester', 'Business Analyst',  'All Category']
 
 
 class HomePage extends React.Component {
   
   render() {
-    const {logout, getdetail, username, message, loggedIn} = this.props;
+    const { username, message} = this.props;
     return (
       <div className="home">
         <Header username = {username}/>
-         <h2>Home Page</h2>
           {message && !this.state.isFirstLoad &&
                   <div className="error-message">{message}</div>
                 }
-          <Button type="primary" onClick={()=> logout()} disabled={!loggedIn}>Đăng xuất</Button>
-          <Button type="primary" onClick ={() => getdetail()} disabled={!loggedIn}>Thông tin cá nhân</Button>
+          <NavBar categories={categories}/>
+          <Poster/>
+       
+           <Content/>
+
+         
       </div> 
     );
   }

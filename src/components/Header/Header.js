@@ -1,7 +1,9 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Select, DatePicker, Avatar} from 'antd';
+import {Input} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
+import {Link} from 'react-router-dom'
+
 
 const {Search} = Input;
 
@@ -17,21 +19,22 @@ class Header extends React.Component {
     const {username} = this.props;
     return (
       <div className="header">
-         <div className="tab-component">
-            <a href="/home">LOGO</a>
-            <a href="/home">TRANG CHỦ</a>
-         </div>
-         <div className="search-bar">
+         <div className="tab-component d-flex">
+            <Link to="/home">LOGO</Link>
+            <Link to="/home">TRANG CHỦ</Link>
+            <div className="search-bar ml-5">
             <Search placeholder="Nhập từ khóa"
                 style={{ width: 400 }}
             />
          </div>
+         </div>
+       
          <div className="user-component">
          {
           username !== null ? (
-              <a href="/user-info">{username}</a>
+              <Link to="/user-info">{username}</Link>
           ) : (
-            <a href="/login">ĐĂNG NHẬP</a>
+            <Link to="/login">ĐĂNG NHẬP</Link>
             )
           }
          </div>

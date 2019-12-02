@@ -1,0 +1,23 @@
+
+@mixin category() {
+  font-size: 14px;
+  font-weight: 500;
+  color: #202124;
+}
+.nav-bar {
+  list-style-type: none;
+  margin-top: 20px;
+  border-bottom:  solid 1px #ececec;
+  height: 40px;
+
+
+  &:hover {
+    cursor: pointer;
+  }
+
+  li {
+   @include category();
+   margin-right: 4%;
+  }
+
+}
