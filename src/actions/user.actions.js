@@ -29,15 +29,60 @@ const login = ({email, password}) => {
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
-const loginWithFBGG = (data) => {
-    // console.log('user.token', data);
+const loginWithFB = (accessToken) => {
+    const authOptions = {
+        method: 'POST',
+        url: `${API_URL}users/login/facebook`,
+        headers: {
+            'Access_token': accessToken,
+            'Content-Type': 'application/json'
+        },
+        json: true
+    };
     return dispatch => {
-        localStorage.setItem('jwt_token', data.token.token);
-        dispatch(success(data.token.user));
-        history.push('/home');
+        setTimeout(() => {
+            axios(authOptions)
+            .then( result => { 
+                dispatch(success(result.data.user.username));
+                history.push('/home');
+                })
+            .catch(error => {
+                dispatch(failure(error.response.data.message || error.message));
+            })
+        }, 1000)
+
     };
 
-    function success(user) { return { type: userConstants.LOGIN_SUCCESS, user} }
+    function success(username) { return { type: userConstants.LOGIN_SUCCESS, username } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
+}
+
+const loginWithGG = (accessToken) => {
+    const authOptions = {
+        method: 'POST',
+        url: `${API_URL}users/login/google`,
+        headers: {
+            'Access_token': accessToken,
+            'Content-Type': 'application/json'
+        },
+        json: true
+      };
+    return dispatch => {
+        setTimeout(() => {
+            axios(authOptions)
+            .then( result => { 
+                dispatch(success(result.data.user.username));
+                history.push('/home');
+                })
+            .catch(error => {
+                dispatch(failure(error.response.data.message || error.message));
+            })
+        }, 1000)
+
+    };
+
+    function success(username) { return { type: userConstants.LOGIN_SUCCESS, username } }
+    function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
 const logout = () => {
@@ -101,7 +146,7 @@ const update = ({_id, displayname}) => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post('https://hw6-caro-api.herokuapp.com/user/update', {
+                .post(API_URL + 'users/update', {
                     _id,
                     displayname
                 })
@@ -148,7 +193,8 @@ const changepass = ({_id, passpresent, password}) => {
 
 export const userActions = {
     login,
-    loginWithFBGG,
+    loginWithFB,
+    loginWithGG,
     logout,
     register,
     update,

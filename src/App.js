@@ -7,6 +7,7 @@ import HomePage from './containers/HomePage/Homepage';
 import UserInfoPage from './containers/UserInfoPage/UserInfoPage';
 import RegisterTeacherPage from './containers/RegisterTeacherPage/RegisterTeacherPage';
 import { connect } from 'react-redux';
+require('dotenv').config()
 
 function App(props) {
   const {loggedIn} = props;

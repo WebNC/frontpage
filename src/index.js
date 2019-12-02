@@ -12,6 +12,7 @@ import storage from 'redux-persist/lib/storage'
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistStore, persistReducer } from 'redux-persist'
 import * as serviceWorker from './serviceWorker';
+require('dotenv').config()
 
 const persistConfig = {
     key: 'root',

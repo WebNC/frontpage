@@ -1,10 +1,14 @@
 import React from 'react';
 import { Form, Input, Button, Icon, Checkbox} from 'antd';
-import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props'
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
+import GoogleLogin from 'react-google-login'
+import FacebookLogin from 'react-facebook-login'
+import { access } from 'fs';
+
+require('dotenv').config()
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -43,18 +47,16 @@ class LoginForm extends React.Component {
     }
 
     responseFacebook = (response) => {
-      console.log(response);
+      
+      this.props.loginWithFB(response.accessToken);
     }
 
-    // handleLoginFacebook = e => {
-    //   e.preventDefault();
-    //   window.location.replace('https://hw6-caro-api.herokuapp.com/login/facebook');
-    // }
+    responseGoogle = (response) => {
+      console.log(response);
+      console.log(response.Zi.access_token);
+      this.props.loginWithGG(response.Zi.access_token);
+    }
 
-    // handleLoginGoogle = e => {
-    //   e.preventDefault();
-    //   window.location.replace('https://hw6-caro-api.herokuapp.com/login/google');
-    // }
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
@@ -68,7 +70,7 @@ class LoginForm extends React.Component {
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item>
               <h1>WEB NAME</h1>
-                {message && !this.state.isFirstLoad &&
+                {message &&
                   <div className="error-message">{message}</div>
                 }
             </Form.Item>
@@ -115,14 +117,19 @@ class LoginForm extends React.Component {
               </Button>
               <p>Bạn có thể đăng nhập với các tài khoản xã hội: </p>
               <div className="login-button-component">
-                <Button type="primary" onClick={this.handleLoginFacebook}>
-                  <Icon type="facebook" theme="filled" />
-                  Facebook
-                </Button>
-                <Button type="danger" onClick={this.handleLoginGoogle}>
-                  <Icon type="google" />
-                  Google
-                </Button>
+              <FacebookLogin
+                appId = "771279956617163"
+                fields="name,email,picture"
+                callback={this.responseFacebook}
+                icon="fa-facebook"
+              />
+                <GoogleLogin
+                  clientId= "951194193712-20krm3fg807tvb7mqr4h080cakkg1msn.apps.googleusercontent.com"
+                  buttonText="Login"
+                  onSuccess={this.responseGoogle}
+                  onFailure={this.responseGoogle}
+                  cookiePolicy={'single_host_origin'}
+                />,
               </div>
               <p>Bạn chưa có tài khoản?<a href="/register"> Đăng ký ngay!</a></p>
             </Form.Item>
@@ -141,7 +148,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   login: (email, password) => dispatch(userActions.login(email,password)),
-  //loginWithFBGG:(token) => dispatch(userActions.loginWithFBGG(token))
+  loginWithFB:(accessToken) => dispatch(userActions.loginWithFB(accessToken)),
+  loginWithGG: (accessToken) => dispatch(userActions.loginWithGG(accessToken))
 });
 
 const LoginPage = (Form.create({ name: 'login' })(LoginForm));

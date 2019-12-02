@@ -22,4 +22,4 @@ export const userConstants = {
     GETDETAIL_FAILURE:  ' GETDETAIL_FAILURE',
 };
 
-export const API_URL = 'https://frontpage-api-1612384.herokuapp.com/'
+export const API_URL = 'http://localhost:3000/'
