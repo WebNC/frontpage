@@ -6,6 +6,8 @@ import Header from '../../components/Header/Header'
 import NavBar from '../../components/NavBar/NavBar'
 import Poster from '../../components/Poster/Poster'
 import Content from '../../components/Content/Content'
+import Intro from '../../components/Introduction/Intro'
+import Footer from '../../components/Footer/Footer'
 
 const categories = ['Web Dev', 'Mobile Dev', 'Design', 'Quality Control', 'Quality Assurance', 'Tester', 'Business Analyst',  'All Category']
 
@@ -15,7 +17,7 @@ class HomePage extends React.Component {
   render() {
     const { username, message} = this.props;
     return (
-      <div className="home">
+      <div className="home ">
         <Header username = {username}/>
           {message && !this.state.isFirstLoad &&
                   <div className="error-message">{message}</div>
@@ -24,8 +26,9 @@ class HomePage extends React.Component {
           <Poster/>
        
            <Content/>
+           <Intro/>
+           <Footer/>
 
-         
       </div> 
     );
   }

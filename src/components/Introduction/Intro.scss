@@ -1,0 +1,21 @@
+.introduction{
+    margin-top: 5%;
+    .intro-title{
+        font-weight: bold;
+    }
+
+    .features{
+        padding-left: 7%;
+        padding-right: 5%;
+        text-align: center;
+
+        .feature{
+            width: 200px;
+            img{
+                border-radius: 50%;
+                margin-bottom: 20px;
+                
+            }
+        }
+    }
+}
