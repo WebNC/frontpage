@@ -1,0 +1,35 @@
+.course{
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  border-top: 1px solid;
+  border-bottom: 1px solid;
+  border-color: #e6e9ed;
+  margin-bottom: 20px;
+}
+
+.course .course-info {
+  display: block;
+}
+
+.course .course-info h3 {
+  font-size: 22px;
+  line-height: 30px;
+  color: #1e5aba;
+  font-weight: bold;
+}
+
+.course .course-info h4 {
+  font-size: 18px;
+  line-height: 30px;
+  color: #000000;
+  font-weight: bold;
+}
+
+.course .course-info h5 {
+  font-size: 14px;
+  line-height: 20px;
+}
+.course .course-btn {
+
+}

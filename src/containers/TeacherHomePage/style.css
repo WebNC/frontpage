@@ -1,0 +1,84 @@
+  .teacher-home-page {
+    position: relative;
+    margin: 0;
+    min-height: 100%;
+  }
+
+  .cover-component {
+    /* background-color: #001529; */
+    background: #16222A;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #3A6073, #16222A);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #3A6073, #16222A); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    height: 200px;
+    display: flex;
+    padding-left: 60px;
+    padding-right: 30px;
+    align-items: center;
+    margin: 0 60px 0 60px;
+  }
+
+  .cover-component .info-component {
+    display: block;
+    margin-left: 20px;
+    background: transparent;
+  }
+
+  .cover-component .info-component h3{
+    font-size: 22px;
+    margin-bottom: 5px;
+    height: 30px;
+    font-weight: bold;
+    color: #ffffff;
+  }
+
+  .cover-component .info-component h4 {
+    font-size: 18px;
+    height: 30px;
+    color: #ffffff;
+  }
+
+  .cover-component .btns-component {
+    display: flex;
+    justify-content: right;
+    margin-top: 100px;
+  }
+  .cover-component .btns-component .btn {
+    margin-left: 20px;
+  }
+
+
+  .content-component {
+    display: block;
+    background-color:#ffffff;
+    margin: 0px 60px 0 60px;
+    padding-bottom: 30px;
+    padding-top: 40px;
+    min-height: 100%;
+  }
+
+  .intro-component, .skill-component, .courses-component, .requirement-component, .history-component{
+    display: block;
+    padding: 0px 60px 0 60px;
+  }
+
+  .skill-component {
+    padding-top: 40px;
+  }
+  
+  .intro-component h3, .skill-component h3, .courses-component h3 {
+    font-size: 22px;
+    margin-bottom: 10px;
+    line-height: 35px;
+    font-weight: bold;
+    text-align: left;
+  }
+
+  .intro-component .intro, .skill-component h5 {
+    font-size: 16px;
+    line-height: 30px;
+    text-align: left;
+  }
+
+  .icon {
+    padding-right:10px ;
+  }
