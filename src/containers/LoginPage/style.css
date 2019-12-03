@@ -20,6 +20,7 @@
     background-size: cover;
     padding: 80px 0px 100px 0px;
     background-image: url("../../images/background-login.jpg");
+    background-repeat: repeat;
   }
   
   .ant-form-explain {
@@ -55,6 +56,6 @@
     margin: 0px 0px 20px 0px;
   }
   
-  h1, h2, h5, p{
+  .loginform-component h1, h2, p{
     text-align: center;
   }

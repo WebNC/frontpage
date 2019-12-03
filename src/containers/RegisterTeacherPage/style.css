@@ -21,6 +21,7 @@
     background-size: cover;
     padding: 80px 0px 100px 0px;
     background-image: url("../../images/background-login.jpg");
+    background-repeat: repeat;
   }
   
   .ant-form-explain {
@@ -46,6 +47,6 @@
     padding-left: 10px;
   }
   
-  h1, h2, h3, h4, h5, p{
+.registerform-component h1, h2 {
     text-align: center;
   }

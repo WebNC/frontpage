@@ -47,6 +47,7 @@ class RegistrationTeacherForm extends React.Component {
     const skillError = isFieldTouched('skill') && getFieldError('skill');
     const phoneError = isFieldTouched('phone') && getFieldError('phone');
     const majorError = isFieldTouched('major') && getFieldError('major');
+    const addressError = isFieldTouched('address') && getFieldError('address');
 
     return (
       <div className="registerform-component">
@@ -57,6 +58,20 @@ class RegistrationTeacherForm extends React.Component {
                 {message && !this.state.isFirstLoad &&
                   <div className="error-message">{message}</div>
                 }
+            </Form.Item>
+            <Form.Item validateStatus={addressError ? 'error' : ''} help={addressError || ''}>
+              {getFieldDecorator('address', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập địa chỉ!',
+                  },
+                ],
+              })(<Input
+                prefix={<Icon type="enviroment" theme="filled" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                placeholder="Địa chỉ"
+                />
+                )}
             </Form.Item>
             <Form.Item validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
               {getFieldDecorator('phone', {

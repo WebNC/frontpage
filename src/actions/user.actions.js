@@ -9,7 +9,7 @@ const login = ({email, password}) => {
 
         setTimeout(() => {
             axios
-                .post(API_URL + 'users/login', {
+                .post(`${API_URL}users/login`, {
                     email,
                     password,
                 })
@@ -34,7 +34,7 @@ const loginWithFB = (accessToken) => {
         method: 'POST',
         url: `${API_URL}users/login/facebook`,
         headers: {
-            'Access_token': accessToken,
+            'Access_token': `Bearer ${accessToken}`,
             'Content-Type': 'application/json'
         },
         json: true

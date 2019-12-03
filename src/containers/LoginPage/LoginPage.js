@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Checkbox} from 'antd';
+import { Form, Input, Button, Icon} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
@@ -24,11 +24,6 @@ class LoginForm extends React.Component {
   }
     
     componentDidMount() {
-      // To disabled submit button at the beginning.
-      // const token = new URL(window.location.href).searchParams.get('token');
-      //   if (token) {
-      //       this.props.loginWithFBGG(JSON.parse(token));
-      // }
       this.props.form.validateFields();
     }
 
@@ -37,7 +32,6 @@ class LoginForm extends React.Component {
       e.preventDefault();
       
       const values = getFieldsValue();
-      
       this.props.login({
           email: values.email,
           password: values.password,
@@ -47,7 +41,6 @@ class LoginForm extends React.Component {
     }
 
     responseFacebook = (response) => {
-      
       this.props.loginWithFB(response.accessToken);
     }
 
@@ -70,7 +63,7 @@ class LoginForm extends React.Component {
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item>
               <h1>WEB NAME</h1>
-                {message &&
+                {!this.state.isFirstLoad && message &&
                   <div className="error-message">{message}</div>
                 }
             </Form.Item>

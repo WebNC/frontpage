@@ -23,7 +23,7 @@ class Header extends React.Component {
          </div>
          <div className="search-bar">
             <Search placeholder="Nhập từ khóa"
-                style={{ width: 400 }}
+                style={{ width: 400, color: "#143675" }}
             />
          </div>
          <div className="user-component">

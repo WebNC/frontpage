@@ -19,21 +19,16 @@
     float: right;
   }
 
-  .tab-component a {
+  .tab-component a, .user-component a {
       margin-left: 20px;
       color: white;
       font-weight: bold;
   }
-
-  .user-component a {
-      margin-right: 20px;
-      color: white;
-      font-weight: bold;
-  }
   
+  .ant-input-search-icon {
+    color: black;
+    font-size: 20px;
+  }
   .search-bar {
     width: 400px;
-  }
-  h1, h2, h5, p{
-    text-align: center;
   }
