@@ -15,17 +15,23 @@ const login = ({email, password}) => {
                 })
                 .then(result => {
                     localStorage.setItem('token', result.data.user.token);
-                    dispatch(success(result.data.user.username));
-                    history.push('/home');
+                    const isTeacher = ( result.data.user.type ===  "Người dạy" );
+                    dispatch(success(result.data.user, isTeacher));
+                    if (isTeacher) {
+                        history.push('/teacher-home');
+                    }
+                    else {
+                        history.push('/home');
+                    }
                 })
                 .catch(error => {
-                    dispatch(failure(error.response.data.message || error.message));
+                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
                 })
         }, 1000)
     };
 
     function request() { return { type: userConstants.LOGIN_REQUEST} }
-    function success(username) { return { type: userConstants.LOGIN_SUCCESS, username} }
+    function success(user, isTeacher) { return { type: userConstants.LOGIN_SUCCESS, user, isTeacher} }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
@@ -42,18 +48,24 @@ const loginWithFB = (accessToken) => {
     return dispatch => {
         setTimeout(() => {
             axios(authOptions)
-            .then( result => { 
-                dispatch(success(result.data.user.username));
-                history.push('/home');
+            .then( result => {
+                const isTeacher = ( result.data.user.type ===  "Người dạy" )
+                dispatch(success(result.data.user, isTeacher));
+                if (isTeacher) {
+                    history.push('/teacher-home');
+                }
+                else {
+                    history.push('/home');
+                }
                 })
             .catch(error => {
-                dispatch(failure(error.response.data.message || error.message));
+                return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
             })
         }, 1000)
 
     };
 
-    function success(username) { return { type: userConstants.LOGIN_SUCCESS, username } }
+    function success(user, isTeacher) { return { type: userConstants.LOGIN_SUCCESS, user, isTeacher } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
@@ -71,17 +83,23 @@ const loginWithGG = (accessToken) => {
         setTimeout(() => {
             axios(authOptions)
             .then( result => { 
-                dispatch(success(result.data.user.username));
-                history.push('/home');
+                const isTeacher = ( result.data.user.type ===  "Người dạy" )
+                    dispatch(success(result.data.user, isTeacher));
+                    if (isTeacher) {
+                        history.push('/teacher-home');
+                    }
+                    else {
+                        history.push('/home');
+                    }
                 })
             .catch(error => {
-                dispatch(failure(error.response.data.message || error.message));
+                return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
             })
         }, 1000)
 
     };
 
-    function success(username) { return { type: userConstants.LOGIN_SUCCESS, username } }
+    function success(user, isTeacher) { return { type: userConstants.LOGIN_SUCCESS, user, isTeacher } }
     function failure(error) { return { type: userConstants.LOGIN_FAILURE, error } }
 }
 
@@ -92,31 +110,70 @@ const logout = () => {
     }
 }
 
-const register = ({email,password,username}) => {
+const register = ({email,password,username, type}) => {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post(API_URL + 'users/register', {
+                .post(`${API_URL}users/register`, {
                     email,
                     password,
-                    username
+                    username,
+                    type
                 })
-                .then( result => { 
-                        dispatch(success(result.data));
+                .then( result => {
+                    const isTeacher = (result.data.type ===  "Người dạy" )
+                    dispatch(success(result.data.user, isTeacher));
+                    if (type === "Người dạy") {
+                        history.push('/teacher-register');
+                    }
+                    else {
                         history.push('/home');
                     }
-                )
+                })
                 .catch(error => {
-                    dispatch(failure(error.response.data.message || error.message));
+                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
                 })
         }, 1000)
 
     };
 
     function request() { return { type: userConstants.REGISTER_REQUEST} }
-    function success(newUser) { return { type: userConstants.REGISTER_SUCCESS, newUser } }
+    function success(newUser, isTeacher) { return { type: userConstants.REGISTER_SUCCESS, newUser, isTeacher } }
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
+}
+
+const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex}) => {
+    console.log(id);
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .post(`${API_URL}users/register-teacher`, {
+                    id,
+                    address,
+                    phone,
+                    birthday,
+                    intro,
+                    major,
+                    skill,
+                    sex
+                })
+                .then( result => { 
+                        dispatch(success(true));
+                        history.push('/teacher-home');
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                })
+        }, 1000)
+
+    };
+
+    function request() { return { type: userConstants.REGISTER_TEACHER_REQUEST} }
+    function success(isTeacher) { return { type: userConstants.REGISTER_TEACHER_SUCCESS, isTeacher} }
+    function failure(error) { return { type: userConstants.REGISTER_TEACHER_FAILURE, error } }
 }
 
 const getdetail = () => {
@@ -131,7 +188,7 @@ const getdetail = () => {
                     history.push('/user-info');
                 })
                 .catch(error => {
-                    dispatch(failure( 'Đã có lỗi xảy ra, vui lòng thử lại!'));
+                    return dispatch(failure( 'Đã có lỗi xảy ra, vui lòng thử lại!'));
                 })
         }, 1000)
     };
@@ -151,11 +208,11 @@ const update = ({_id, displayname}) => {
                     displayname
                 })
                 .then( result => { 
-                        dispatch(success(result.data.message, result.data.user));
+                        return dispatch(success(result.data.message, result.data.user));
                     }
                 )
                 .catch(error => {
-                    dispatch(failure(error.response.data.message));
+                    return dispatch(failure(error.response.data.message));
                 })
         }, 1000)
     };
@@ -200,4 +257,5 @@ export const userActions = {
     update,
     changepass,
     getdetail,
+    registerTeacher
 };

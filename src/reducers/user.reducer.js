@@ -1,12 +1,15 @@
 import { userConstants } from '../constants';
+import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 const initialState = {
-  pending: false,
   loggedIn: false,
   username: null,
   message: undefined,
   errMessage: undefined,
   successMessage: undefined,
+  userId: null,
+  isTeacher: false,
+  pending: false,
 }
 
 const user = (state = initialState, action) => {
@@ -21,6 +24,9 @@ const user = (state = initialState, action) => {
         ...state,
         loggedIn: true,
         pending: false,
+        userId: action.newUser.id,
+        isTeacher: action.isTeacher,
+        username: action.newUser.username,
       };
     case userConstants.REGISTER_FAILURE:
       return {
@@ -28,19 +34,38 @@ const user = (state = initialState, action) => {
         message: action.error,
         pending: false,
       };
+    case userConstants.REGISTER_TEACHER_REQUEST:
+      return {
+        ...state,
+        pending: true
+      };
+    case userConstants.REGISTER_TEACHER_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        isTeacher: action.isTeacher
+      };
+    case userConstants.REGISTER_TEACHER_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        message: action.error,
+      }
     case userConstants.LOGIN_REQUEST:
       return {
         ...state,
         message: undefined,
-        pending: true,
+        pending: false,
       };
     case userConstants.LOGIN_SUCCESS:
       return {
         ...state,
         loggedIn: true,
-        username: action.username,
+        username: action.user.username,
         message: undefined,
         pending: false,
+        userId: action.user.id,
+        isTeacher: action.isTeacher,
       };
     case userConstants.LOGIN_FAILURE:
       return {
@@ -56,6 +81,9 @@ const user = (state = initialState, action) => {
         message: undefined,
         errMessage: undefined,
         successMessage: undefined,
+        userId: null,
+        isTeacher: false,
+        pending: false,
       };
     case userConstants.UPDATE_REQUEST:
       return {

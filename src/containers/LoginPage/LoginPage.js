@@ -45,8 +45,6 @@ class LoginForm extends React.Component {
     }
 
     responseGoogle = (response) => {
-      console.log(response);
-      console.log(response.Zi.access_token);
       this.props.loginWithGG(response.Zi.access_token);
     }
 
@@ -54,12 +52,17 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const {message, pending} = this.props;
-
+    console.log(pending);
     const emailError = isFieldTouched('email') && getFieldError('email');
     const passwordError = isFieldTouched('password') && getFieldError('password');
     
     return (
-      <div className="loginform-component">
+      <div className="login-page-component">
+        <div className="login-form-component">
+          <div className="left-component">
+            <img src="./login-img.png" alt="" className="login-img"></img>
+          </div>
+
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item>
               <h1>WEB NAME</h1>
@@ -105,28 +108,32 @@ class LoginForm extends React.Component {
               <a className="login-form-forgot" href="#">
                 Quên mật khẩu?
               </a>
-              <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={pending ? pending : false}>
+              <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())}>
                 Đăng nhập
               </Button>
               <p>Bạn có thể đăng nhập với các tài khoản xã hội: </p>
               <div className="login-button-component">
-              <FacebookLogin
-                appId = "771279956617163"
-                fields="name,email,picture"
-                callback={this.responseFacebook}
-                icon="fa-facebook"
-              />
+                <FacebookLogin
+                  appId = "771279956617163"
+                  fields="name,email,picture"
+                  callback={this.responseFacebook}
+                  textButton="Facebook"
+                  cssClass="button-login-facebook"
+                />
                 <GoogleLogin
                   clientId= "951194193712-20krm3fg807tvb7mqr4h080cakkg1msn.apps.googleusercontent.com"
-                  buttonText="Login"
+                  buttonText="Google"
                   onSuccess={this.responseGoogle}
                   onFailure={this.responseGoogle}
                   cookiePolicy={'single_host_origin'}
-                />,
+                  className="button-login-google"
+                  icon={false}
+                />
               </div>
               <p>Bạn chưa có tài khoản?<a href="/register"> Đăng ký ngay!</a></p>
             </Form.Item>
           </Form>
+        </div>
       </div> 
     );
   }

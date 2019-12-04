@@ -32,13 +32,11 @@ class RegistrationForm extends React.Component {
       
       const values = getFieldsValue();
       
-      if (values.type === "Người dạy") {
-        history.push('/teacher-register');
-      }
       this.props.register({
           email: values.email,
           password: values.password,
-          username: values.username
+          username: values.username,
+          type: values.type
       });
       this.setState({isFirstLoad: false})
     }
@@ -152,7 +150,7 @@ class RegistrationForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())} loading = {pending ? pending : false}>
+              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())}>
                 Đăng ký
               </Button>
               <p>Bạn đã có tài khoản?<a href="/login"> Đăng nhập ngay!</a></p>

@@ -15,13 +15,10 @@ const categories = ['Web Dev', 'Mobile Dev', 'Design', 'Quality Control', 'Quali
 class HomePage extends React.Component {
   
   render() {
-    const { username, message} = this.props;
+    const { username} = this.props;
     return (
       <div className="home ">
         <Header username = {username}/>
-          {message && !this.state.isFirstLoad &&
-                  <div className="error-message">{message}</div>
-                }
           <NavBar categories={categories}/>
           <Sliders/>
        

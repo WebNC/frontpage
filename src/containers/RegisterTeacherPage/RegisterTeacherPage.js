@@ -6,7 +6,7 @@ import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions'
 import moment from 'moment';
 const { Option } = Select;
-const dateFormat = 'DD-MM-YYYY';
+const dateFormat = 'DD/MM/YYYY';
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -26,16 +26,22 @@ class RegistrationTeacherForm extends React.Component {
     }
 
     handleSubmit = e => {
+      const {userId} = this.props;
       const {getFieldsValue} = this.props.form;
       e.preventDefault();
-      
       const values = getFieldsValue();
-      // this.props.register({
-      //     email: values.email,
-      //     password: values.password,
-      //     username: values.username
-      // });
-      // this.setState({isFirstLoad: false})
+      console.log(values);
+      this.props.registerTeacher({
+          id: userId,
+          address: values.address,
+          phone: values.phone,
+          birthday: values.dob.toString(),
+          intro: values.intro !== undefined ? values.intro : '',
+          major: values.major,
+          skill: values.skill,
+          sex: values.sex,
+      });
+      this.setState({isFirstLoad: false})
     }
 
   render() {
@@ -68,7 +74,7 @@ class RegistrationTeacherForm extends React.Component {
                   },
                 ],
               })(<Input
-                prefix={<Icon type="enviroment" theme="filled" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                prefix={<Icon type="home" style={{ color: 'rgba(0,0,0,.25)' }} />}
                 placeholder="Địa chỉ"
                 />
                 )}
@@ -96,6 +102,10 @@ class RegistrationTeacherForm extends React.Component {
                   },
                 ],
               })(<DatePicker placeholder='Ngày sinh' format={dateFormat} style={{width:370}}/>
+                )}
+            </Form.Item>
+            <Form.Item>
+              {getFieldDecorator('intro')(<Input.TextArea style={{height: 150}} autoSize={{ minRows: 5 }} placeholder="Giới thiệu bản thân"/>,
                 )}
             </Form.Item>
             <Form.Item validateStatus={majorError ? 'error' : ''} help={majorError || ''}>
@@ -136,7 +146,7 @@ class RegistrationTeacherForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())} loading = {pending ? pending : false}>
+              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())}>
                 Đăng ký
               </Button>
             </Form.Item>
@@ -150,11 +160,12 @@ function mapStateToProps(state) {
   return { 
     message: state.user.message,
     pending: state.user.pending,
+    userId: state.user.userId
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  register: (user) => dispatch(userActions.register(user))
+  registerTeacher: (user) => dispatch(userActions.registerTeacher(user))
 });
 
 const RegisterTeacherPage = (Form.create({ name: 'registerteacher' })(RegistrationTeacherForm));
