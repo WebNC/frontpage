@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 require('dotenv').config()
 
 function App(props) {
-  const {loggedIn} = props;
+  const {loggedIn, isTeacher} = props;
   return (
         <Switch>
           <Route exact path="/">
@@ -23,10 +23,14 @@ function App(props) {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/home" component={HomePage} />
           <Route exact path="/user-info">
-            {loggedIn ? <UserInfoPage/> : <Redirect to="/login"/>}
+            {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}
           </Route>
-          <Route exact path="/register-teacher" component={RegisterTeacherPage} />
-          <Route exact path="/teacher-home" component={TeacherHomePage} />
+          <Route exact path="/register-teacher">
+            {loggedIn && isTeacher ? <RegisterTeacherPage/> : <Redirect to="/register"/>}
+          </Route>
+          <Route exact path="/teacher-home">
+            {loggedIn && isTeacher ? <TeacherHomePage/> : <Redirect to="/"/>}
+          </Route>
           {/* <Route exact path="/update"> 
             {loggedIn ? <UpdateInfoPage/> : <Redirect to="/login" />}
           </Route>
@@ -41,7 +45,8 @@ function App(props) {
 }
 
 const mapStateToProps = state => ({
-  loggedIn: state.user.loggedIn
+  loggedIn: state.user.loggedIn,
+  isTeacher: state.user.isTeacher
 })
 
 export default connect(mapStateToProps)(App)

@@ -19,41 +19,29 @@ function hasErrors(fieldsError) {
 class TeacherHomePage extends React.Component {
 
     componentDidMount() {
-      // To disabled submit button at the beginning.
-      // const { form, user} = this.props;
-      // form.setFieldsValue({username: username});
-      // form.setFieldsValue({username: user.username, age: user.age || '', sex: user.sex || 'Nam', degree: user.degree || 'Đại học', phone: user.phone || ''});
-      // form.validateFields();
     }
 
-    handleSubmit = e => {
-      const {getFieldsValue} = this.props.form;
-      e.preventDefault();
+    // handleSubmit = e => {
+    //   const {getFieldsValue} = this.props.form;
+    //   e.preventDefault();
       
-      const values = getFieldsValue();
+    //   const values = getFieldsValue();
       
-      this.props.getDetail();
+    //   this.props.getDetail();
       
-      this.setState({isFirstLoad: false})
-    }
+    //   this.setState({isFirstLoad: false})
+    // }
 
   render() {
-    // const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    // const {message, pending, user} = this.props;
-    // // Only show error after a field is touched.
-    // const usernameError = isFieldTouched('username') && getFieldError('username');
-    // const ageError = isFieldTouched('age') && getFieldError('age');
-    // const sexError = isFieldTouched('sex') && getFieldError('sex');
-    // const degreeError = isFieldTouched('degree') && getFieldError('degree');
-    // const phoneError = isFieldTouched('phone') && getFieldError('phone');
+    const {username, logout} = this.props;
 
     return (
       <div className="teacher-home-page">
-        <Header/>
+        <Header username={username}/>
         <div class="cover-component">
             <Avatar size={130}/>
             <div class="info-component">
-              <h3>Lê Uyển Nhi</h3>
+              <h3>{username}</h3>
               <h4>Developer</h4>
             </div>
             <div className="btns-component">
@@ -243,12 +231,13 @@ function mapStateToProps(state) {
   return { 
     message: state.user.message,
     pending: state.user.pending,
-    user: state.user.user,
+    username: state.user.username,
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  getDetail: () => dispatch(userActions.getdetail())
+  getDetail: () => dispatch(userActions.getdetail()),
+  logout: () => dispatch(userActions.logout())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherHomePage)

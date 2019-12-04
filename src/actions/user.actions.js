@@ -122,13 +122,13 @@ const register = ({email,password,username, type}) => {
                     type
                 })
                 .then( result => {
-                    const isTeacher = (result.data.type ===  "Người dạy" )
+                    const isTeacher = (type ===  "Người dạy" )
                     dispatch(success(result.data.user, isTeacher));
-                    if (type === "Người dạy") {
-                        history.push('/teacher-register');
+                    if (isTeacher) {
+                        return history.push('/register-teacher');
                     }
                     else {
-                        history.push('/home');
+                        return history.push('/home');
                     }
                 })
                 .catch(error => {

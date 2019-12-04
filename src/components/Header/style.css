@@ -1,34 +1,38 @@
-  .header {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 20px 0px 20px;
-    text-align: center;
-    background-color: black;
-    width: 100%;
-    height: 60px;
-  }
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0px 60px 0px 60px;
+  text-align: center;
+  background-color: #b8d8f2;
+  width: 100%;
+  height: 60px;
+}
 
-  .tab-component {
-    float: left;
-  }
+.tab-component {
+  float: left;
+}
 
-  .user-component {
-    float: right;
-  }
+.user-component {
+  float: right;
+}
 
-  .tab-component a, .user-component a {
-      margin-left: 20px;
-      color: white;
-      font-weight: bold;
-  }
-  
-  .ant-input-search-icon {
-    color: black;
-    font-size: 20px;
-  }
-  .search-bar {
-    width: 400px;
-  }
+.btn-header {
+    margin-right: 20px;
+    color: #0c6b94;
+    font-weight: bold;
+}
+
+.search-bar {
+  width: 400px;
+}
+
+.ant-input-search-icon {
+  color: #0c6b94;
+  font-size: large;
+}
+h1, h2, h5, p{
+  text-align: center;
+}

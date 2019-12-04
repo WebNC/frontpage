@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link} from 'antd';
 import 'antd/dist/antd.css';
-import './logo.css';
-
 class Logo extends React.Component {
     // constructor(props) {
     //   super(props);
@@ -12,11 +10,9 @@ class Logo extends React.Component {
     // }
 
   render() {
+    const {size} = this.props;
     return (
-      <div className="logo">
-        <h1 className="top">Teacher</h1>
-        <h1 className="bottom">Finder</h1>
-      </div>
+      <img src="logo.png" alt="" width={size} height={size}></img>
     );
   }
 }

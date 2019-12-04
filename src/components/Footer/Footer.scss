@@ -1,35 +1,35 @@
 .footer{
-    background: rgb(48, 54, 133);
+    background: #b8d8f2;
     margin-top: 5%;
-        padding: 20px 8%;
+        padding: 20px 8% 0px 8%;
 
     
     h6 {
-        color: white;
+        color: #0c6b94;
         text-align: center;
-        border-bottom: solid 1px rgb(88, 88, 88);
+        border-bottom: solid 1px #94bfd1;
         padding-bottom: 20px;
     }
 
     .sub-infor{
         h5{
-            color: white;
+            color: #0c6b94;
         }
-        border-bottom: solid 1px rgb(88, 88, 88);
+        border-bottom: solid 1px #94bfd1;
     }
     .follow-us{
         padding: 15px;
-        border-bottom: solid 1px rgb(88, 88, 88);
+        border-bottom: solid 1px #94bfd1;
 
         p{
-            color: white;
+            color: #0c6b94;
         }
         margin-bottom: 15px;
     }
 
     .copyright{
         border-bottom: none;
-        
+        margin-bottom: 0px;
     }
     
 }

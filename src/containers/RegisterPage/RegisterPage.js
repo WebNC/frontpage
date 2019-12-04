@@ -24,6 +24,8 @@ class RegistrationForm extends React.Component {
 
     componentDidMount() {
       // To disabled submit button at the beginning.
+      const { form } = this.props;
+      form.setFieldsValue({type: "Người học"});
       this.props.form.validateFields();
     }
 
@@ -76,8 +78,10 @@ class RegistrationForm extends React.Component {
             <img src="./login-img.png" alt="" className="register-img"></img>
           </div>
           <Form onSubmit={this.handleSubmit} className="register-form">
+            <Form.Item className="logo-component">
+              <Logo size={100}></Logo>
+            </Form.Item>
             <Form.Item>
-              <Logo></Logo>
                 {message && !this.state.isFirstLoad &&
                   <div className="error-message">{message}</div>
                 }
@@ -155,7 +159,7 @@ class RegistrationForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())}>
+              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
                 Đăng ký
               </Button>
               <p>Bạn đã có tài khoản?<a href="/login"> Đăng nhập ngay!</a></p>
