@@ -7,6 +7,7 @@ import {userActions} from '../../actions/user.actions';
 import GoogleLogin from 'react-google-login'
 import FacebookLogin from 'react-facebook-login'
 import { access } from 'fs';
+import Logo from '../../components/Logo'
 
 require('dotenv').config()
 
@@ -65,7 +66,7 @@ class LoginForm extends React.Component {
 
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item>
-              <h1>WEB NAME</h1>
+              <Logo></Logo>
                 {!this.state.isFirstLoad && message &&
                   <div className="error-message">{message}</div>
                 }

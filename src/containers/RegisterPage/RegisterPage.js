@@ -5,6 +5,7 @@ import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions'
 import {history} from '../../helper'
+import Logo from '../../components/Logo'
 // import moment from 'moment';
 const { Option } = Select;
 // const dateFormat = 'DD-MM-YYYY';
@@ -69,10 +70,14 @@ class RegistrationForm extends React.Component {
     const typeError = isFieldTouched('type') && getFieldError('type');
 
     return (
-      <div className="registerform-component">
+      <div className="register-page-component">
+        <div className="register-form-component">
+          <div className="left-component">
+            <img src="./login-img.png" alt="" className="register-img"></img>
+          </div>
           <Form onSubmit={this.handleSubmit} className="register-form">
             <Form.Item>
-              <h1>WEB NAME</h1>
+              <Logo></Logo>
                 {message && !this.state.isFirstLoad &&
                   <div className="error-message">{message}</div>
                 }
@@ -156,6 +161,7 @@ class RegistrationForm extends React.Component {
               <p>Bạn đã có tài khoản?<a href="/login"> Đăng nhập ngay!</a></p>
             </Form.Item>
           </Form>
+        </div>
       </div> 
     );
   }

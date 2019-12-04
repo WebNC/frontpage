@@ -1,18 +1,47 @@
-  .registerform-component {
+  .register-page-component {
     display: block;
     background-size: cover;
     padding: 80px 0px 100px 0px;
     background-image: url("../../images/background.png");
     background-repeat: repeat;
   }
-  
-  .register-form {
-    max-width: 400px;
+
+  .register-form-component {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 800px;
     position: relative;
     margin-left: auto;
     margin-right: auto;
-    padding: 30px 15px 30px 15px;
-    background: rgba(0, 0, 0, 0.04); /* Black background with 0.5 opacity */
+    background: white;
+    border-radius: 5px;
+    box-shadow: 0px 14px 20px 10px rgba(0, 0, 0, 0.14);
+  }
+
+  .register-form-component .left-component {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    justify-items: center;
+    width: 400px;
+  }
+
+  .register-img{
+    position: relative;
+    margin: auto;
+    border-right: 1px solid;
+    border-color: #e6e9ed;
+  }
+  
+  .register-form {
+    width: 450px;
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 30px 40px 0px 40px;
+    background: #FFFFFF;
+    border-radius: 5px;
   }
 
   .register-form-forgot {
@@ -22,6 +51,7 @@
   .register-form-button {
     width: 50%;
     margin-left: 25% ;
+    margin-bottom: 40px;
   }
   
   .ant-form-explain {
