@@ -55,7 +55,7 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         message: undefined,
-        pending: false,
+        pending: true,
       };
     case userConstants.LOGIN_SUCCESS:
       return {

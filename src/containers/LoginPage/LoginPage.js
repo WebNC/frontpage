@@ -53,7 +53,6 @@ class LoginForm extends React.Component {
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const {message, pending} = this.props;
-    console.log(pending);
     const emailError = isFieldTouched('email') && getFieldError('email');
     const passwordError = isFieldTouched('password') && getFieldError('password');
     
@@ -65,8 +64,10 @@ class LoginForm extends React.Component {
           </div>
 
           <Form onSubmit={this.handleSubmit} className="login-form">
+            <Form.Item className="logo-component">
+              <Logo size={100}></Logo>
+            </Form.Item>
             <Form.Item>
-              <Logo></Logo>
                 {!this.state.isFirstLoad && message &&
                   <div className="error-message">{message}</div>
                 }
@@ -109,7 +110,7 @@ class LoginForm extends React.Component {
               <a className="login-form-forgot" href="#">
                 Quên mật khẩu?
               </a>
-              <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())}>
+              <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
                 Đăng nhập
               </Button>
               <p>Bạn có thể đăng nhập với các tài khoản xã hội: </p>

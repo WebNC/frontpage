@@ -3,6 +3,7 @@ import {Input} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
 import {Link} from 'react-router-dom'
+import Logo from '../Logo'
 
 
 const {Search} = Input;
@@ -19,22 +20,20 @@ class Header extends React.Component {
     const {username} = this.props;
     return (
       <div className="header">
-         <div className="tab-component d-flex">
-            <Link to="/home">LOGO</Link>
-            <Link to="/home">TRANG CHỦ</Link>
-            <div className="search-bar ml-5">
+        <div className="tab-component">
+          <a href="/home">TRANG CHỦ</a>
+        </div>
+        <div className="search-bar">
             <Search placeholder="Nhập từ khóa"
-                style={{ width: 400, color: "#143675" }}
+              style={{ width: 400, color: "#143675" }}
             />
-         </div>
-         </div>
-       
+          </div>
          <div className="user-component">
          {
           username !== null ? (
-              <Link to="/user-info">{username}</Link>
+              <a href="/user-info">{username}</a>
           ) : (
-            <Link to="/login">ĐĂNG NHẬP</Link>
+            <a href="/login">ĐĂNG NHẬP</a>
             )
           }
          </div>

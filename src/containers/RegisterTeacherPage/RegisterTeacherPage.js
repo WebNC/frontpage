@@ -31,7 +31,6 @@ class RegistrationTeacherForm extends React.Component {
     componentDidMount() {
       // To disabled submit button at the beginning.
       const { form } = this.props;
-      // form.setFieldsValue({username: username});
       form.setFieldsValue({sex: "Nam"});
 
       this.props.form.validateFields();
@@ -70,8 +69,10 @@ class RegistrationTeacherForm extends React.Component {
     return (
       <div className="register-teacher-page-component">
           <Form onSubmit={this.handleSubmit} className="register-teacher-form">
+            <Form.Item className="logo-component">
+              <Logo size={100}></Logo>
+            </Form.Item>
             <Form.Item className="top-register-teacher-form">
-              <Logo></Logo>
               <h2>Đăng Ký Trở Thành Người Dạy</h2>
                 {message && !this.state.isFirstLoad &&
                   <div className="error-message">{message}</div>
@@ -164,7 +165,7 @@ class RegistrationTeacherForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="register-teacher-form-button" disabled={hasErrors(getFieldsError())}>
+              <Button type="primary" htmlType="submit" className="register-teacher-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
                 Đăng ký
               </Button>
             </Form.Item>

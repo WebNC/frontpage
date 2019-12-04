@@ -6,6 +6,10 @@
     background-repeat: repeat;
   }
 
+  .logo-component {
+    display: flex;
+    justify-content: center;
+  }
   .login-form-component {
     display: flex;
     flex-direction: row;
