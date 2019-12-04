@@ -24,11 +24,12 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className="tab-component">
-        <Button type="link" className="btn-header" onClick={()=> history.push('/home')}>Trang Chủ</Button>
+          <Logo size={50}></Logo>
+          <Button type="link" className="btn-header" onClick={()=> history.push('/home')}>Trang Chủ</Button>
         </div>
         <div className="search-bar">
             <Search placeholder="Nhập từ khóa"
-              style={{ width: 400, color: "#143675" }}
+              style={{ width: 400, color: "#0c6b94" }}
             />
           </div>
          
