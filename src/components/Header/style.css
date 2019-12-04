@@ -27,7 +27,7 @@
     justify-content: left;
 }
 
-.user-component a {
+.btn-header {
     margin-right: 20px;
     color: white;
     font-weight: bold;

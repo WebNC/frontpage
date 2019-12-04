@@ -47,7 +47,6 @@ class TeacherHomePage extends React.Component {
             <div className="btns-component">
               <Button icon="edit" className="btn">Cập nhật thông tin cá nhân</Button>
               <Button icon="plus" className="btn">Thêm khóa học mới</Button>
-              <Button onClick={() => logout()}>Đăng xuất</Button>
             </div>
         </div>
         <div class="content-component">
