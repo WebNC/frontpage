@@ -1,0 +1,35 @@
+.footer{
+    background: rgb(48, 54, 133);
+    margin-top: 5%;
+        padding: 20px 8%;
+
+    
+    h6 {
+        color: white;
+        text-align: center;
+        border-bottom: solid 1px rgb(88, 88, 88);
+        padding-bottom: 20px;
+    }
+
+    .sub-infor{
+        h5{
+            color: white;
+        }
+        border-bottom: solid 1px rgb(88, 88, 88);
+    }
+    .follow-us{
+        padding: 15px;
+        border-bottom: solid 1px rgb(88, 88, 88);
+
+        p{
+            color: white;
+        }
+        margin-bottom: 15px;
+    }
+
+    .copyright{
+        border-bottom: none;
+        
+    }
+    
+}
