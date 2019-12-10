@@ -1,6 +1,7 @@
 import React from 'react';
-import Filter from '../Filter/Filter'
+import Filter from '../../components/Filter/Filter'
 import Cart from '../Cart/Cart'
+import {getAllUserTeacher, getNumberUserTeacher} from '../../actions/teacher.actions'
 import './Content.scss'
 
 const countries = ['All', 'Item1','Item2','Item3', 'Item4'];
@@ -22,15 +23,29 @@ class Content extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
+            teachers: [],
+            amount: 0, 
+            page : 0
         }
     }
 
     componentDidMount = () =>{
-       
+        const {page} = this.state;
+       getAllUserTeacher(page).then(res=>{
+           this.setState({
+               teachers: res.message
+           })
+       })
+       getNumberUserTeacher().then(res=>{
+           this.setState({
+               amount: res.message
+           })
+       })
+
     }
 
     render() {
-        const arr = [1,2,3,4,5];
+        const {teachers} = this.state;
       
         return (
             <div className="content">
@@ -46,8 +61,8 @@ class Content extends React.Component {
                     </div>
                 </div>
                 {
-                    arr.map(item => 
-                        <Cart cartInfor={cartInfor} key={item}/>
+                    teachers.map((item, index) => 
+                        <Cart cartInfor={item} key={index}/>
                     )
                 }
                

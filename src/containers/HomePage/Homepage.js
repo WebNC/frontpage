@@ -4,7 +4,7 @@ import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
 import Header from '../../components/Header/Header'
 import NavBar from '../../components/NavBar/NavBar'
-import Content from '../../components/Content/Content'
+import Content from '../HomeContent/Content'
 import Intro from '../../components/Introduction/Intro'
 import Footer from '../../components/Footer/Footer'
 import Sliders from '../../components/Slider/Slider'

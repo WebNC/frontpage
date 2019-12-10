@@ -16,7 +16,7 @@ class Intro extends React.Component {
       <h2 className="intro-title">How it work</h2>
       <div className="features d-flex justify-content-between">
           {
-              arr.map(item => <div className="feature">
+              arr.map((item, index) => <div className="feature" key={index}>
                   <img src="http://placehold.it/1000" height="80" width="80" alt="img" />
                  <h4>{feature.name}</h4>
                  <p>{feature.description}</p>
