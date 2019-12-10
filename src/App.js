@@ -10,6 +10,7 @@ import UserInfoPage from './containers/UserInfoPage/UserInfoPage';
 import RegisterTeacherPage from './containers/RegisterTeacherPage/RegisterTeacherPage';
 import TeacherHomePage from './containers/TeacherHomePage/TeacherHomePage';
 import EditInfoTeacherPage from './containers/EditInfoTeacherPage/EditInfoTeacherPage';
+import TeacherDetail from './containers/TeacherDetail/TeacherDetail'
 import { connect } from 'react-redux'
 require('dotenv').config()
 
@@ -23,7 +24,9 @@ function App(props) {
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/home" component={HomePage} />
-          <Route exact path="/user-info">
+          <Route exact path="/teachers/:id"  component={TeacherDetail} />
+
+          <Route exact path="/user-info" >
             {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}
           </Route>
           <Route exact path="/teacher-register">

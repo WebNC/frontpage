@@ -30,7 +30,7 @@ class Content extends React.Component {
             <div className="cart d-flex">
                 <img src="http://placehold.it/1000" height="80" width="80" alt="avatar" className="avartar"/>
                 <div className="infor">
-                    <Link to="/" className="username mr-5">{`${cartInfor.username}`}</Link>
+                    <Link to={`/teachers/${cartInfor._id}`} className="username mr-5">{`${cartInfor.username}`}</Link>
                     <div className="d-flex subjects">{`${cartInfor.major}    -    ${cartInfor.email}`}</div>
 
                     <div className="d-flex justify-content-between status">
