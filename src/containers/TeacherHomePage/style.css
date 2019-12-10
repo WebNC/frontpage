@@ -55,7 +55,7 @@
     min-height: 100%;
   }
 
-  .intro-component, .skill-component, .courses-component, .requirement-component, .history-component{
+  .basic-info-component, .intro-component, .skill-component, .courses-component, .requirement-component, .history-component{
     display: block;
     padding: 0px 60px 0 60px;
   }
@@ -80,4 +80,15 @@
 
   .icon {
     padding-right:10px ;
+  }
+
+  .basic-info-component span {
+    font-size: 16px;
+    font-weight: bold;
+    margin-left: 10px;
+  }
+
+  .basic-info-component span h5{
+    font-size: 16px;
+    text-align: left;
   }

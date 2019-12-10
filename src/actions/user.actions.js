@@ -18,7 +18,7 @@ const login = ({email, password}) => {
                     const isTeacher = ( result.data.user.type ===  "Người dạy" );
                     dispatch(success(result.data.user, isTeacher));
                     if (isTeacher) {
-                        history.push('/teacher-home');
+                        history.push('/teacher-home'); 
                     }
                     else {
                         history.push('/home');
@@ -125,9 +125,10 @@ const register = ({email,password,username, type}) => {
                     const isTeacher = (type ===  "Người dạy" )
                     dispatch(success(result.data.user, isTeacher));
                     if (isTeacher) {
-                        return history.push('/register-teacher');
+                        return history.push('/teacher-register');
                     }
                     else {
+                        localStorage.setItem('token', result.data.user.token);
                         return history.push('/home');
                     }
                 })
@@ -159,7 +160,7 @@ const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex
                     skill,
                     sex
                 })
-                .then( result => { 
+                .then( result => {
                         dispatch(success(true));
                         history.push('/teacher-home');
                     }
@@ -176,7 +177,7 @@ const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex
     function failure(error) { return { type: userConstants.REGISTER_TEACHER_FAILURE, error } }
 }
 
-const getdetail = () => {
+const getDetail = () => {
     return dispatch => {
         dispatch(request());
 
@@ -185,7 +186,6 @@ const getdetail = () => {
                 .get(API_URL + 'users/me', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem("token")}})
                 .then(result => {
                     dispatch(success(result.data));
-                    history.push('/user-info');
                 })
                 .catch(error => {
                     return dispatch(failure( 'Đã có lỗi xảy ra, vui lòng thử lại!'));
@@ -196,6 +196,75 @@ const getdetail = () => {
     function request() { return { type: userConstants.GETDETAIL_REQUEST} }
     function success(user) { return { type: userConstants.GETDETAIL_SUCCESS, user} }
     function failure(error) { return { type: userConstants.GETDETAIL_FAILURE, error } }
+}
+
+const updateTeacherInfo = ({id, username, address, phone, birthday, sex }) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .post(API_URL + 'users/update', {
+                    id, username, address, phone, birthday, sex
+                })
+                .then( result => { 
+                        return dispatch(success(result.data.message, result.data.user));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.UPDATE_REQUEST} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+}
+
+const updateTeacherIntro = ({id, intro}) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .post(API_URL + 'users/update', {
+                    id, intro
+                })
+                .then( result => { 
+                        return dispatch(success(result.data.message, result.data.user));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.UPDATE_REQUEST} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+}
+
+const updateTeacherMajorSkill = ({id, major, skill }) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .post(API_URL + 'users/update', {
+                    id, major, skill
+                })
+                .then( result => { 
+                        return dispatch(success(result.data.message, result.data.user));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.UPDATE_REQUEST} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user } }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
 const update = ({_id, displayname}) => {
@@ -256,6 +325,9 @@ export const userActions = {
     register,
     update,
     changepass,
-    getdetail,
-    registerTeacher
+    getDetail,
+    registerTeacher,
+    updateTeacherInfo,
+    updateTeacherIntro,
+    updateTeacherMajorSkill
 };

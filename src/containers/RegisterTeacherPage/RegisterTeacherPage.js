@@ -1,20 +1,17 @@
 import React from 'react';
 import { Form, Input, Button, Icon, Select, DatePicker} from 'antd';
+import AddressInput from '../../components/AddressInput/AddressInput'
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions'
+import {skillActions} from '../../actions/skill.action'
 import moment from 'moment';
 import Logo from '../../components/Logo';
 
 const { Option } = Select;
 const dateFormat = 'DD/MM/YYYY';
-const listSkill = ['HTML5', 'CSS3', 'JavaScript', 'C#', 'C++', 'React', 'Video Editing', 'Graphic Design', 'UX Design', 'Mobile UI Design', 'Web Design'];
-const selectSkill=[];
-
-listSkill.forEach(skill => {
-selectSkill.push(<Option key={ skill }>{skill}</Option>)
-});
+// const listSkill = ['HTML5', 'CSS3', 'JavaScript', 'C#', 'C++', 'React', 'Video Editing', 'Graphic Design', 'UX Design', 'Mobile UI Design', 'Web Design'];
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -30,9 +27,9 @@ class RegistrationTeacherForm extends React.Component {
 
     componentDidMount() {
       // To disabled submit button at the beginning.
-      const { form } = this.props;
+      const { form, getAllSkill } = this.props;
       form.setFieldsValue({sex: "Nam"});
-
+      getAllSkill();
       this.props.form.validateFields();
     }
 
@@ -57,7 +54,7 @@ class RegistrationTeacherForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const {message, pending} = this.props;
+    const {message, pending, allSkill} = this.props;
     // Only show error after a field is touched.
     const dobError = isFieldTouched('dob') && getFieldError('dob');
     const sexError = isFieldTouched('sex') && getFieldError('sex');
@@ -66,11 +63,20 @@ class RegistrationTeacherForm extends React.Component {
     const majorError = isFieldTouched('major') && getFieldError('major');
     const addressError = isFieldTouched('address') && getFieldError('address');
 
+    const selectSkill=[];
+    if (allSkill !== undefined) {
+      allSkill.forEach(skill => {
+        selectSkill.push(<Option key={ skill._id }>{skill.name}</Option>)
+        });
+    }
+    
+
+
     return (
       <div className="register-teacher-page-component">
           <Form onSubmit={this.handleSubmit} className="register-teacher-form">
             <Form.Item className="logo-component">
-              <Logo size={100}></Logo>
+              <Logo size={120}></Logo>
             </Form.Item>
             <Form.Item className="top-register-teacher-form">
               <h2>Đăng Ký Trở Thành Người Dạy</h2>
@@ -86,10 +92,7 @@ class RegistrationTeacherForm extends React.Component {
                     message: 'Vui lòng nhập địa chỉ!',
                   },
                 ],
-              })(<Input
-                prefix={<Icon type="home" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                placeholder="Địa chỉ"
-                />
+              })(<AddressInput/>
                 )}
             </Form.Item>
             <Form.Item label="Số điện thoại" validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
@@ -144,7 +147,6 @@ class RegistrationTeacherForm extends React.Component {
                     mode="tags" 
                     style={{ width: '100%' }} 
                     tokenSeparators={[',']}
-                    defaultValue={['CSS', 'HTML', 'JS']} 
                     placeholder="Kỹ năng">
                       {selectSkill}
                   </Select>,
@@ -179,12 +181,14 @@ function mapStateToProps(state) {
   return { 
     message: state.user.message,
     pending: state.user.pending,
-    userId: state.user.userId
+    userId: state.user.userId,
+    allSkill: state.skill.allSkill
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  registerTeacher: (user) => dispatch(userActions.registerTeacher(user))
+  registerTeacher: (user) => dispatch(userActions.registerTeacher(user)),
+  getAllSkill:() => dispatch(skillActions.getAll())
 });
 
 const RegisterTeacherPage = (Form.create({ name: 'registerteacher' })(RegistrationTeacherForm));
