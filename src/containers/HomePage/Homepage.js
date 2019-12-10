@@ -36,13 +36,13 @@ const mapStateToProps = (state) => {
     username: state.user.username,
     message: state.user.message,
     loggedIn: state.user.loggedIn,
+
   };
 
 }
 const mapDispatchToProps = (dispatch) => ({
   logout: () => dispatch(userActions.logout()),
   getdetail: ()  => dispatch(userActions.getdetail()),
-  //loginWithFBGG:(token) => dispatch(userActions.loginWithFBGG(token))
 });
 
  export default connect(mapStateToProps, mapDispatchToProps)(HomePage)

@@ -54,7 +54,7 @@ class TeacherHomePage extends React.Component {
       <div className="teacher-home-page">
         <Header username={user.username}/>
         <NavBar/>
-        <div class="cover-component">
+        <div className="cover-component">
             <Avatar size={130}/>
             <div class="info-component">
               <h3>{user.username}</h3>

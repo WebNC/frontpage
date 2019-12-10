@@ -2,11 +2,13 @@ import React from 'react';
 import {Pagination} from 'react-bootstrap'
 import Filter from '../../components/Filter/Filter'
 import Cart from '../Cart/Cart'
-import {getAllUserTeacher, getNumberUserTeacher} from '../../actions/teacher.actions'
+import * as teacherAction from '../../actions/teacher.actions'
 import './Content.scss'
+import{ connect } from 'react-redux';
 
-const hourRate = ['All', '10$-20$','20$-30$','> 30$'];
-const sort = ['All', 'Low to high','High to low'];
+
+const hourRate = ['< 100K','100K - 500K','> 500K'];
+const sort = ['Low to high','High to low'];
 
 const district = ['Quận 1', 'Quận 2', 'Quận 3','Quận 4', 'Quận 5', 
             'Quận 6', 'Quận 7','Quận 8','Quận 9', 'Quận 10', 
@@ -28,24 +30,41 @@ class Content extends React.Component {
 
     componentDidMount = () =>{
         const {page} = this.state;
-       getAllUserTeacher(page).then(res=>{
+        teacherAction.getAllUserTeacher(page).then(res=>{
            this.setState({
                teachers: res.message
            })
        })
-       getNumberUserTeacher().then(res=>{
+       teacherAction.getNumberUserTeacher().then(res=>{
            this.setState({
                amount: res.message
            })
        })
+    }
 
+    UNSAFE_componentWillReceiveProps = nextProps =>{
+        const types = nextProps.teachers;
+        if(!types.skill && !types.address && !types.cost){
+            teacherAction.getAllUserTeacher(0).then(res=>{
+                this.setState({
+                    teachers: res.message
+                })
+            })
+        } else {
+            teacherAction.filterTeacher(types.address, types.cost, types.skill).then(res => {
+                console.log(res)
+                this.setState({
+                    teachers: res.user
+                })
+            })
+        }
     }
 
     handlePre = () =>{
         const {page, amount} = this.state;
         if(page  > Math.floor(amount/25)){
           this.setState({page: page -1})
-          getAllUserTeacher(page).then(res=>{
+          teacherAction.getAllUserTeacher(page).then(res=>{
             this.setState({teachers: res.message})
           })
           
@@ -57,7 +76,7 @@ class Content extends React.Component {
         const {page, amount} = this.state;
         if(page < Math.floor(amount/25) ){
           this.setState({page: page + 1})
-          getAllUserTeacher(page).then(res=>{
+          teacherAction.getAllUserTeacher(page).then(res=>{
             this.setState({teachers: res.message})
           })
           
@@ -67,7 +86,7 @@ class Content extends React.Component {
 
     render() {
         const {teachers, amount, page} = this.state;
-
+        const {allSkill} = this.props
         const items = [];
         const active = page +1;
         for (let number = 1; number <= amount/25+1; number+=1) {
@@ -82,8 +101,9 @@ class Content extends React.Component {
             <div className="content">
                 <div className="d-flex filter-banner">
                     <h6 className="filter">Filter</h6>
-                    <Filter data={district} />
-                    <Filter data={hourRate} />
+                    <Filter data={district} name=" District"/>
+                    <Filter data={hourRate} name="Cost"/>
+                    <Filter data={allSkill} name="Skill"/>
 
                     <div className="ml-auto d-flex">
                         <h6>Sort By : </h6>
@@ -104,14 +124,26 @@ class Content extends React.Component {
                         <Pagination.Last onClick={this.handleNext}/>
                     </Pagination>
                 </div>
-
-
-                
-               
             </div>        
         )
     }
 }
 
-    
-export default Content;
+function mapStateToProps(state) {
+    return { 
+      allSkill: state.skill.allSkill,
+      teachers : state.teachers
+    };
+  }
+
+  const mapDispatchToProps = (dispatch) => ({
+    // getAllUserTeacher: (page) => dispatch(teacherAction.getAllUserTeacher(page)),
+    // getNumberUserTeacher: ()  => dispatch(teacherAction.getNumberUserTeacher()),
+    // filterTeacher: (local,type,skill)  => dispatch(teacherAction.filterTeacher(local,type,skill)),
+
+  });
+  
+  
+export default connect(mapStateToProps, mapDispatchToProps)(Content)
+  
+  

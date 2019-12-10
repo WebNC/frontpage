@@ -7,7 +7,6 @@ import Header from '../../components/Header/Header';
 import NavBar from '../../components/NavBar/NavBar'
 import {getDetailTeacher} from '../../actions/teacher.actions'
 import{ connect } from 'react-redux';
-import {skillActions} from '../../actions/skill.action'
 
 
 const { TabPane } = Tabs;
@@ -122,10 +121,8 @@ function mapStateToProps(state) {
     allSkill: state.skill.allSkill
   };
 }
-const mapDispatchToProps = (dispatch) => ({
-  getAllSkill:() => dispatch(skillActions.getAll())
-});
 
-export default connect(mapStateToProps, mapDispatchToProps)(TeacherDetail)
+
+export default connect(mapStateToProps, null)(TeacherDetail)
 
 
