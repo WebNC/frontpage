@@ -7,6 +7,7 @@ import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
 import moment from 'moment';
 import Header from '../../components/Header/Header';
+import Footer from '../../components/Footer/Footer';
 import {history} from '../../helper';
 
 const { TabPane } = Tabs;
@@ -38,7 +39,7 @@ class TeacherHomePage extends React.Component {
 
   render() {
     var {user} = this.props;
-    if(user === undefined) {
+    if(user === null || user === undefined) {
       user = {skill: []};
     }
     var userSkill =[];
@@ -55,12 +56,12 @@ class TeacherHomePage extends React.Component {
         <div class="cover-component">
             <Avatar size={130}/>
             <div class="info-component">
-              <h3>{user.username}</h3>
+              <h3 className="username">{user.username}</h3>
               <h4>{user.major}</h4>
             </div>
             <div className="btns-component">
-              <Button icon="edit" className="btn" onClick = {() => history.push('/teacher-edit-info')}>Cập nhật thông tin cá nhân</Button>
-              <Button icon="plus" className="btn">Thêm khóa học mới</Button>
+              <Button icon="edit" type="normal" className="btn" onClick = {() => history.push('/teacher-edit-info')}>Cập nhật thông tin cá nhân</Button>
+              <Button icon="plus" type="normal" className="btn">Thêm khóa học mới</Button>
             </div>
         </div>
         <div class="content-component">
@@ -68,20 +69,36 @@ class TeacherHomePage extends React.Component {
             <TabPane tab="Thông tin cá nhân" key="1">
               <div className="basic-info-component">
                 <h3>Thông tin cơ bản</h3>
-                <span>Địa chỉ: 
+                <div className="item-info">
+                  <h5 className="info-title">Địa chỉ:</h5>
                   <h5>
-                    {user.address === undefined ? '' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` }
+                    {user.address === undefined ? '' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` } 
                   </h5>
-                </span>
-                <span>Số điện thoại:
-                  <h5>{user.phone}</h5>
-                </span>
-                <span>Ngày Sinh:
-                  <h5>{user.birthday}</h5>
-                </span>
-                <span>Giới tính:
-                  <h5>{user.sex}</h5>
-                </span>
+                </div>
+                <div className="item-info">
+                  <h5 className="info-title">Số điện thoại:</h5> 
+                  <h5>
+                    {user.phone}
+                  </h5> 
+                </div>
+                <div className="item-info">
+                  <h5 className="info-title">Ngày Sinh:</h5> 
+                  <h5>
+                    {user.birthday === undefined ? '' : moment(user.birthday).format('DD/MM/YYYY') }
+                  </h5>
+                </div>
+                <div className="item-info">
+                  <h5 className="info-title">Giới tính: </h5>
+                  <h5>
+                    {user.sex}
+                  </h5>
+                </div>
+                <div className="item-info">
+                  <h5 className="info-title">Mức lương:</h5> 
+                  <h5 >
+                    {user.price}
+                  </h5>
+                </div>
               </div>
               <div className="intro-component">
                 <h3>Giới thiệu</h3>
@@ -118,6 +135,7 @@ class TeacherHomePage extends React.Component {
             </TabPane>
           </Tabs> 
         </div>
+        <Footer />
       </div>
       
     );
