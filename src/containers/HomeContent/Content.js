@@ -1,4 +1,5 @@
 import React from 'react';
+import {Pagination} from 'react-bootstrap'
 import Filter from '../../components/Filter/Filter'
 import Cart from '../Cart/Cart'
 import {getAllUserTeacher, getNumberUserTeacher} from '../../actions/teacher.actions'
@@ -8,16 +9,6 @@ const countries = ['All', 'Item1','Item2','Item3', 'Item4'];
 const hourRate = ['All', '10$-20$','20$-30$','> 30$'];
 const sort = ['All', 'Low to high','High to low'];
 
-const cartInfor = {
-    username: 'USER NAME',
-    subject: ['WordPress','BuddyPress','WooCommerce','Designer'],
-    hourlyRate: 75,
-    success: true,
-    totalJob: 130,
-    country: 'Viet Nam',
-    languages: ['C', 'C++', 'C#','Java', 'Python'],
-    description: 'Over the past 8 years, I have developed a wide range of websites using WordPress/HTML5/CSS3, PHP, MySQL and jQuery, including sites for startup companies, small businesses and individuals. I enjoy designing, building and maintaining clean, professional, and easy to navigate websites.',
-}
 
 class Content extends React.Component {
     constructor(props) {
@@ -44,8 +35,42 @@ class Content extends React.Component {
 
     }
 
+    handlePre = () =>{
+        const {page, amount} = this.state;
+        if(page  > Math.floor(amount/25)){
+          this.setState({page: page -1})
+          getAllUserTeacher(page).then(res=>{
+            this.setState({teachers: res.message})
+          })
+          
+        }
+        
+    }
+  
+    handleNext = () =>{
+        const {page, amount} = this.state;
+        if(page < Math.floor(amount/25) ){
+          this.setState({page: page + 1})
+          getAllUserTeacher(page).then(res=>{
+            this.setState({teachers: res.message})
+          })
+          
+        }
+    }
+      
+
     render() {
-        const {teachers} = this.state;
+        const {teachers, amount, page} = this.state;
+
+        const items = [];
+        const active = page +1;
+        for (let number = 1; number <= amount/25+1; number+=1) {
+            items.push(
+            <Pagination.Item key={number}  active={number === active}>
+                {number}
+            </Pagination.Item>,
+            );
+        }
       
         return (
             <div className="content">
@@ -65,13 +90,22 @@ class Content extends React.Component {
                         <Cart cartInfor={item} key={index}/>
                     )
                 }
+                <div className="mb-5 mr-4">
+                    <Pagination className="float-right" size="sm">
+                        <Pagination.First onClick={this.handlePre} />
+                        {items} 
+                        {/* <Pagination.Ellipsis /> */}
+                        <Pagination.Last onClick={this.handleNext}/>
+                    </Pagination>
+                </div>
+
+
+                
                
             </div>        
         )
     }
-
-
-
-
 }
+
+    
 export default Content;
