@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Input, Button} from 'antd';
 import 'antd/dist/antd.css';
-import {userActions} from '../../actions/user.actions';
+import {userActions} from '../../../actions/user.actions';
 import{ connect } from 'react-redux';
 // import './style.css';
 
@@ -42,31 +42,35 @@ class EditIntroTeacherForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldsError} = this.props.form;
-    const {message, pending} = this.props;
+    const {successMessage,errMessage, pending} = this.props;
 
     return (
-      <Form class="intro-form">
-      <Form.Item>
-          {message && !this.state.isFirstLoad &&
-            <div className="error-message">{message}</div>
+      <Form className="intro-form" onSubmit={this.handleSubmit}>
+        <Form.Item>
+          {successMessage && !this.state.isFirstLoad &&
+            <div className="success-message">{successMessage}</div>
           }
-      </Form.Item>
-      <Form.Item >
-        {getFieldDecorator('intro')(<Input.TextArea style={{height: 150}} autoSize={{ minRows: 10 }} placeholder="Giới thiệu bản thân"/>,
-        )}
-      </Form.Item>
-      <Form.Item>
-        <Button type="primary" htmlType="submit" className="register-teacher-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
-          Lưu thay đổi
-        </Button>
-      </Form.Item>  
-    </Form>
+          {errMessage && !this.state.isFirstLoad &&
+            <div className="error-message">{errMessage}</div>
+          }
+        </Form.Item>
+        <Form.Item >
+          {getFieldDecorator('intro')(<Input.TextArea autoSize={{ minRows: 10 }} placeholder="Giới thiệu bản thân"/>,
+          )}
+        </Form.Item>
+        <Form.Item>
+          <Button type="primary" htmlType="submit" className="register-teacher-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
+            Lưu thay đổi
+          </Button>
+        </Form.Item>  
+      </Form>
     );
   }
 }
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    successMessage: state.user.successMessage,
+    errMessage: state.user.errMessage,
     pending: state.user.pending,
     user: state.user.user,
   };

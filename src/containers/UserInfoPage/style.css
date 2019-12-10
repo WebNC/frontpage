@@ -72,6 +72,6 @@
     padding-left: 10px;
   }
   
-  .info-user-page h1, h2, p{
+  .info-user-page h1, .info-user-page h2, .info-user-page p{
     text-align: center;
   }

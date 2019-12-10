@@ -10,6 +10,7 @@ const initialState = {
   userId: null,
   isTeacher: false,
   pending: false,
+  user: null,
 }
 
 const user = (state = initialState, action) => {
@@ -94,7 +95,6 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         successMessage: action.message,
-        user: action.user,
         errMessage: undefined,
         pending: false,
       };

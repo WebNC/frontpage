@@ -1,8 +1,8 @@
 import React from 'react';
 import { Form, Input, Button, Select} from 'antd';
 import 'antd/dist/antd.css';
-import {userActions} from '../../actions/user.actions';
-import {skillActions} from '../../actions/skill.action';
+import {userActions} from '../../../actions/user.actions';
+import {skillActions} from '../../../actions/skill.action';
 import{ connect } from 'react-redux';
 
 // import './style.css';
@@ -48,7 +48,7 @@ class EditMajorSkillForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const {message, pending, allSkill} = this.props;
+    const {message, pending, allSkill,  successMessage, errMessage} = this.props;
     // Only show error after a field is touched.
     const skillError = isFieldTouched('skill') && getFieldError('skill');
     const majorError = isFieldTouched('major') && getFieldError('major');
@@ -63,9 +63,12 @@ class EditMajorSkillForm extends React.Component {
     return (
               <Form className="major-skill-form" onSubmit={this.handleSubmit}>
                 <Form.Item>
-                    {message && !this.state.isFirstLoad &&
-                      <div className="error-message">{message}</div>
-                    }
+                  {successMessage && !this.state.isFirstLoad &&
+                    <div className="success-message">{successMessage}</div>
+                  }
+                  {errMessage && !this.state.isFirstLoad &&
+                    <div className="error-message">{errMessage}</div>
+                  }
                 </Form.Item>
                 <Form.Item label="Chuyên môn" validateStatus={majorError ? 'error' : ''} help={majorError || ''}>
                   {getFieldDecorator('major', {
@@ -106,7 +109,8 @@ class EditMajorSkillForm extends React.Component {
 }
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    successMessage: state.user.successMessage,
+    errMessage: state.user.errMessage,
     pending: state.user.pending,
     user: state.user.user,
     allSkill: state.skill.allSkill
