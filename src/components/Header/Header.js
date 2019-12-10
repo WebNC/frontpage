@@ -24,7 +24,7 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className="tab-component">
-          <Logo size={50}></Logo>
+          <Logo size={60}></Logo>
           <Button type="link" className="btn-header" onClick={()=> history.push('/home')}>Trang Chủ</Button>
         </div>
         <div className="search-bar">

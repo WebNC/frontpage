@@ -26,4 +26,10 @@ export const userConstants = {
     GETDETAIL_FAILURE:  ' GETDETAIL_FAILURE',
 };
 
-export const API_URL = 'https://frontpage-api-1612384.herokuapp.com/'
+export const skillConstants = {
+    GETALL_REQUEST: 'SKILL_GETALL_REQUEST',
+    GETALL_SUCCESS: 'SKILL_GETALL_SUCCESS',
+    GETALL_FAILURE: 'SKILL_GETALL_FAILURE',
+};
+
+export const API_URL = 'http://localhost:3000/'

@@ -79,7 +79,7 @@ class RegistrationForm extends React.Component {
           </div>
           <Form onSubmit={this.handleSubmit} className="register-form">
             <Form.Item className="logo-component">
-              <Logo size={100}></Logo>
+              <Logo size={120}></Logo>
             </Form.Item>
             <Form.Item>
                 {message && !this.state.isFirstLoad &&

@@ -65,7 +65,7 @@ class LoginForm extends React.Component {
 
           <Form onSubmit={this.handleSubmit} className="login-form">
             <Form.Item className="logo-component">
-              <Logo size={100}></Logo>
+              <Logo size={120}></Logo>
             </Form.Item>
             <Form.Item>
                 {!this.state.isFirstLoad && message &&
