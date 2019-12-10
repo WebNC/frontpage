@@ -1,19 +1,14 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Select, DatePicker} from 'antd';
-import AddressInput from '../../components/AddressInput/AddressInput'
+import { Form, Input, InputNumber, Button, Icon, Select, DatePicker} from 'antd';
+import AddressInput from '../../../components/AddressInput/AddressInput'
 import 'antd/dist/antd.css';
-import {userActions} from '../../actions/user.actions';
+import {userActions} from '../../../actions/user.actions';
 import{ connect } from 'react-redux';
+import moment from 'moment';
 // import './style.css';
 
 const {Option} = Select;
 const dateFormat = 'DD-MM-YYYY';
-const listSkill = ['HTML5', 'CSS3', 'JavaScript', 'C#', 'C++', 'React', 'Video Editing', 'Graphic Design', 'UX Design', 'Mobile UI Design', 'Web Design'];
-const selectSkill=[];
-
-listSkill.forEach(skill => {
-selectSkill.push(<Option key={ skill }>{skill}</Option>)
-});
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -31,7 +26,7 @@ class EditInfoTeacherForm extends React.Component {
       // To disabled submit button at the beginning.
       const { form, user} = this.props;
       // form.setFieldsValue({username: username});
-      form.setFieldsValue({username: user.username, dob: '', sex: user.sex || 'Nam', address: user.address || '', phone: user.phone || '' });
+      form.setFieldsValue({username: user.username, dob: moment(user.birthday) || '', sex: user.sex || 'Nam', address: user.address || '', phone: user.phone || '', salary: user.price || 0 });
       form.validateFields();
     }
    
@@ -48,7 +43,8 @@ class EditInfoTeacherForm extends React.Component {
         address: values.address,
         phone: values.phone,
         sex: values.sex,
-        birthday: values.dob
+        birthday: values.dob,
+        price: values.salary
       });
       
       this.setState({isFirstLoad: false})
@@ -56,19 +52,23 @@ class EditInfoTeacherForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const {message, pending} = this.props;
+    const {successMessage, errMessage, pending} = this.props;
     // Only show error after a field is touched.
     const usernameError = isFieldTouched('username') && getFieldError('username');
     const dobError = isFieldTouched('dob') && getFieldError('dob');
     const sexError = isFieldTouched('sex') && getFieldError('sex');
     const phoneError = isFieldTouched('phone') && getFieldError('phone');
     const addressError = isFieldTouched('address') && getFieldError('address');
+    const salaryError = isFieldTouched('salary') && getFieldError('salary');
 
     return (
               <Form className="info-form" onSubmit={this.handleSubmit}>
                 <Form.Item>
-                    {message && !this.state.isFirstLoad &&
-                      <div className="error-message">{message}</div>
+                    {successMessage && !this.state.isFirstLoad &&
+                      <div className="success-message">{successMessage}</div>
+                    }
+                    {errMessage && !this.state.isFirstLoad &&
+                      <div className="error-message">{errMessage}</div>
                     }
                 </Form.Item>
                 <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
@@ -110,6 +110,23 @@ class EditInfoTeacherForm extends React.Component {
                     />
                     )}
                 </Form.Item>
+                <Form.Item label="Mức lương mong muốn (/giờ)" validateStatus={salaryError ? 'error' : ''} help={salaryError || ''}>
+                  {getFieldDecorator('salary', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập mức lương bạn mong muốn!',
+                      },
+                    ],
+                  })(<InputNumber
+                    prefix={<Icon type="dollar" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                    placeholder="Mức lương mong muốn"
+                    min={0} step={10000}
+                    style={{width: 680}}
+                    formatter={value => `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    />
+                    )}
+                </Form.Item>
                 <Form.Item label="Ngày sinh" validateStatus={dobError ? 'error' : ''} help={dobError || ''}>
                   {getFieldDecorator('dob', {
                     rules: [
@@ -128,7 +145,7 @@ class EditInfoTeacherForm extends React.Component {
                       message: 'Vui lòng chọn giới tính!' 
                     }],
                   })(
-                    <Select placeholder="Giới tính" defaultValue="Nam">
+                    <Select placeholder="Giới tính">
                       <Option value="Nam">Nam</Option>
                       <Option value="Nữ">Nữ</Option>
                       <Option value="Khác">Khác</Option>
@@ -147,7 +164,8 @@ class EditInfoTeacherForm extends React.Component {
 
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    successMessage: state.user.successMessage,
+    errMessage: state.user.errMessage,
     pending: state.user.pending,
     user: state.user.user,
   };

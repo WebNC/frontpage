@@ -23,14 +23,6 @@
     background: transparent;
   }
 
-  .cover-component .info-component h3{
-    font-size: 22px;
-    margin-bottom: 5px;
-    height: 30px;
-    font-weight: bold;
-    color: #ffffff;
-  }
-
   .cover-component .info-component h4 {
     font-size: 18px;
     height: 30px;
@@ -58,37 +50,27 @@
   .basic-info-component, .intro-component, .skill-component, .courses-component, .requirement-component, .history-component{
     display: block;
     padding: 0px 60px 0 60px;
-  }
-
-  .skill-component {
-    padding-top: 40px;
-  }
-  
-  .intro-component h3, .skill-component h3, .courses-component h3 {
-    font-size: 22px;
-    margin-bottom: 10px;
-    line-height: 35px;
-    font-weight: bold;
-    text-align: left;
-  }
-
-  .intro-component .intro, .skill-component h5 {
-    font-size: 16px;
-    line-height: 30px;
-    text-align: left;
+    margin-bottom: 30px;
   }
 
   .icon {
     padding-right:10px ;
   }
 
-  .basic-info-component span {
-    font-size: 16px;
+  .teacher-home-page h3 {
+    font-size: 22px;
+    margin-bottom: 5px;
+    line-height: 35px;
     font-weight: bold;
-    margin-left: 10px;
+    text-align: left;
   }
 
-  .basic-info-component span h5{
+  .teacher-home-page h5, .intro {
     font-size: 16px;
     text-align: left;
+    line-height: 35px;
+  }
+
+  h3.username {
+    color: #ffffff;
   }

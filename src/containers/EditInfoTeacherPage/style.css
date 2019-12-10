@@ -3,6 +3,37 @@
   position: relative;
   margin-left: auto;
   margin-right: auto;
-  padding: 30px 40px 0px 40px;
+  padding: 30px 40px 10px 40px;
   background: #FFFFFF;
 }
+
+.edit-teacher-page h3 {
+  font-size: 22px;
+  margin-bottom: 5px;
+  line-height: 35px;
+  font-weight: bold;
+  text-align: left;
+}
+
+.edit-teacher-page p, .intro {
+  font-size: 16px;
+  text-align: left;
+  line-height: 35px;
+}
+
+.item-info {
+  font-size: 16px;
+  display: flex;
+  line-height: 35px;
+}
+
+h5.info-title {
+  font-weight: bold;
+  padding-right: 10px;
+  width: 150px;
+}
+
+.edit-teacher-page .title {
+  text-align: center;
+}
+

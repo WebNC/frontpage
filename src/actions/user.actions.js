@@ -183,7 +183,7 @@ const getDetail = () => {
 
         setTimeout(() => {
             axios
-                .get(API_URL + 'users/me', { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem("token")}})
+                .get(`${API_URL}users/me`, { 'headers': { 'Authorization': 'Bearer ' + localStorage.getItem("token")}})
                 .then(result => {
                     dispatch(success(result.data));
                 })
@@ -198,26 +198,26 @@ const getDetail = () => {
     function failure(error) { return { type: userConstants.GETDETAIL_FAILURE, error } }
 }
 
-const updateTeacherInfo = ({id, username, address, phone, birthday, sex }) => {
+const updateTeacherInfo = ({id, username, address, phone, birthday, sex, price }) => {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post(API_URL + 'users/update', {
-                    id, username, address, phone, birthday, sex
+                .post(`${API_URL}teachers/edit/info`, {
+                    id, username, address, phone, birthday, sex, price
                 })
                 .then( result => { 
-                        return dispatch(success(result.data.message, result.data.user));
+                        return dispatch(success("Cập nhật thông tin thành công!"));
                     }
                 )
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message));
+                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
                 })
         }, 1000)
     };
 
     function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user } }
+    function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
@@ -226,21 +226,21 @@ const updateTeacherIntro = ({id, intro}) => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post(API_URL + 'users/update', {
+                .post(`${API_URL}teachers/edit/intro`, {
                     id, intro
                 })
                 .then( result => { 
-                        return dispatch(success(result.data.message, result.data.user));
+                        return dispatch(success("Cập nhật thông tin thành công!"));
                     }
                 )
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message));
+                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
                 })
         }, 1000)
     };
 
     function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user } }
+    function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
@@ -249,21 +249,21 @@ const updateTeacherMajorSkill = ({id, major, skill }) => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post(API_URL + 'users/update', {
+                .post(`${API_URL}teachers/edit/major-skill`, {
                     id, major, skill
                 })
                 .then( result => { 
-                        return dispatch(success(result.data.message, result.data.user));
+                        return dispatch(success("Cập nhật thông tin thành công!"));
                     }
                 )
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message));
+                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
                 })
         }, 1000)
     };
 
     function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user } }
+    function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
