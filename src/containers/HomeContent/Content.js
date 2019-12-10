@@ -5,9 +5,15 @@ import Cart from '../Cart/Cart'
 import {getAllUserTeacher, getNumberUserTeacher} from '../../actions/teacher.actions'
 import './Content.scss'
 
-const countries = ['All', 'Item1','Item2','Item3', 'Item4'];
 const hourRate = ['All', '10$-20$','20$-30$','> 30$'];
 const sort = ['All', 'Low to high','High to low'];
+
+const district = ['Quận 1', 'Quận 2', 'Quận 3','Quận 4', 'Quận 5', 
+            'Quận 6', 'Quận 7','Quận 8','Quận 9', 'Quận 10', 
+            'Quận 11', 'Quận 12',  'Quận Bình Thạnh', 'Quận Gò Vấp', 'Quận Tân Bình', 'Quận Thủ Đức',
+            'Quận Tân Phú', 'Quận Bình Tân', 'Quận Phú Nhuận', 'Huyện Củ Chi', 'Huyện Hóc Môn', 
+            'Huyện Bình Chánh', 'Huyện Nhà Bè', 'Huyện Cần Giờ'
+          ];  
 
 
 class Content extends React.Component {
@@ -76,7 +82,7 @@ class Content extends React.Component {
             <div className="content">
                 <div className="d-flex filter-banner">
                     <h6 className="filter">Filter</h6>
-                    <Filter data={countries} />
+                    <Filter data={district} />
                     <Filter data={hourRate} />
 
                     <div className="ml-auto d-flex">
