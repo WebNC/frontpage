@@ -9,11 +9,20 @@ export const getAllUserTeacher = page => {
         }).catch(error => console.log(error));
 }
 
-// getNumberUserTeacher
+// getNumberUserTeacher getDetailTeacher
 
 export const getNumberUserTeacher = () => {
     return API
         .get(`/teachers/number`)
+        .then(res => {
+            return res.data
+        }).catch(error => console.log(error));
+}
+
+
+export const getDetailTeacher = (id) => {
+    return API
+        .get(`/teachers/detail/${id}`)
         .then(res => {
             return res.data
         }).catch(error => console.log(error));

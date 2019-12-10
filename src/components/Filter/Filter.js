@@ -2,7 +2,7 @@ import React from 'react';
 import './Filter.scss'
 
 
-// const data = ['All', 'Item1','Item2','Item3', 'Item4'];
+
 class Filter extends React.Component {
     constructor(props) {
         super(props);
@@ -27,11 +27,8 @@ class Filter extends React.Component {
         const {data} = this.state;
         return (
             <div className="drop-down  d-flex justify-content-between "  onClick={this.toggle}>
-                    <p className="sort-by"
-                      
-                    >Sort By:
-                    <span className="sort-by-selected">{sort}
-                        </span>
+                    <p className="sort-by">Sort By:
+                        <span className="sort-by-selected">{sort}</span>
                     </p>
                     <img src="/asserts/arrow.svg"
                         className="arrow " alt="arrow" />

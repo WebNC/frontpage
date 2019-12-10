@@ -9,6 +9,7 @@ import moment from 'moment';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import {history} from '../../helper';
+import NavBar from '../../components/NavBar/NavBar'
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -53,6 +54,7 @@ class TeacherHomePage extends React.Component {
     return (
       <div className="teacher-home-page">
         <Header username={user.username}/>
+        <NavBar/>
         <div class="cover-component">
             <Avatar size={130}/>
             <div class="info-component">

@@ -1,5 +1,7 @@
 import React from 'react';
 import './NavBar.scss'
+const categoryList = ['Web Dev', 'Mobile Dev', 'Design', 'Quality Control', 'Quality Assurance', 'Tester', 'Business Analyst',  'All Category']
+
 
 class NavBar extends React.Component {
     constructor(props) {
@@ -17,7 +19,9 @@ class NavBar extends React.Component {
     }
 
     render() {
-        const {categories} = this.state;
+        let {categories} = this.state;
+        if(!categories)
+            categories= categoryList
         const categoriesBar = categories.map((item, index) => {
             return(
                 <li key={index}> {item}</li>
