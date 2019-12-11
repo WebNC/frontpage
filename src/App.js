@@ -25,11 +25,11 @@ function App(props) {
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/teachers/:id"  component={TeacherDetail} />
 
-          {/* <Route exact path="/home"  component={HomePage} /> */}
+          <Route exact path="/home"  component={HomePage} />
           
-          <Route exact path="/home">
+          {/* <Route exact path="/home">
           {isTeacher ? <TeacherHomePage/> : <HomePage/>}
-          </Route>
+          </Route> */}
 
           <Route exact path="/user-info" >
             {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}

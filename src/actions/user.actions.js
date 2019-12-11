@@ -255,7 +255,7 @@ const updateTeacherMajorSkill = ({id, major, skill }) => {
                     id, major, skill
                 })
                 .then( result => { 
-                        return dispatch(success("Cập nhật thông tin thành công!", result.user));
+                        return dispatch(success("Cập nhật thông tin thành công!", result.data));
                     }
                 )
                 .catch(error => {
@@ -269,16 +269,24 @@ const updateTeacherMajorSkill = ({id, major, skill }) => {
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
-const updateAvatar = ({id, ingFile}) => {
+const updateAvatar = ({id, file}) => {
     return dispatch => {
         dispatch(request());
+        const formData = new FormData();
+        formData.append('avatar', file);
+        formData.append('id', id);
+        console.log(formData);
+        const config = {
+            'headers': { 
+            'content-type': 'multipart/form-data'
+            }
+        }
         setTimeout(() => {
             axios
-                .post(`${API_URL}teachers/edit/major-skill`, {
-                    id, ingFile
-                })
+                .post(`${API_URL}upload/avatar`,
+                    formData, config)
                 .then( result => { 
-                        return dispatch(success("Cập nhật thông tin thành công!"));
+                        return dispatch(success("Cập nhật thông tin thành công!", result.data));
                     }
                 )
                 .catch(error => {
@@ -288,7 +296,7 @@ const updateAvatar = ({id, ingFile}) => {
     };
 
     function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 const update = ({_id, displayname}) => {
@@ -305,7 +313,7 @@ const update = ({_id, displayname}) => {
                     }
                 )
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message));
+                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại"));
                 })
         }, 1000)
     };
@@ -353,5 +361,6 @@ export const userActions = {
     registerTeacher,
     updateTeacherInfo,
     updateTeacherIntro,
-    updateTeacherMajorSkill
+    updateTeacherMajorSkill,
+    updateAvatar,
 };

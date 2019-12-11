@@ -10,7 +10,7 @@ import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import {history} from '../../helper';
 import NavBar from '../../components/NavBar/NavBar';
-import Avatar from '../../components/Avatar/Avatar';
+import MyAvatar from '../../components/MyAvatar/MyAvatar';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -41,9 +41,11 @@ class TeacherHomePage extends React.Component {
 
   render() {
     var {user} = this.props;
+    
     if(user === null || user === undefined) {
       user = {skill: []};
     }
+    console.log(user.skill);
     var userSkill =[];
     user.skill.forEach(element => {
       userSkill.push(
@@ -57,7 +59,7 @@ class TeacherHomePage extends React.Component {
         <Header username={user.username}/>
         <NavBar/>
         <div class="cover-component">
-            <Avatar />
+            <MyAvatar imageUrl={user.url}/>
             <div class="info-component">
               <h3 className="username">{user.username}</h3>
               <h4>{user.major}</h4>

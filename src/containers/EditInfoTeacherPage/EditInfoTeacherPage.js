@@ -8,6 +8,7 @@ import Header from '../../components/Header/Header';
 import WrappedEditInfoTeacherForm from './EditInfoTeacherForm/EditInfoTeacherForm'
 import WrappedEditIntroTeacherForm from './EditIntroForm/EditIntroForm'
 import WrappedEditMajorSkillForm from './EditMajorSkillForm/EditMajorSkillForm'
+import MyAvatar from '../../components/MyAvatar/MyAvatar'
 import {history} from '../../helper'
 
 const { TabPane } = Tabs;
@@ -35,7 +36,7 @@ class EditInfoTeacherPage extends React.Component {
       <div className="edit-teacher-page">
         <Header username={user.username}/>
         <div class="cover-component">
-            <Avatar size={130}/>
+            <MyAvatar imageUrl={user.url}/>
             <div class="info-component">
               <h3 className="username">{user.username}</h3>
               <h4>{user.major}</h4>
