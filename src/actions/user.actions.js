@@ -122,6 +122,7 @@ const register = ({email,password,username, type}) => {
                     type
                 })
                 .then( result => {
+                    localStorage.setItem('token', result.data.user.token);
                     const isTeacher = (type ===  "Người dạy" )
                     dispatch(success(result.data.user, isTeacher));
                     if (isTeacher) {
@@ -144,7 +145,7 @@ const register = ({email,password,username, type}) => {
     function failure(error) { return { type: userConstants.REGISTER_FAILURE, error } }
 }
 
-const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex}) => {
+const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex, price}) => {
     console.log(id);
     return dispatch => {
         dispatch(request());
@@ -158,7 +159,8 @@ const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex
                     intro,
                     major,
                     skill,
-                    sex
+                    sex,
+                    price
                 })
                 .then( result => {
                         dispatch(success(true));
@@ -207,7 +209,7 @@ const updateTeacherInfo = ({id, username, address, phone, birthday, sex, price }
                     id, username, address, phone, birthday, sex, price
                 })
                 .then( result => { 
-                        return dispatch(success("Cập nhật thông tin thành công!"));
+                        return dispatch(success("Cập nhật thông tin thành công!", result.data));
                     }
                 )
                 .catch(error => {
@@ -217,7 +219,7 @@ const updateTeacherInfo = ({id, username, address, phone, birthday, sex, price }
     };
 
     function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
@@ -230,7 +232,7 @@ const updateTeacherIntro = ({id, intro}) => {
                     id, intro
                 })
                 .then( result => { 
-                        return dispatch(success("Cập nhật thông tin thành công!"));
+                        return dispatch(success("Cập nhật thông tin thành công!", result.data));
                     }
                 )
                 .catch(error => {
@@ -240,7 +242,7 @@ const updateTeacherIntro = ({id, intro}) => {
     };
 
     function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
@@ -251,6 +253,29 @@ const updateTeacherMajorSkill = ({id, major, skill }) => {
             axios
                 .post(`${API_URL}teachers/edit/major-skill`, {
                     id, major, skill
+                })
+                .then( result => { 
+                        return dispatch(success("Cập nhật thông tin thành công!", result.user));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.UPDATE_REQUEST} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user} }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+}
+
+const updateAvatar = ({id, ingFile}) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .post(`${API_URL}teachers/edit/major-skill`, {
+                    id, ingFile
                 })
                 .then( result => { 
                         return dispatch(success("Cập nhật thông tin thành công!"));
@@ -266,7 +291,6 @@ const updateTeacherMajorSkill = ({id, major, skill }) => {
     function success(message) { return { type: userConstants.UPDATE_SUCCESS, message} }
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
-
 const update = ({_id, displayname}) => {
     return dispatch => {
         dispatch(request());

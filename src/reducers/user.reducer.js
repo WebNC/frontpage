@@ -28,6 +28,7 @@ const user = (state = initialState, action) => {
         userId: action.newUser.id,
         isTeacher: action.isTeacher,
         username: action.newUser.username,
+        message: undefined,
       };
     case userConstants.REGISTER_FAILURE:
       return {
@@ -44,7 +45,8 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         pending: false,
-        isTeacher: action.isTeacher
+        isTeacher: action.isTeacher,
+        message: undefined,
       };
     case userConstants.REGISTER_TEACHER_FAILURE:
       return {
@@ -64,6 +66,8 @@ const user = (state = initialState, action) => {
         loggedIn: true,
         username: action.user.username,
         message: undefined,
+        successMessage: undefined,
+        errMessage: undefined,
         pending: false,
         userId: action.user.id,
         isTeacher: action.isTeacher,
@@ -85,11 +89,14 @@ const user = (state = initialState, action) => {
         userId: null,
         isTeacher: false,
         pending: false,
+        user: null
       };
     case userConstants.UPDATE_REQUEST:
       return {
         ...state,
         pending: true,
+        errMessage: undefined,
+        successMessage: undefined,
       };
     case userConstants.UPDATE_SUCCESS:
       return {
@@ -97,6 +104,7 @@ const user = (state = initialState, action) => {
         successMessage: action.message,
         errMessage: undefined,
         pending: false,
+        user: action.user
       };
     case userConstants.UPDATE_FAILURE:
       return {

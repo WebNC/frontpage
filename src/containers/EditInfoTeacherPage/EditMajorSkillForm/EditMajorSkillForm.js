@@ -26,7 +26,11 @@ class EditMajorSkillForm extends React.Component {
     const { form, getAllSkill, user } = this.props;
     getAllSkill();
     // form.setFieldsValue({username: username});
-    form.setFieldsValue({major: user.major, skill: user.skill});
+    const userSkill = [];
+    user.skill.forEach((element)=>{
+      userSkill.push(element.id)
+    })
+    form.setFieldsValue({major: user.major, skill: userSkill});
     form.validateFields();
   }
 

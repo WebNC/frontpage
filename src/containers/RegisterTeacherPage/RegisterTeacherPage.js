@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Select, DatePicker} from 'antd';
+import { Form, Input, Button, Icon, Select, DatePicker, InputNumber} from 'antd';
 import AddressInput from '../../components/AddressInput/AddressInput'
 import 'antd/dist/antd.css';
 import './style.css';
@@ -34,8 +34,10 @@ class RegistrationTeacherForm extends React.Component {
     }
 
     handleSubmit = e => {
-      const {userId} = this.props;
+      const {userId, allSkill} = this.props;
       const {getFieldsValue} = this.props.form;
+
+      
       e.preventDefault();
       const values = getFieldsValue();
       console.log(values);
@@ -48,6 +50,7 @@ class RegistrationTeacherForm extends React.Component {
           major: values.major,
           skill: values.skill,
           sex: values.sex,
+          price: values.salary
       });
       this.setState({isFirstLoad: false})
     }
@@ -62,6 +65,7 @@ class RegistrationTeacherForm extends React.Component {
     const phoneError = isFieldTouched('phone') && getFieldError('phone');
     const majorError = isFieldTouched('major') && getFieldError('major');
     const addressError = isFieldTouched('address') && getFieldError('address');
+    const salaryError = isFieldTouched('salary') && getFieldError('salary');
 
     const selectSkill=[];
     if (allSkill !== undefined) {
@@ -109,6 +113,23 @@ class RegistrationTeacherForm extends React.Component {
                 />
                 )}
             </Form.Item>
+            <Form.Item label="Mức lương mong muốn (/giờ)" validateStatus={salaryError ? 'error' : ''} help={salaryError || ''}>
+                  {getFieldDecorator('salary', {
+                    rules: [
+                      {
+                        required: true,
+                        message: 'Vui lòng nhập mức lương bạn mong muốn!',
+                      },
+                    ],
+                  })(<InputNumber
+                    prefix={<Icon type="dollar" style={{ color: 'rgba(0,0,0,.25)' }}/>}
+                    placeholder="Mức lương mong muốn"
+                    min={0} step={10000}
+                    style={{width: 680}}
+                    formatter={value => `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    />
+                    )}
+                </Form.Item>
             <Form.Item label="Ngày sinh" validateStatus={dobError ? 'error' : ''} help={dobError || ''}>
               {getFieldDecorator('dob', {
                 rules: [

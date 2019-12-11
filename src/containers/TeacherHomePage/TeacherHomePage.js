@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Select, Typography, Avatar, Tabs} from 'antd';
+import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload} from 'antd';
 import Course from '../../components/Course/Course';
 import 'antd/dist/antd.css';
 import './style.css';
@@ -9,7 +9,8 @@ import moment from 'moment';
 import Header from '../../components/Header/Header';
 import Footer from '../../components/Footer/Footer';
 import {history} from '../../helper';
-import NavBar from '../../components/NavBar/NavBar'
+import NavBar from '../../components/NavBar/NavBar';
+import Avatar from '../../components/Avatar/Avatar';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -48,7 +49,7 @@ class TeacherHomePage extends React.Component {
       userSkill.push(
       <h5>
         <Icon type="check" className="icon"/>
-        {element}
+        {element.name}
       </h5>)
     });
     return (
@@ -56,7 +57,7 @@ class TeacherHomePage extends React.Component {
         <Header username={user.username}/>
         <NavBar/>
         <div class="cover-component">
-            <Avatar size={130}/>
+            <Avatar />
             <div class="info-component">
               <h3 className="username">{user.username}</h3>
               <h4>{user.major}</h4>
@@ -98,7 +99,7 @@ class TeacherHomePage extends React.Component {
                 <div className="item-info">
                   <h5 className="info-title">Mức lương:</h5> 
                   <h5 >
-                    {user.price}
+                    {user.price} đ
                   </h5>
                 </div>
               </div>
