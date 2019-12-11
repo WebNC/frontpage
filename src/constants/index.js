@@ -32,4 +32,12 @@ export const skillConstants = {
     GETALL_FAILURE: 'SKILL_GETALL_FAILURE',
 };
 
-export const API_URL = 'http://localhost:3000/'
+export const teacherConstants = {
+    FILTER_ADRESS_REQUEST : 'FILTER_ADRESS_REQUEST',
+    FILTER_COST_REQUEST : 'FILTER_COST_REQUEST',
+    FILTER_SKILL_REQUEST : 'FILTER_SKILL_REQUEST',
+
+
+}
+
+export const API_URL = 'https://frontpage-api-1612384.herokuapp.com/'
