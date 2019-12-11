@@ -43,7 +43,6 @@ class Filter extends React.Component {
             selected = DEFAULT
         }
 
-        console.log(name,selected)
 
 
         if(name === 'Skill'){

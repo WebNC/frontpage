@@ -31,12 +31,12 @@ class Content extends React.Component {
                 <img src="http://placehold.it/1000" height="80" width="80" alt="avatar" className="avartar"/>
                 <div className="infor">
                     <Link to={`/teachers/${cartInfor._id}`} className="username mr-5">{`${cartInfor.username}`}</Link>
-                    <div className="d-flex subjects">{`${cartInfor.major}    -    ${cartInfor.email}`}</div>
+                    <div className="d-flex subjects">{ cartInfor.major ? `${cartInfor.major}    -    ${cartInfor.email}` : cartInfor.email}</div>
 
                     <div className="d-flex justify-content-between status">
-                         <div>{cartInfor.sex}</div>
-                         <div>{cartInfor.phone}</div>
-                        <div>{`${cartInfor.address.address} , ${cartInfor.address.district}`}</div>
+                         <div>{ cartInfor ? cartInfor.sex : ' '}</div>
+                         <div>{cartInfor ?  cartInfor.phone : ' '}</div>
+                        <div>{( cartInfor.address && cartInfor.address.address && cartInfor.address.district) ? `${cartInfor.address.address} , ${cartInfor.address.district}` : ' '}</div>
                     </div>
 
 
@@ -46,7 +46,7 @@ class Content extends React.Component {
                         )}
                     </div>
 
-                    <div className="description">{cartInfor.intro || `I am ${cartInfor.major}, Wellcome everyone to my class`}</div>
+                    <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
                     <Button variant="success">Expand Profile</Button>
 
 
