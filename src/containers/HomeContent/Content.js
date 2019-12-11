@@ -8,7 +8,7 @@ import{ connect } from 'react-redux';
 
 
 const hourRate = ['< 100K','100K - 500K','> 500K'];
-const sort = ['Low to high','High to low'];
+// const sort = ['Low to high','High to low'];
 
 const district = ['Quận 1', 'Quận 2', 'Quận 3','Quận 4', 'Quận 5', 
             'Quận 6', 'Quận 7','Quận 8','Quận 9', 'Quận 10', 
@@ -105,11 +105,11 @@ class Content extends React.Component {
                     <Filter data={hourRate} name="Cost"/>
                     <Filter data={allSkill} name="Skill"/>
 
-                    <div className="ml-auto d-flex">
+                    {/* <div className="ml-auto d-flex">
                         <h6>Sort By : </h6>
                         <Filter data={sort} />
 
-                    </div>
+                    </div> */}
                 </div>
                 {
                     teachers.map((item, index) => 

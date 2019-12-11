@@ -47,7 +47,10 @@ class Content extends React.Component {
                     </div>
 
                     <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
+                    <Link to={`/teachers/${cartInfor._id}`}     >
                     <Button variant="success">Expand Profile</Button>
+
+                    </Link>
 
 
                 </div>
