@@ -132,15 +132,11 @@ class Content extends React.Component {
 function mapStateToProps(state) {
     return { 
       allSkill: state.skill.allSkill,
-      teachers : state.teachers
+      teachers : state.teachers,
     };
   }
 
   const mapDispatchToProps = (dispatch) => ({
-    // getAllUserTeacher: (page) => dispatch(teacherAction.getAllUserTeacher(page)),
-    // getNumberUserTeacher: ()  => dispatch(teacherAction.getNumberUserTeacher()),
-    // filterTeacher: (local,type,skill)  => dispatch(teacherAction.filterTeacher(local,type,skill)),
-
   });
   
   

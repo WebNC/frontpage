@@ -23,9 +23,14 @@ function App(props) {
           </Route>
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
-          <Route exact path="/home" component={HomePage} />
-          <Route exact path="/teachers/:id"  component={TeacherDetail} />
 
+          {/* <Route exact path="/home"  component={HomePage} /> */}
+          <Route exact path="/home">
+          {isTeacher ? <TeacherHomePage/> : <HomePage/>}
+          </Route>
+
+          <Route exact path="/teachers/:id"  component={TeacherDetail} />
+          
           <Route exact path="/user-info" >
             {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}
           </Route>
