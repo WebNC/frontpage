@@ -3,6 +3,7 @@ import{ connect } from 'react-redux';
 import './Filter.scss'
 import * as teacherAction from '../../actions/teacher.actions'
 
+const DEFAULT = null;
 
 
 class Filter extends React.Component {
@@ -21,9 +22,9 @@ class Filter extends React.Component {
             name,
             selected: name ? `Any ${name}` : 'All'
         })
-        this.props.filterSkill(null)
-        this.props.filterCost(null);
-         this.props.filterAdress(null)
+        this.props.filterSkill(DEFAULT)
+        this.props.filterCost(DEFAULT);
+         this.props.filterAdress(DEFAULT)
 
     }
 
@@ -35,23 +36,23 @@ class Filter extends React.Component {
 
     handleClick = e => {
         const {name, data} = this.state
-        const selected = e.target.getAttribute('name')
+        let selected = e.target.getAttribute('name')
         this.setState({selected})
+
+        if(selected.trim() === 'All'){
+            selected = DEFAULT
+        }
+
         console.log(name,selected)
 
+
         if(name === 'Skill'){
-            if(selected === 'All')
-                this.props.filterSkill(null)
             this.props.filterSkill(selected)
         }
         else if (name === 'Cost'){
-            if(selected === 'All')
-                this.props.filterSkill(null)
             this.props.filterCost(data.indexOf(selected));
         }
         else {
-            if(selected === 'All')
-            this.props.filterAdress(null)
             this.props.filterAdress(selected)}
     }
 
