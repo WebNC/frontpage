@@ -2,6 +2,8 @@ import React from 'react';
 import './ContactModal.scss'
 import { Modal} from 'react-bootstrap'
 import{ connect } from 'react-redux';
+import { Icon} from 'antd';
+import 'antd/dist/antd.css';
 import WrapContactForm from './ContactForm/ContactForm'
 
 
@@ -29,9 +31,12 @@ class ContactModal extends React.Component {
     
 
     render() {
-        const {handleCloseModal, open} = this.props;
+        const {handleCloseModal, open, loggedIn, isTeacher} = this.props;
         const {teacherInfo} = this.state
         const skills = [{_id: '1', name: 'skill 1'}]
+
+        const notification = <h6 
+        > <Icon type="warning" className="mr-5" style={{color: 'red'}}/>You must loggin first to contact with teacher !</h6>
 
         return (
           <>
@@ -39,10 +44,13 @@ class ContactModal extends React.Component {
             <Modal.Header closeButton>
               <Modal.Title>Contact to teacher</Modal.Title>
             </Modal.Header>
-            <Modal.Body>Please fill out all information to contact successfully
+            {
+              (loggedIn && !isTeacher) ?  <Modal.Body>Please fill out all information to contact successfully
               <WrapContactForm skills={skills}/>
-
             </Modal.Body>
+            :
+            <Modal.Body>{notification} </Modal.Body>
+            }
           </Modal>
         </>    
         )
@@ -58,6 +66,10 @@ class ContactModal extends React.Component {
 function mapStateToProps(state) {
   return {
     teacherInfo: state.teachers.teacherInfo,
+    userInfo : state.user.user,
+    loggedIn: state.user.loggedIn,
+    isTeacher: state.user.isTeacher
+
   };
 }
 // const mapDispatchToProps = (dispatch) => ({
