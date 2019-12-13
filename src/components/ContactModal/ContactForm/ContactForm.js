@@ -1,6 +1,7 @@
 import React from 'react';
-import { Button, Form, Input, InputNumber, Icon, Select, DatePicker} from 'antd';
+import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
+import './ContactForm.scss'
 
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
@@ -20,12 +21,26 @@ class ContactForm extends React.Component {
         }
     }
 
+    componentDidMount = () =>{
+        this.props.form.validateFields();
+    }
+
+    handleSubmit = e =>{
+        const {getFieldsValue} = this.props.form;
+        e.preventDefault();
+        const values = getFieldsValue();
+        console.log(values);
+
+    }
+
+
     render(){
-        const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
+        const {getFieldDecorator, getFieldsError,
+             getFieldError, isFieldTouched } = this.props.form;
         const {skills} = this.props;
         
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
-        const toDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
+        const toDateError = isFieldTouched('todate') && getFieldError('todate');
 
         const hourError = isFieldTouched('hour') && getFieldError('hour');
         const skillError = isFieldTouched('skill') && getFieldError('skill');
@@ -40,7 +55,7 @@ class ContactForm extends React.Component {
 
         return(
             
-            <Form className="info-form" onSubmit={this.handleSubmit}>
+            <Form className="contact-form" onSubmit={this.handleSubmit}>
                 <div className="d-flex">
                     <Form.Item  className="mr-3" label="Frome Date" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
                         {getFieldDecorator('fromdate', {
@@ -54,7 +69,9 @@ class ContactForm extends React.Component {
                         )}
                      </Form.Item>
 
-                    <Form.Item label="To Date" validateStatus={toDateError ? 'error' : ''} help={toDateError || ''}>
+                    <Form.Item label="To Date"
+                     validateStatus={toDateError ? 'error' : ''} 
+                     help={toDateError || ''}>
                             {getFieldDecorator('todate', {
                             rules: [
                                 {
@@ -62,11 +79,34 @@ class ContactForm extends React.Component {
                                 message: 'Enter date to please!',
                                 },
                             ],
-                            })(<DatePicker placeholder='dd/mm/yyyy' format={dateFormat} style={{width:270}}/>
+                            })(<DatePicker
+                                 placeholder='dd/mm/yyyy' 
+                                 format={dateFormat} 
+                                 style={{width:270}}/>
                             )}
                     </Form.Item>
 
                 </div>
+
+                
+                <Form.Item label="Skill" validateStatus={skillError ? 'error': ''} help={skillError || ''}>
+                {getFieldDecorator('skill', {
+                    rules: [
+                        {
+                        required: true,
+                        message: 'Select skill',
+                        },
+                    ],
+                    })(<Select 
+                        mode="tags" 
+                        style={{ width: '70%' }} 
+                        tokenSeparators={[',']}
+                        placeholder="Skill">
+                        {selectSkill}
+                    </Select>,
+                )}
+                </Form.Item>
+
               
                 <div className="d-flex">
                     <Form.Item label="Number of studying hour" validateStatus={hourError ? 'error' : ''} help={hourError || ''}>
@@ -78,8 +118,14 @@ class ContactForm extends React.Component {
                             },
                             ],
                         })(<InputNumber
-                            prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                            placeholder="Total hours"
+                            prefix={<Icon type="hourglass" 
+                            style={{ color: 'rgba(0,0,0,.25)' }} />}
+                            style={{width: 150}}
+                            defaultValue={1000}
+                            formatter={value => `hour ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                            onChange={this.onChange}
+
                             />
                             )}
                     </Form.Item>
@@ -89,24 +135,6 @@ class ContactForm extends React.Component {
              </div>
 
             
-
-                <Form.Item label="Skill" validateStatus={skillError ? 'error': ''} help={skillError || ''}>
-                {getFieldDecorator('skill', {
-                    rules: [
-                        {
-                        required: true,
-                        message: 'Select skill',
-                        },
-                    ],
-                    })(<Select 
-                        mode="tags" 
-                        style={{ width: '80%' }} 
-                        tokenSeparators={[',']}
-                        placeholder="Skill">
-                        {selectSkill}
-                    </Select>,
-                )}
-                </Form.Item>
 
               
 

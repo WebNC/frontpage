@@ -99,7 +99,9 @@ class RegistrationTeacherForm extends React.Component {
               })(<AddressInput/>
                 )}
             </Form.Item>
-            <Form.Item label="Số điện thoại" validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
+            <Form.Item label="Số điện thoại" 
+            validateStatus={phoneError ? 'error' : ''}
+             help={phoneError || ''}>
               {getFieldDecorator('phone', {
                 rules: [
                   {
@@ -108,7 +110,8 @@ class RegistrationTeacherForm extends React.Component {
                   },
                 ],
               })(<Input
-                prefix={<Icon type="phone" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                prefix={<Icon type="phone"
+                 style={{ color: 'rgba(0,0,0,.25)' }} />}
                 placeholder="Số điện thoại"
                 />
                 )}
@@ -130,7 +133,11 @@ class RegistrationTeacherForm extends React.Component {
                     />
                     )}
                 </Form.Item>
-            <Form.Item label="Ngày sinh" validateStatus={dobError ? 'error' : ''} help={dobError || ''}>
+            
+            <Form.Item label="Ngày sinh"
+             validateStatus={dobError ? 'error' : ''}
+             
+             help={dobError || ''}>
               {getFieldDecorator('dob', {
                 rules: [
                   {
@@ -138,9 +145,12 @@ class RegistrationTeacherForm extends React.Component {
                     message: 'Vui lòng nhập ngày sinh!',
                   },
                 ],
-              })(<DatePicker placeholder='dd/mm/yyyy' format={dateFormat} style={{width:570}}/>
+              })(<DatePicker placeholder='dd/mm/yyyy'
+               format={dateFormat} style={{width:570}}/>
                 )}
             </Form.Item>
+
+
             <Form.Item label="Giới thiệu">
               {getFieldDecorator('intro')(<Input.TextArea style={{height: 150}} autoSize={{ minRows: 5 }} placeholder="Giới thiệu bản thân"/>,
                 )}
