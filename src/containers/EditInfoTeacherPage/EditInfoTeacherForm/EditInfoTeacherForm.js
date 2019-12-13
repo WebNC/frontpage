@@ -178,3 +178,16 @@ const mapDispatchToProps = (dispatch) => ({
 const WrappedEditInfoTeacherForm = (Form.create({ name: 'edit-info-teacher' })(EditInfoTeacherForm));
 
 export default connect(mapStateToProps, mapDispatchToProps)(WrappedEditInfoTeacherForm)
+
+
+
+
+ /**
+                studentID: req.body.studentID,
+    teacherID: req.body.teacherID,
+    fromDate: req.body.fromDate,
+    toDate: req.body.toDate,
+    hour: req.body.hour,
+    skill: req.body.skill,
+    value: req.body.value,
+            */

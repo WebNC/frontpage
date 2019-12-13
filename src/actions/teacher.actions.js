@@ -59,3 +59,12 @@ export const filterSkill = (skill) =>{
         })
     }
 }
+
+
+export const handleContact = (teacherInfo) =>{
+    return dispatch => {
+        dispatch({type: teacherConstants.HANDLE_CONTACT,
+            teacherInfo
+        })
+    }
+}

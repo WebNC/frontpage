@@ -5,6 +5,7 @@ import Cart from '../Cart/Cart'
 import * as teacherAction from '../../actions/teacher.actions'
 import './Content.scss'
 import{ connect } from 'react-redux';
+import ContactModal from '../../components/ContactModal/ContactModal'
 
 
 const hourRate = ['< 100K','100K - 500K','> 500K'];
@@ -24,7 +25,8 @@ class Content extends React.Component {
         this.state = {
             teachers: [],
             amount: 0, 
-            page : 0
+            page : 0,
+            openModal: false
         }
     }
 
@@ -82,10 +84,17 @@ class Content extends React.Component {
           
         }
     }
+
+    handleCloseModal = () =>{
+        const {openModal} = this.state;
+        this.setState({
+            openModal : !openModal,
+        })
+    }
       
 
     render() {
-        const {teachers, amount, page} = this.state;
+        const {teachers, amount, page, openModal} = this.state;
         const {allSkill} = this.props
         const items = [];
         const active = page +1;
@@ -96,8 +105,14 @@ class Content extends React.Component {
             </Pagination.Item>,
             );
         }
+        // handleCloseModal, open, teacher
       
         return (
+            <div>
+                <ContactModal open={openModal}
+                handleCloseModal= {this.handleCloseModal}
+                />
+                
             <div className="content">
                 <div className="d-flex filter-banner">
                     <h6 className="filter">Filter</h6>
@@ -113,7 +128,7 @@ class Content extends React.Component {
                 </div>
                 {
                     teachers.map((item, index) => 
-                        <Cart cartInfor={item} key={index}/>
+                        <Cart cartInfor={item} key={index} handleCloseModal={this.handleCloseModal}/>
                     )
                 }
                 <div className="mb-5 mr-4">
@@ -125,7 +140,8 @@ class Content extends React.Component {
                     </Pagination>
                 </div>
             </div>        
-        )
+       
+            </div> )
     }
 }
 

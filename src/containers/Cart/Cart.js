@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {Button} from 'react-bootstrap'
 import {skillActions} from '../../actions/skill.action'
 import{ connect } from 'react-redux';
+import { handleContact } from '../../actions/teacher.actions';
 
 class Content extends React.Component {
     constructor(props) {
@@ -23,6 +24,15 @@ class Content extends React.Component {
         });
         this.setState({skills})
     }
+
+    handleClickContact = () =>{
+        const {handleCloseModal, handleContact} = this.props;
+        const {cartInfor} = this.state
+        handleCloseModal();
+        handleContact(cartInfor);
+    }
+
+  
 
     render() {
         const {cartInfor, skills} = this.state;
@@ -48,9 +58,10 @@ class Content extends React.Component {
 
                     <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
                     <Link to={`/teachers/${cartInfor._id}`}     >
-                    <Button variant="success">Expand Profile</Button>
-
+                    <Button variant="success" className="mr-3">Expand Profile</Button>
                     </Link>
+                    <Button variant="primary" onClick={this.handleClickContact}>Contact Now</Button>
+
 
 
                 </div>
@@ -66,12 +77,13 @@ class Content extends React.Component {
 
 
 function mapStateToProps(state) {
-    return { 
+    return {
       allSkill: state.skill.allSkill
     };
   }
   const mapDispatchToProps = (dispatch) => ({
-    getAllSkill:() => dispatch(skillActions.getAll())
+    getAllSkill:() => dispatch(skillActions.getAll()),
+    handleContact : (teacherInfo) => dispatch(handleContact(teacherInfo))
   });
 
   export default connect(mapStateToProps, mapDispatchToProps)(Content)
