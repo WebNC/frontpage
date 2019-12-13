@@ -45,4 +45,4 @@ export const teacherConstants = {
 
 }
 
-export const API_URL = 'http://localhost:3000/'
+export const API_URL = 'https://frontpage-api-1612384.herokuapp.com/'

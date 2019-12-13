@@ -122,7 +122,7 @@ class ContactForm extends React.Component {
                             style={{ color: 'rgba(0,0,0,.25)' }} />}
                             style={{width: 150}}
                             defaultValue={1000}
-                            formatter={value => `hour ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                            formatter={value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
                             onChange={this.onChange}
 

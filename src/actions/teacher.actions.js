@@ -3,7 +3,7 @@ import {teacherConstants} from '../constants/index'
 
 export const getAllUserTeacher = page => {
     return API
-        .get(`/teachers/list/${page}`)
+        .get(`teachers/list/${page}`)
         .then(res => {
             return res.data
         }).catch(error => console.log(error));
@@ -13,7 +13,7 @@ export const getAllUserTeacher = page => {
 
 export const getNumberUserTeacher = () => {
     return API
-        .get(`/teachers/number`)
+        .get(`teachers/number`)
         .then(res => {
             return res.data
         }).catch(error => console.log(error));
@@ -22,7 +22,7 @@ export const getNumberUserTeacher = () => {
 
 export const getDetailTeacher = (id) => {
     return API
-        .get(`/teachers/detail/${id}`)
+        .get(`teachers/detail/${id}`)
         .then(res => {
             return res.data
         }).catch(error => console.log(error));
@@ -30,7 +30,7 @@ export const getDetailTeacher = (id) => {
 
 export const filterTeacher = ( local, type, skill) => {
     return API
-        .post(`/teachers/filter`,{local, type, skill})
+        .post(`teachers/filter`,{local, type, skill})
         .then(res => {
             return res.data
         }).catch(error => console.log(error));
