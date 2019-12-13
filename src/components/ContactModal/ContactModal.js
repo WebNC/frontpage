@@ -31,6 +31,7 @@ class ContactModal extends React.Component {
     render() {
         const {handleCloseModal, open} = this.props;
         const {teacherInfo} = this.state
+        const skills = [{_id: '1', name: 'skill 1'}]
 
         return (
           <>
@@ -39,7 +40,7 @@ class ContactModal extends React.Component {
               <Modal.Title>Contact to teacher</Modal.Title>
             </Modal.Header>
             <Modal.Body>Please fill out all information to contact successfully
-              <WrapContactForm skills={teacherInfo.skill}/>
+              <WrapContactForm skills={skills}/>
 
             </Modal.Body>
           </Modal>
