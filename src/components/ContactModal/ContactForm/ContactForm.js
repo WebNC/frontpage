@@ -18,6 +18,8 @@ class ContactForm extends React.Component {
         this.state = {
             isFirstLoad: true,
             total: 0,
+            openFromDate: false,
+            openToDate: false,
         }
     }
 
@@ -33,11 +35,27 @@ class ContactForm extends React.Component {
 
     }
 
+    closeFromDate = () => {
+        this.setState({openFromDate: false});
+    }
+
+    closeToDate = () => {
+        this.setState({openToDate: false});
+    }
+
+    openFromDate = () => {
+        this.setState({openFromDate: true});
+    }
+
+    openToDate = () => {
+        this.setState({openToDate: true});
+    }
 
     render(){
         const {getFieldDecorator, getFieldsError,
              getFieldError, isFieldTouched } = this.props.form;
         const {skills} = this.props;
+        const {openFromDate, openToDate} = this.state;
         
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
         const toDateError = isFieldTouched('todate') && getFieldError('todate');
@@ -65,7 +83,7 @@ class ContactForm extends React.Component {
                             message: 'Enter date from please !',
                             },
                         ],
-                        })(<DatePicker placeholder='dd/mm/yyyy' format={dateFormat} style={{width:270}}/>
+                        })(<DatePicker open={openFromDate} onOpenChange={this.openFromDate} onChange={this.closeFromDate} placeholder='dd/mm/yyyy' format={dateFormat} style={{width:270}}/>
                         )}
                      </Form.Item>
 
@@ -80,9 +98,12 @@ class ContactForm extends React.Component {
                                 },
                             ],
                             })(<DatePicker
-                                 placeholder='dd/mm/yyyy' 
-                                 format={dateFormat} 
-                                 style={{width:270}}/>
+                                open={openToDate}
+                                onOpenChange={this.openToDate} 
+                                onChange={this.closeToDate}
+                                placeholder='dd/mm/yyyy' 
+                                format={dateFormat} 
+                                style={{width:270}}/>
                             )}
                     </Form.Item>
 
