@@ -26,7 +26,7 @@ const teachers = (state = initialState, action) => {
         skill: action.skill 
       }
       case teacherConstants.HANDLE_CONTACT:
-      console.log(action.teacherInfo)
+      // console.log(action.teacherInfo)
       return { 
         ...state,
         teacherInfo: action.teacherInfo 

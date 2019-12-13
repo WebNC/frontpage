@@ -1,5 +1,4 @@
 import { userConstants } from '../constants';
-import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 const initialState = {
   loggedIn: false,

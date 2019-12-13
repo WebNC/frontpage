@@ -369,6 +369,16 @@ const changepass = ({_id, passpresent, password}) => {
     function failure(error) { return { type: userConstants.CHANGEPASS_FAILURE, error } }
 }
 
+const requestContract = (studentID, teacherID, fromDate, toDate, hour, skill,value) => {
+    return axios
+        .post(`${API_URL}student/contract/request`, {
+            studentID, teacherID,fromDate, toDate, hour, skill, value
+        })
+        .then(res => {
+            return res.data
+        }).catch(error => console.log(error));
+}
+
 export const userActions = {
     login,
     loginWithFB,
@@ -384,4 +394,5 @@ export const userActions = {
     updateTeacherMajorSkill,
     updateAvatar,
     activeEmail,
+    requestContract
 };

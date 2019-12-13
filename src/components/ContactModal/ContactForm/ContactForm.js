@@ -2,9 +2,14 @@ import React from 'react';
 import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
 import './ContactForm.scss'
+import {userActions} from '../../../actions/user.actions'
+import moment from 'moment';
+
 
 const dateFormat = 'DD-MM-YYYY';
 const { Option } = Select;
+const { RangePicker } = DatePicker;
+
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -18,62 +23,106 @@ class ContactForm extends React.Component {
         this.state = {
             isFirstLoad: true,
             total: 0,
-            openFromDate: false,
-            openToDate: false,
+            hour: 0,
+            skillList: []
         }
     }
-
     componentDidMount = () =>{
         this.props.form.validateFields();
+        const {teacherInfo, skills} = this.props;
+        let skillList = []
+        skills.forEach(skill => {
+            if(teacherInfo.skill.indexOf(skill._id) !== -1){
+                skillList.push(skill)
+            }
+            
+        });
+        this.setState({skillList})
     }
 
-    handleSubmit = e =>{
+    handleSubmit = (e) =>{
         const {getFieldsValue} = this.props.form;
+        const {userInfo, teacherInfo, handleCloseModal} = this.props;
+        const {total} = this.state;
         e.preventDefault();
         const values = getFieldsValue();
-        console.log(values);
+          handleCloseModal()
+        
+        userActions.requestContract(userInfo.userId, teacherInfo._id,values.fromdate[0].toString(),
+        values.fromdate[1].toString(), values.hour, values.skill, total).then(res=>{
+            console.log(res)
+        })
+
+        //requestContract
 
     }
 
-    closeFromDate = () => {
-        this.setState({openFromDate: false});
+    range = (start, end) => {
+        const result = [];
+        for (let i = start; i < end; i++) {
+          result.push(i);
+        }
+        return result;
+    }
+      
+
+    disabledDate = (current)=> {
+        return current && current < moment().endOf('day');
     }
 
-    closeToDate = () => {
-        this.setState({openToDate: false});
+    disabledRangeTime = (_, type) => {
+        if (type === 'start') {
+          return {
+            disabledHours: () => this.range(0, 60).splice(4, 20),
+            disabledMinutes: () => this.range(30, 60),
+            disabledSeconds: () => [55, 56],
+          };
+        }
+        return {
+          disabledHours: () => this.range(0, 60).splice(20, 4),
+          disabledMinutes: () => this.range(0, 31),
+          disabledSeconds: () => [55, 56],
+        };
     }
 
-    openFromDate = () => {
-        this.setState({openFromDate: true});
+    onChange = e =>{
+        const {getFieldsValue} = this.props.form;
+        const {teacherInfo} = this.props;
+
+        const values = getFieldsValue();
+        const hour = values.hour
+        console.log(e)
+        if(hour){
+            this.setState({
+                total : teacherInfo.price? teacherInfo.price*e : e*50000
+            })
+        }
+        
     }
 
-    openToDate = () => {
-        this.setState({openToDate: true});
-    }
 
     render(){
         const {getFieldDecorator, getFieldsError,
              getFieldError, isFieldTouched } = this.props.form;
-        const {skills} = this.props;
-        const {openFromDate, openToDate} = this.state;
+        const { skillList} = this.state;
         
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
-        const toDateError = isFieldTouched('todate') && getFieldError('todate');
+        // const toDateError = isFieldTouched('todate') && getFieldError('todate');
 
         const hourError = isFieldTouched('hour') && getFieldError('hour');
         const skillError = isFieldTouched('skill') && getFieldError('skill');
         const {total} = this.state;
 
         const selectSkill=[];
-    if (skills !== undefined) {
-      skills.forEach(skill => {
+        skillList.forEach(skill => {
         selectSkill.push(<Option key={ skill._id }>{skill.name}</Option>)
         });
-    }
+    
 
         return(
             
             <Form className="contact-form" onSubmit={this.handleSubmit}>
+
                 <div className="d-flex">
                     <Form.Item  className="mr-3" label="Frome Date" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
                         {getFieldDecorator('fromdate', {
@@ -83,52 +132,40 @@ class ContactForm extends React.Component {
                             message: 'Enter date from please !',
                             },
                         ],
-                        })(<DatePicker open={openFromDate} onOpenChange={this.openFromDate} onChange={this.closeFromDate} placeholder='dd/mm/yyyy' format={dateFormat} style={{width:270}}/>
+                        })(
+                            <RangePicker
+                                disabledDate={this.disabledDate}
+                                disabledTime={this.disabledRangeTime}
+                                name="range" id="range"
+
+                                onChange = {this.onChange}
+                                showTime={{
+                                    hideDisabledOptions: true,
+                                    defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
+                                }}
+                                format={dateFormat}
+                                />
                         )}
                      </Form.Item>
-
-                    <Form.Item label="To Date"
-                     validateStatus={toDateError ? 'error' : ''} 
-                     help={toDateError || ''}>
-                            {getFieldDecorator('todate', {
-                            rules: [
-                                {
-                                required: true,
-                                message: 'Enter date to please!',
-                                },
-                            ],
-                            })(<DatePicker
-                                open={openToDate}
-                                onOpenChange={this.openToDate} 
-                                onChange={this.closeToDate}
-                                placeholder='dd/mm/yyyy' 
-                                format={dateFormat} 
-                                style={{width:270}}/>
-                            )}
-                    </Form.Item>
-
                 </div>
-
-                
                 <Form.Item label="Skill" validateStatus={skillError ? 'error': ''} help={skillError || ''}>
-                {getFieldDecorator('skill', {
-                    rules: [
-                        {
-                        required: true,
-                        message: 'Select skill',
-                        },
-                    ],
-                    })(<Select 
-                        mode="tags" 
-                        style={{ width: '70%' }} 
-                        tokenSeparators={[',']}
-                        placeholder="Skill">
-                        {selectSkill}
-                    </Select>,
-                )}
+                    {getFieldDecorator('skill', {
+                        rules: [
+                            {
+                            required: true,     
+                            message: 'Select skill',
+                            },
+                        ],
+                        })(<Select 
+                            mode="tags" 
+                            style={{ width: '70%' }} 
+                            tokenSeparators={[',']}
+                            placeholder="Skill">
+                            {selectSkill}
+                        </Select>,
+                    )}
                 </Form.Item>
 
-              
                 <div className="d-flex">
                     <Form.Item label="Number of studying hour" validateStatus={hourError ? 'error' : ''} help={hourError || ''}>
                         {getFieldDecorator('hour', {
@@ -142,11 +179,9 @@ class ContactForm extends React.Component {
                             prefix={<Icon type="hourglass" 
                             style={{ color: 'rgba(0,0,0,.25)' }} />}
                             style={{width: 150}}
-                            defaultValue={1000}
                             formatter={value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                             parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                            onChange={this.onChange}
-
+                             onChange={this.onChange}
                             />
                             )}
                     </Form.Item>
@@ -154,10 +189,6 @@ class ContactForm extends React.Component {
                         {`Total : ${total} VND`}
                     </div>
              </div>
-
-            
-
-              
 
                 <Form.Item>
                   <Button type="primary" htmlType="submit" className="" disabled={hasErrors(getFieldsError())}>

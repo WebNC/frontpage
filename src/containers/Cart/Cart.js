@@ -28,6 +28,7 @@ class Content extends React.Component {
     handleClickContact = () =>{
         const {handleCloseModal, handleContact} = this.props;
         const {cartInfor} = this.state
+        
         handleCloseModal();
         handleContact(cartInfor);
     }

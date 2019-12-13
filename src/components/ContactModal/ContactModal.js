@@ -13,28 +13,25 @@ class ContactModal extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-          teacherInfo : {},
             skills: [],
             isFirstLoad: true,
         }
     }
 
     componentDidMount = () =>{
-      const {teacherInfo} = this.props
-      this.setState({teacherInfo})
+     const {allSkill} = this.props.skills;
+     const skills = [...allSkill.slice(0, allSkill.length-1)];
+     this.setState({skills})
+    //  console.log(skills)
+    //  console.log(allSkill)
     }
 
-    handleContact = () =>{
-
-    }
-
-    
-
+   
     render() {
-        const {handleCloseModal, open, loggedIn, isTeacher} = this.props;
-        const {teacherInfo} = this.state
-        const skills = [{_id: '1', name: 'skill 1'}]
+        const {handleCloseModal, open, loggedIn, isTeacher, userInfo, teacherInfo} = this.props;
+        // const skills = [{_id: '1', name: 'skill 1'}]
 
+        const {skills} = this.state;
         const notification = <h6 
         > <Icon type="warning" className="mr-5" style={{color: 'red'}}/>You must loggin first to contact with teacher !</h6>
 
@@ -46,7 +43,7 @@ class ContactModal extends React.Component {
             </Modal.Header>
             {
               (loggedIn && !isTeacher) ?  <Modal.Body>Please fill out all information to contact successfully
-              <WrapContactForm skills={skills}/>
+              <WrapContactForm skills={skills} userInfo={userInfo} teacherInfo={teacherInfo} handleCloseModal={handleCloseModal}/>
             </Modal.Body>
             :
             <Modal.Body>{notification} </Modal.Body>
@@ -66,9 +63,10 @@ class ContactModal extends React.Component {
 function mapStateToProps(state) {
   return {
     teacherInfo: state.teachers.teacherInfo,
-    userInfo : state.user.user,
+    userInfo : state.user,
     loggedIn: state.user.loggedIn,
-    isTeacher: state.user.isTeacher
+    isTeacher: state.user.isTeacher,
+    skills : state.skill
 
   };
 }
