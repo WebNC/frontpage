@@ -1,13 +1,14 @@
 .active-email-component {
   width: 400px;
-  display: flex;
-  padding: 0 20px 0 20px;
+  display: block;
+  padding: 20px;
   align-items: center;
   text-align: center;
   justify-content: center;
   justify-items: center;
 }
 
-.active-email-component p {
-  float: left;
+.active-email-component img {
+  margin-bottom: 40px ;
+  margin: ;
 }

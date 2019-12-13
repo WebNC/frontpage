@@ -1,0 +1,30 @@
+.login-page-component {
+  .forget-pass-component {
+    width: 400px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding-top: 30px;
+    .logo {
+      margin-bottom: 30px;
+    }
+    .ant-form {
+      width: 360px;
+      .ant-row {
+        margin-bottom: 5px;
+      }
+      .ant-form-item {
+        .ant-form-item-control {
+          line-height: 30px;
+          .ant-form-item-children {
+            margin-bottom: 0px;
+            .forget-pass-btn {
+              margin-top: 10px;
+            }
+            
+          }
+        }
+      }
+    }  
+  }
+}

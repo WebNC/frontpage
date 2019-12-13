@@ -128,7 +128,7 @@ class RegistrationTeacherForm extends React.Component {
                     prefix={<Icon type="dollar" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                     placeholder="Mức lương mong muốn"
                     min={0} step={10000}
-                    style={{width: 680}}
+                    style={{maxWidth: 680}}
                     formatter={value => `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     />
                     )}
@@ -210,7 +210,7 @@ class RegistrationTeacherForm extends React.Component {
 
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    message: state.user.errMessage,
     pending: state.user.pending,
     userId: state.user.userId,
     allSkill: state.skill.allSkill
