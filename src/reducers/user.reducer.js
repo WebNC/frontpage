@@ -85,11 +85,10 @@ const user = (state = initialState, action) => {
       return {
         ...state,
         loggedIn: true,
-        username: action.user.username,
         successMessage: undefined,
         errMessage: undefined,
         pending: false,
-        userId: action.user.id,
+        user: action.user,
         isTeacher: action.isTeacher,
       };
     case userConstants.LOGIN_FAILURE:

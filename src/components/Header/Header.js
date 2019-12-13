@@ -11,15 +11,10 @@ import {userActions} from '../../actions/user.actions';
 const {Search} = Input;
 
 class Header extends React.Component {
-    // constructor(props) {
-    //   super(props);
-    //   this.state = {
-    //     isFirstLoad: true,
-    //   };
-    // }
 
   render() {
-    const {username, logout} = this.props;
+    const {user, logout} = this.props;
+    console.log(user);
     return (
       <div className="header">
         <div className="tab-component">
@@ -33,9 +28,9 @@ class Header extends React.Component {
           </div>
          
          {
-          username  ? (
+          user !== null ? (
             <div className="user-component">
-              <Button className="btn-header" type="link">{username}</Button>
+              <Button className="btn-header" type="link">{user.username}</Button>
               <Button className="btn-header" type="link" onClick={()=> logout()}>Đăng xuất</Button>
             </div>
           ) : (
@@ -53,6 +48,7 @@ class Header extends React.Component {
 
 function mapStateToProps(state) {
   return { 
+    user: state.user.user
   };
 }
 
