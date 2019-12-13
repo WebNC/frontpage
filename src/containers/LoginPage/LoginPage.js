@@ -1,5 +1,6 @@
 import React from 'react';
 import { Form, Input, Button, Icon} from 'antd';
+import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
@@ -107,9 +108,9 @@ class LoginForm extends React.Component {
                 valuePropName: 'checked',
                 initialValue: true,
               })}
-              <a className="login-form-forgot" href="#">
+              <Link className="login-form-forgot">
                 Quên mật khẩu?
-              </a>
+              </Link>
               <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
                 Đăng nhập
               </Button>
@@ -132,7 +133,7 @@ class LoginForm extends React.Component {
                   icon={false}
                 />
               </div>
-              <p>Bạn chưa có tài khoản?<a href="/register"> Đăng ký ngay!</a></p>
+              <p>Bạn chưa có tài khoản?<Link to={`/register`}> Đăng ký ngay!</Link></p>
             </Form.Item>
           </Form>
         </div>

@@ -3,6 +3,8 @@
     background-size: cover;
     padding: 80px 0px 100px 0px;
     background-image: url("../../images/background.png");
+    min-height: 100vh;
+  /* Center and scale the image nicely */
     background-repeat: repeat;
   }
 

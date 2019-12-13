@@ -130,7 +130,7 @@ const register = ({email,password,username, type}) => {
                     }
                     else {
                         localStorage.setItem('token', result.data.user.token);
-                        return history.push('/home');
+                        return history.push(`/comfirm-email`);
                     }
                 })
                 .catch(error => {
@@ -146,7 +146,6 @@ const register = ({email,password,username, type}) => {
 }
 
 const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex, price}) => {
-    console.log(id);
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
@@ -164,7 +163,7 @@ const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex
                 })
                 .then( result => {
                         dispatch(success(true));
-                        history.push('/teacher-home');
+                        return history.push(`comfirm-email`);
                     }
                 )
                 .catch(error => {
@@ -177,6 +176,27 @@ const registerTeacher = ({id, address, phone, birthday, intro, major, skill, sex
     function request() { return { type: userConstants.REGISTER_TEACHER_REQUEST} }
     function success(isTeacher) { return { type: userConstants.REGISTER_TEACHER_SUCCESS, isTeacher} }
     function failure(error) { return { type: userConstants.REGISTER_TEACHER_FAILURE, error } }
+}
+
+const activeEmail = (token) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .get(`${API_URL}users/verified-account/${token}`)
+                .then( result => {
+                        dispatch(success(result.data.message));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                })
+        }, 1000)
+    };
+    
+    function request() { return { type: userConstants.CONFIRM_EMAIL_REQUEST} }
+    function success(message) { return { type: userConstants.CONFIRM_EMAIL_SUCCESS, message} }
+    function failure(error) { return { type: userConstants.CONFIRM_EMAIL_FAILURE, error } }
 }
 
 const getDetail = () => {
@@ -363,4 +383,5 @@ export const userActions = {
     updateTeacherIntro,
     updateTeacherMajorSkill,
     updateAvatar,
+    activeEmail,
 };
