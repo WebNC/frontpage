@@ -3,11 +3,8 @@ import { SSL_OP_ALLOW_UNSAFE_LEGACY_RENEGOTIATION } from 'constants';
 
 const initialState = {
   loggedIn: false,
-  username: null,
-  message: undefined,
   errMessage: undefined,
   successMessage: undefined,
-  userId: null,
   isTeacher: false,
   pending: false,
   user: null,
@@ -18,54 +15,77 @@ const user = (state = initialState, action) => {
     case userConstants.REGISTER_REQUEST:
       return { 
         ...state,
-        pending: true 
+        pending: true,
+        errMessage: undefined,
+        successMessage: undefined, 
       };
     case userConstants.REGISTER_SUCCESS:
       return {
         ...state,
-        loggedIn: true,
         pending: false,
-        userId: action.newUser.id,
+        successMessage: undefined,
+        errMessage: undefined,
+        user: action.newUser,
         isTeacher: action.isTeacher,
-        username: action.newUser.username,
-        message: undefined,
       };
     case userConstants.REGISTER_FAILURE:
       return {
         ...state,
-        message: action.error,
+        errMessage: action.error,
         pending: false,
       };
     case userConstants.REGISTER_TEACHER_REQUEST:
       return {
         ...state,
-        pending: true
+        pending: true,
+        errMessage: undefined,
+        successMessage: undefined,
       };
     case userConstants.REGISTER_TEACHER_SUCCESS:
       return {
         ...state,
         pending: false,
         isTeacher: action.isTeacher,
-        message: undefined,
+        successMessage: undefined,
+        errMessage: undefined,
       };
     case userConstants.REGISTER_TEACHER_FAILURE:
       return {
         ...state,
         pending: false,
-        message: action.error,
+        errMessage: action.error,
+      }
+    case userConstants.ACTIVE_EMAIL_REQUEST:
+      return {
+        ...state,
+        loggedIn: true,
+        successMessage: undefined,
+        errMessage: undefined,
+      };
+    case userConstants.ACTIVE_EMAIL_SUCCESS:
+      return {
+        ...state,
+        successMessage: action.message,
+        errMessage: undefined,
+      };
+    case userConstants.ACTIVE_EMAIL_FAILURE:
+      return {
+        ...state,
+        successMessage: undefined,
+        errMessage: action.err,
       }
     case userConstants.LOGIN_REQUEST:
       return {
         ...state,
-        message: undefined,
         pending: true,
+        errMessage: undefined,
+        successMessage: undefined,
       };
     case userConstants.LOGIN_SUCCESS:
       return {
         ...state,
         loggedIn: true,
         username: action.user.username,
-        message: undefined,
         successMessage: undefined,
         errMessage: undefined,
         pending: false,
@@ -75,21 +95,18 @@ const user = (state = initialState, action) => {
     case userConstants.LOGIN_FAILURE:
       return {
         ...state,
-        message: action.error,
+        errMessage: action.error,
         pending: false,
       };
     case userConstants.LOGOUT:
       return {
         ...state,
         loggedIn: false,
-        username: null,
-        message: undefined,
         errMessage: undefined,
         successMessage: undefined,
-        userId: null,
         isTeacher: false,
         pending: false,
-        user: null
+        user: null,
       };
     case userConstants.UPDATE_REQUEST:
       return {

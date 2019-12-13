@@ -10,7 +10,9 @@ import UserInfoPage from './containers/UserInfoPage/UserInfoPage';
 import RegisterTeacherPage from './containers/RegisterTeacherPage/RegisterTeacherPage';
 import TeacherHomePage from './containers/TeacherHomePage/TeacherHomePage';
 import EditInfoTeacherPage from './containers/EditInfoTeacherPage/EditInfoTeacherPage';
-import TeacherDetail from './containers/TeacherDetail/TeacherDetail'
+import TeacherDetail from './containers/TeacherDetail/TeacherDetail';
+import ActiveEmailPage from './containers/ActiveEmailPage/ActiveEmailPage';
+import ConfirmEmailPage from './containers/ConfirmEmailPage/ConfirmEmailPage';
 import { connect } from 'react-redux'
 require('dotenv').config()
 
@@ -43,7 +45,9 @@ function App(props) {
           <Route exact path="/teacher-edit-info">
             {loggedIn && isTeacher ? <EditInfoTeacherPage/> : <Redirect to="/"/>}
           </Route>
-          <Route exact path="/test" component={EditInfoTeacherPage} />
+          <Route exact path="/comfirm-email" component={ConfirmEmailPage} />
+          <Route exact path="/active/:id" component={ActiveEmailPage} />
+          <Route exact path="/test" component={ConfirmEmailPage} />
           {/* <Route exact path="/update"> 
             {loggedIn ? <UpdateInfoPage/> : <Redirect to="/login" />}
           </Route>
