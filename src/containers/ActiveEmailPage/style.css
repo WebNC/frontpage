@@ -1,7 +1,7 @@
 .active-email-component {
   width: 400px;
-  display: block;
-  padding: 20px;
+  display: flex;
+  padding: 20px 10px 20px 10px;
   align-items: center;
   text-align: center;
   justify-content: center;
@@ -10,5 +10,8 @@
 
 .active-email-component img {
   margin-bottom: 40px ;
-  margin: ;
+}
+
+.active-email-component p {
+  line-height: 35px;
 }

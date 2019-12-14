@@ -194,9 +194,9 @@ const activeEmail = (token) => {
         }, 1000)
     };
     
-    function request() { return { type: userConstants.CONFIRM_EMAIL_REQUEST} }
-    function success(message) { return { type: userConstants.CONFIRM_EMAIL_SUCCESS, message} }
-    function failure(error) { return { type: userConstants.CONFIRM_EMAIL_FAILURE, error } }
+    function request() { return { type: userConstants.ACTIVE_EMAIL_REQUEST} }
+    function success(message) { return { type: userConstants.ACTIVE_EMAIL_SUCCESS, message} }
+    function failure(error) { return { type: userConstants.ACTIVE_EMAIL_FAILURE, error } }
 }
 
 const getDetail = () => {
@@ -305,6 +305,29 @@ const updateAvatar = ({id, file}) => {
             axios
                 .post(`${API_URL}upload/avatar`,
                     formData, config)
+                .then( result => { 
+                        return dispatch(success("Cập nhật thông tin thành công!", result.data));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.UPDATE_REQUEST} }
+    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user} }
+    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+}
+
+const requireResetPassword = ({email}) => {
+    return dispatch => {
+        dispatch(request());
+
+        setTimeout(() => {
+            axios
+                .post(`${API_URL}upload/avatar`,
+                    email)
                 .then( result => { 
                         return dispatch(success("Cập nhật thông tin thành công!", result.data));
                     }

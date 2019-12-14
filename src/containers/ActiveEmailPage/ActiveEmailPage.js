@@ -18,8 +18,8 @@ class ActiveEmailPage extends React.Component {
   }
     
     componentDidMount() {
-      const {user, activeEmail} = this.props;
-      activeEmail(user.token);
+      const {activeEmail} = this.props;
+      activeEmail(this.props.match.params.token);
     }
 
     handleSubmit = e => {
@@ -41,20 +41,17 @@ class ActiveEmailPage extends React.Component {
           </div>
           <div className="active-email-component">
             <div>
-              <Logo size={120} />
               { successMessage !== undefined ?  
                 (<p>
                   Chào {user.username}, <br/>
                   Bạn đã kích hoạt tài khoản thành công. <br/>
-                  Nhấn vào <Link to='/'>đây</Link>để đến Trang chủ. <br />
-                  {successMessage}
+                  Nhấn vào <Link to='/'> đây</Link> để đến Trang chủ. <br />
                 </p> 
                 ):(
                   <p>
                   Chào {user.username}, <br/>
-                  Đã có lỗi xảy ra trong quá trình xác nhận mail của bạn. <br />
+                  Đã có lỗi xảy ra khi xác nhận mail của bạn. <br />
                   Hãy thử <Link to='/login'> đăng nhập </Link> để nhận lại mail xác nhận! <br />
-                  {errMessage}
                 </p>
                 )
               }
