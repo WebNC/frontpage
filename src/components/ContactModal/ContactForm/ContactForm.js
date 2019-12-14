@@ -27,6 +27,7 @@ class ContactForm extends React.Component {
             skillList: []
         }
     }
+
     componentDidMount = () =>{
         this.props.form.validateFields();
         const {teacherInfo, skills} = this.props;
@@ -35,7 +36,6 @@ class ContactForm extends React.Component {
             if(teacherInfo.skill.indexOf(skill._id) !== -1){
                 skillList.push(skill)
             }
-            
         });
         this.setState({skillList})
     }
@@ -105,7 +105,7 @@ class ContactForm extends React.Component {
         const {getFieldDecorator, getFieldsError,
              getFieldError, isFieldTouched } = this.props.form;
         const { skillList} = this.state;
-        
+
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
         // const toDateError = isFieldTouched('todate') && getFieldError('todate');
 

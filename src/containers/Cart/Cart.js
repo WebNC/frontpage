@@ -59,7 +59,7 @@ class Content extends React.Component {
 
                     <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
                     <Link to={`/teachers/${cartInfor._id}`}     >
-                    <Button variant="success" className="mr-3">Expand Profile</Button>
+                        <Button variant="success" className="mr-3" onClick={this.handleClickContact} >Expand Profile</Button>
                     </Link>
                     <Button variant="primary" onClick={this.handleClickContact}>Contact Now</Button>
 
