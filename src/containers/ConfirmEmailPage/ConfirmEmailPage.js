@@ -1,26 +1,11 @@
 
 import React from 'react';
 import 'antd/dist/antd.css';
-import{ connect } from 'react-redux';
+import Logo from '../../components/Logo';
 
 require('dotenv').config()
 
 class ConfirmEmailPage extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      isFirstLoad: true,
-    };
-  }
-    
-    componentDidMount() {
-    }
-
-    handleSubmit = e => {
-
-      this.setState({isFirstLoad:false});
-    }
 
   render() {
     
@@ -28,10 +13,11 @@ class ConfirmEmailPage extends React.Component {
       <div className="login-page-component">
         <div className="login-form-component">
           <div className="left-component">
-            <img src="./login-img.png" alt="" className="login-img"></img>
+            <img src="/login-img.png" alt="" className="login-img"></img>
           </div>
           <div className="active-email-component">
             <div>
+            <Logo size={120} style={{margin: 30}}/>
               <p>
                 Hệ thống đã gửi thông báo vào mail cho bạn. 
               </p>
@@ -46,14 +32,4 @@ class ConfirmEmailPage extends React.Component {
   }
 }
 
-function mapStateToProps(state) {
-  return { 
-    message: state.user.message,
-    pending: state.user.pending,
-  };
-}
-
-const mapDispatchToProps = (dispatch) => ({
-});
-
- export default connect(mapStateToProps, mapDispatchToProps)(ConfirmEmailPage)
+export default ConfirmEmailPage

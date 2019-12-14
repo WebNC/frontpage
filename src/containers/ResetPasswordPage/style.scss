@@ -1,0 +1,25 @@
+.login-page-component {
+  .reset-pass-component {
+    width: 400px;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding-top: 30px;
+    .ant-form {
+      width: 360px;
+      .ant-row {
+        .ant-form-item {
+          .ant-form-item-control {
+            line-height: 30px;
+            .ant-form-item-children {
+              margin-bottom: 0px;
+              .reset-pass-btn {
+                margin-top: 10px;
+              }
+            }
+          }
+        }
+      }
+    }  
+  }
+}

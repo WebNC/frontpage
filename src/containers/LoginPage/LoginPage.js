@@ -144,7 +144,7 @@ class LoginForm extends React.Component {
 
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    message: state.user.errMessage,
     pending: state.user.pending,
   };
 }
