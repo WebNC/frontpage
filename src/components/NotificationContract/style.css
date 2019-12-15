@@ -1,0 +1,33 @@
+.notification-contract-component {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.notification-contract-component .notify {
+  width: 40%;
+  text-align: left;
+}
+.notification-contract-component .status {
+  font-weight: 800;
+  width: 85px;
+  text-align: left;
+} 
+
+.notification-contract-component .username {
+  font-size: 16px;
+  font-weight: bold; 
+}
+
+.pending-status {
+  color: #ffec3d;
+}
+
+.deline-stuatus {
+  color: #cf1322
+}
+
+.accept-status {
+  color: #237804;
+}

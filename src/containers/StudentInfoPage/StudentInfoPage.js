@@ -11,6 +11,7 @@ import {history} from '../../helper';
 import NavBar from '../../components/NavBar/NavBar';
 import MyAvatar from '../../components/MyAvatar/MyAvatar';
 import WrappedStudentInfoForm from './StudentInfoForm/StudentInfoForm';
+import NotificationContract from '../../components/NotificationContract/NotificationContract';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -25,7 +26,6 @@ class StudentInfoPage extends React.Component {
     componentDidMount() {
       const { getDetail } = this.props;
       getDetail();
-
     }
 
     // handleSubmit = e => {
@@ -38,12 +38,18 @@ class StudentInfoPage extends React.Component {
       
     //   this.setState({isFirstLoad: false})
     // }
-
   render() {
-    var {user} = this.props;
-
+    const {user} = this.props;
+    
+    const listContract = [];
+    if(user.history !== null && user.history !== undefined ) {
+      console.log(user.history);
+      user.history.forEach(element => {
+        listContract.push(<NotificationContract isTeacher={false} contractInfo={element}/>)
+      });
+    }
     return (
-      <div className="student-home-page">
+      <div className="student-info-page">
         <Header username={user.username}/>
         <NavBar/>
         <div class="cover-component">
@@ -62,14 +68,10 @@ class StudentInfoPage extends React.Component {
                 <WrappedStudentInfoForm />
               </div>
             </TabPane>
-            <TabPane tab="Yêu cầu từ người học" key="2">
-              <div className="requirement-component">
-                Hợp đồng hiện có
-              </div>
-            </TabPane>
-            <TabPane tab="Lịch sử" key="3">
-              <div className="history-component">
-                Lịch sử 
+            <TabPane tab="Danh sách hợp đồng" key="2">
+              <div className="contract-history-component">
+                <h3>Danh sách hợp đồng</h3>
+                {listContract}
               </div>
             </TabPane>
           </Tabs> 

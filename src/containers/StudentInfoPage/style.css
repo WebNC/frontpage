@@ -25,10 +25,16 @@ h5.info-title {
   width: 150px;
 }
 
-.student-home-page h3 {
-  font-size: 24px;
+.student-info-page h3 {
+  font-size: 28px;
   margin-bottom: 5px;
   line-height: 35px;
-  font-weight: bold;
   text-align: center;
 }
+
+.contract-history-component {
+  display: block;
+  padding: 0px 60px 0 60px;
+  margin-bottom: 30px;
+}
+

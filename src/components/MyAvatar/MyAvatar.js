@@ -62,7 +62,7 @@ class MyAvatar extends React.Component {
         <Button className="btn-avatar" onClick={() => this.showModal()}>
           <Avatar size={130} src={imageUrl} className="avatar-img" />
         </Button>
-        <Modal show={this.state.visible}>
+        <Modal show={this.state.visible} onHide={this.handleCancel}>
           <Modal.Header closeButton>
             <Modal.Title>Cập nhật ảnh đại diện</Modal.Title>
           </Modal.Header>
