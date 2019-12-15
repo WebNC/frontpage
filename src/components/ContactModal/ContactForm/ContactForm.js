@@ -3,6 +3,7 @@ import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
 import './ContactForm.scss'
 import {userActions} from '../../../actions/user.actions'
+import AddressInput from '../../../components/AddressInput/AddressInput'
 import moment from 'moment';
 
 
@@ -30,7 +31,9 @@ class ContactForm extends React.Component {
 
     componentDidMount = () =>{
         this.props.form.validateFields();
-        const {teacherInfo, skills} = this.props;
+        const {teacherInfo, skills, getDetail, userInfo} = this.props;
+        // console.log(getDetail)
+        getDetail();
         let skillList = []
         skills.forEach(skill => {
             if(teacherInfo.skill.indexOf(skill._id) !== -1){
@@ -38,6 +41,9 @@ class ContactForm extends React.Component {
             }
         });
         this.setState({skillList})
+
+        console.log(userInfo)
+
     }
 
     handleSubmit = (e) =>{
@@ -47,9 +53,9 @@ class ContactForm extends React.Component {
         e.preventDefault();
         const values = getFieldsValue();
           handleCloseModal()
-        
+
         userActions.requestContract(userInfo.userId, teacherInfo._id,values.fromdate[0].toString(),
-        values.fromdate[1].toString(), values.hour, values.skill, total).then(res=>{
+        values.fromdate[1].toString(), values.hour, values.skill, total, values.address).then(res=>{
             console.log(res)
         })
 
@@ -91,7 +97,6 @@ class ContactForm extends React.Component {
 
         const values = getFieldsValue();
         const hour = values.hour
-        console.log(e)
         if(hour){
             this.setState({
                 total : teacherInfo.price? teacherInfo.price*e : e*50000
@@ -104,6 +109,8 @@ class ContactForm extends React.Component {
     render(){
         const {getFieldDecorator, getFieldsError,
              getFieldError, isFieldTouched } = this.props.form;
+        const {userInfo} = this.props;
+
         const { skillList} = this.state;
 
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
@@ -111,6 +118,7 @@ class ContactForm extends React.Component {
 
         const hourError = isFieldTouched('hour') && getFieldError('hour');
         const skillError = isFieldTouched('skill') && getFieldError('skill');
+        const addressError = isFieldTouched('address') && getFieldError('address');
         const {total} = this.state;
 
         const selectSkill=[];
@@ -148,6 +156,21 @@ class ContactForm extends React.Component {
                         )}
                      </Form.Item>
                 </div>
+               
+
+                <Form.Item label="Địa chỉ" validateStatus={addressError ? 'error' : ''} help={addressError || ''}>
+                {getFieldDecorator('address', {
+                rules: [
+                  {
+                    required: true,
+                    message: 'Vui lòng nhập địa chỉ!',
+                  },
+                ],
+              })(<AddressInput value={userInfo.address} />
+                )}
+                </Form.Item>
+           
+
                 <Form.Item label="Skill" validateStatus={skillError ? 'error': ''} help={skillError || ''}>
                     {getFieldDecorator('skill', {
                         rules: [

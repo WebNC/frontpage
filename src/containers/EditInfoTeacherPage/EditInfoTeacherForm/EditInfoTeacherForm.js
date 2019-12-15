@@ -85,6 +85,7 @@ class EditInfoTeacherForm extends React.Component {
                     />
                     )}
                 </Form.Item>
+
                 <Form.Item label="Địa chỉ" validateStatus={addressError ? 'error' : ''} help={addressError || ''}>
                 {getFieldDecorator('address', {
                 rules: [
@@ -96,6 +97,7 @@ class EditInfoTeacherForm extends React.Component {
               })(<AddressInput />
                 )}
                 </Form.Item>
+               
                 <Form.Item label="Số điện thoại" validateStatus={phoneError ? 'error' : ''} help={phoneError || ''}>
                   {getFieldDecorator('phone', {
                     rules: [

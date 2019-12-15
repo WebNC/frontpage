@@ -2,7 +2,7 @@
 import React from 'react';
 import 'antd/dist/antd.css';
 import {Form, Button, Input, Icon} from 'antd';
-import Logo from '../../components/Logo';
+import Logo from '../../../components/Logo';
 import{ connect } from 'react-redux';
 import './style.scss';
 import {userActions} from '../../actions/user.actions';

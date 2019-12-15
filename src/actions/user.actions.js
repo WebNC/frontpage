@@ -438,10 +438,10 @@ const changePass = ({_id, passpresent, password}) => {
     function failure(error) { return { type: userConstants.CHANGEPASS_FAILURE, error } }
 }
 
-const requestContract = (studentID, teacherID, fromDate, toDate, hour, skill,value) => {
+const requestContract = (studentID, teacherID, fromDate, toDate, hour, skill,value, address) => {
     return axios
         .post(`${API_URL}student/contract/request`, {
-            studentID, teacherID,fromDate, toDate, hour, skill, value
+            studentID, teacherID,fromDate, toDate, hour, skill, value, address
         })
         .then(res => {
             return res.data

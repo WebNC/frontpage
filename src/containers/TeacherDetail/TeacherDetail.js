@@ -25,7 +25,7 @@ class TeacherDetail extends React.Component {
   }
 
   UNSAFE_componentWillMount() {
-    // const {id} = this.props.match.params
+    
     const {allSkill, teacherInfo} = this.props;
     this.setState({teacherInfo})
     let {skills} = this.state;
@@ -34,13 +34,22 @@ class TeacherDetail extends React.Component {
       skills.push(skill)
     });
     this.setState({skills})
+
+
+    // const {id} = this.props.match.params
+    // console.log(id)
     // getDetailTeacher(id).then(res=>{
-    //   this.setState({teacherInfo : res.message})
-    //   allSkill.forEach(item => {
-    //     if(res.message.skill.indexOf(item._id) !== -1 && !item.isDeleted)
-    //       skills.push(item.name)
-    // });
+    // //   this.setState({teacherInfo : res.message})
+    // //   allSkill.forEach(item => {
+    // //     if(res.message.skill.indexOf(item._id) !== -1 && !item.isDeleted)
+    // //       skills.push(item.name)
+    // // });
+
+    // console.log(res)
+
     // })
+
+   
   }
 
     
@@ -72,7 +81,6 @@ class TeacherDetail extends React.Component {
       </h5>)
     });
 
-   
     return (
       <div className="teacher-home-page">
         <Header />

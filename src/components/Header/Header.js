@@ -14,7 +14,6 @@ class Header extends React.Component {
 
   render() {
     const {user, logout} = this.props;
-    console.log(user);
     return (
       <div className="header">
         <div className="tab-component">

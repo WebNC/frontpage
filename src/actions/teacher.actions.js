@@ -24,7 +24,7 @@ export const getDetailTeacher = (id) => {
     return API
         .get(`teachers/detail/${id}`)
         .then(res => {
-            return res.data
+            return res
         }).catch(error => console.log(error));
 }
 
