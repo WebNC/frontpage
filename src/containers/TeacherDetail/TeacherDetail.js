@@ -7,6 +7,7 @@ import Header from '../../components/Header/Header';
 import NavBar from '../../components/NavBar/NavBar'
 import ContactModal from '../../components/ContactModal/ContactModal'
 import {getDetailTeacher} from '../../actions/teacher.actions'
+import StarRating from '../../components/Rating/Rating'
 import{ connect } from 'react-redux';
 
 
@@ -86,26 +87,39 @@ class TeacherDetail extends React.Component {
         <Header />
         <NavBar/>
         <ContactModal open={openModal}
-                handleCloseModal= {this.handleCloseModal}
-                />
-
-        <div className="cover-component">
-            <Avatar size={130}/>
+                handleCloseModal= {this.handleCloseModal}/>
+        <div class="cover-component">
             <div className="info-component">
-              <h3>{teacherInfo.username}</h3>
-              <h4>{teacherInfo.major}</h4>
+              <Avatar size={130}/>
+              <div class="name-component">
+                <h3>{teacherInfo.username}</h3>
+                <h4>{teacherInfo.major}</h4>
+              </div>
             </div>
             <div className="btns-component">
-              <Button type="primary" onClick={this.handleClickContact}>
+                <Button type="primary" onClick={this.handleClickContact}>
                 <Icon type="contacts" theme="filled" size="large" />
-                Contact Now</Button>
+                  Contact Now</Button>
             </div>
-        </div>
+          </div>
+
         <div className="content-component">
           <Tabs tabPosition="left">
             <TabPane tab="Thông tin cá nhân" key="1">
               <div className="basic-info-component">
                 <h3>Thông tin cơ bản</h3>
+                  <span className="mt-3">Rating: 
+                    <div className="d-flex rating-ratio mb-3 mt-2 ">
+                      <StarRating rating={teacherInfo.rating}/>
+                      <div className=" mr-5 ml-5"></div>
+                      <div className="ratio ml-5 mt-1 d-flex " > 
+                          <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
+                          <div className=""> {`Success Ratio : ${teacherInfo.successRatio || 100}%`} </div>
+                      </div>
+                    </div>
+                  </span>
+
+                
                 <span>Địa chỉ: 
                   <h5>
                     {teacherInfo.address === undefined ? '' : `${teacherInfo.address.address}, ${teacherInfo.address.district}, Hồ Chí Minh` }

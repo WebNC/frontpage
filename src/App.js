@@ -12,7 +12,6 @@ import EditInfoTeacherPage from './containers/EditInfoTeacherPage/EditInfoTeache
 import TeacherDetail from './containers/TeacherDetail/TeacherDetail';
 import ActiveEmailPage from './containers/ActiveEmailPage/ActiveEmailPage';
 import ConfirmEmailPage from './containers/ConfirmEmailPage/ConfirmEmailPage';
-import ContactModal from './components/ContactModal/ContactModal';
 import ForgetPasswordPage from './containers/ForgetPasswordPage/ForgetPasswordPage';
 import ResetPasswordPage from './containers/ResetPasswordPage/ResetPasswordPage';
 import StudentInfoPage from './containers/StudentInfoPage/StudentInfoPage';

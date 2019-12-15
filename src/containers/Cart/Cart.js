@@ -5,6 +5,8 @@ import {Button} from 'react-bootstrap'
 import {skillActions} from '../../actions/skill.action'
 import{ connect } from 'react-redux';
 import { handleContact } from '../../actions/teacher.actions';
+import StarRating from '../../components/Rating/Rating'
+import {Icon} from 'antd'
 
 class Content extends React.Component {
     constructor(props) {
@@ -44,6 +46,15 @@ class Content extends React.Component {
                     <Link to={`/teachers/${cartInfor._id}`} className="username mr-5">{`${cartInfor.username}`}</Link>
                     <div className="d-flex subjects">{ cartInfor.major ? `${cartInfor.major}    -    ${cartInfor.email}` : cartInfor.email}</div>
 
+                    <div className="d-flex rating-ratio ">
+                        <StarRating rating={cartInfor.rating}/>
+                        <div className=" mr-5 ml-5"></div>
+                         <div className="ratio ml-5 mt-1 d-flex " > 
+                            <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
+                            <div className=""> {`Success Ratio : ${cartInfor.successRatio || 100}%`} </div>
+                           </div>
+
+                    </div>
                     <div className="d-flex justify-content-between status">
                          <div>{ cartInfor ? cartInfor.sex : ' '}</div>
                          <div>{cartInfor ?  cartInfor.phone : ' '}</div>
@@ -59,9 +70,9 @@ class Content extends React.Component {
 
                     <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
                     <Link to={`/teachers/${cartInfor._id}`}     >
-                        <Button variant="success" className="mr-3" onClick={this.handleClickContact} >Expand Profile</Button>
+                        <Button variant="success" size="sm" className="mr-3" onClick={this.handleClickContact} >Expand Profile</Button>
                     </Link>
-                    <Button variant="primary" onClick={this.handleClickContact}>Contact Now</Button>
+                    <Button variant="primary"  size="sm"  onClick={this.handleClickContact}>Contact Now</Button>
 
 
 
