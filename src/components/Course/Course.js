@@ -1,9 +1,8 @@
 import React from 'react';
-import { Form, Input, Button} from 'antd';
-import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
 import moment from 'moment';
+import Rating from '../Rating/Rating'
 
 
 
@@ -67,6 +66,7 @@ class Course extends React.Component {
             <h5 className="ml-5">{`Ngày kết thúc : ${to}`}</h5>
           </div>
           <h5 className="mt-3">{`Tổng số giờ : ${hour}`}</h5>
+          <Rating  rating={rating} rated={true}/>
           {/* <h5 className="mt-3">{` : ${rating}`}</h5> */}
 
         </div>

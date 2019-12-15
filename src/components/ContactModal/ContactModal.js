@@ -41,7 +41,9 @@ class ContactModal extends React.Component {
               <Modal.Title>Thông tin hợp đồng</Modal.Title>
             </Modal.Header>
             {
-              (loggedIn && !isTeacher) ?  <Modal.Body>Hãy điền đầy đủ thông tin đề giáo viên sắp xếp bạn nhé
+              (loggedIn && !isTeacher) ?  <Modal.Body>
+                <Icon type="notification" theme="filled" className="mr-3" style={{color: 'red'}}/>
+                Hãy điền đầy đủ thông tin đề giáo viên sắp xếp bạn nhé !!!
               <WrapContactForm skills={skills} userInfo={userInfo}
                teacherInfo={teacherInfo}
                getDetail = {getDetail}

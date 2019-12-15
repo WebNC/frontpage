@@ -36,16 +36,19 @@ class StarRating extends React.Component {
 
     render() {
         const { rating, starHoverColor, starRatedColor, starDimension, starSpacing, numberOfStars, name } = this.state;
+        const {rated, textColor} = this.props;
+        const style = textColor && {color: 'white'}
+        
         return (
             <div className="d-flex rating">
-                <p className="number-of-review mr-1 p-1">{`${rating}.0`}</p>
+                <p className="number-of-review mr-1 p-1" style={style}>{`${rating}.0`}</p>
                 <StarRatings
                     rating={rating}
                     starRatedColor={starRatedColor}
                     starHoverColor={starHoverColor}
                     starDimension={starDimension}
                     starSpacing={starSpacing}
-                    changeRating={this.changeRating}
+                    changeRating={!rated && this.changeRating}
                     numberOfStars={numberOfStars}
                     name={name}
 

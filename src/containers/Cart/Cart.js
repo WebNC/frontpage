@@ -51,7 +51,7 @@ class Content extends React.Component {
                         <div className=" mr-5 ml-5"></div>
                          <div className="ratio ml-5 mt-1 d-flex " > 
                             <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
-                            <div className=""> {`Success Ratio : ${cartInfor.successRatio || 100}%`} </div>
+                            <div className=""> {`Thành công : ${cartInfor.successRatio || 100}%`} </div>
                            </div>
 
                     </div>

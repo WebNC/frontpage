@@ -123,7 +123,7 @@ class ContactForm extends React.Component {
 
         return(
             
-            <Form className="contact-form" onSubmit={this.handleSubmit}>
+            <Form className="contact-form mt-5" onSubmit={this.handleSubmit}>
 
                 <div className="d-flex">
                     <Form.Item  className="mr-3" label="Ngày bắt đầu" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
@@ -202,8 +202,8 @@ class ContactForm extends React.Component {
                             />
                             )}
                     </Form.Item>
-                    <div className="Tổng tiền">
-                        {`Total : ${total} VND`}
+                    <div className="total">
+                        {`Tổng tiền : ${total} VND`}
                     </div>
              </div>
 

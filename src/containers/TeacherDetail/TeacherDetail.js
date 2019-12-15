@@ -100,11 +100,11 @@ class TeacherDetail extends React.Component {
             <div className="d-flex" >
                 <div className="rating mr-5">
                   <h4  style={{color: 'white'}}>Đánh giá</h4>
-                  <StarRating rating={teacherInfo.rating}/>
+                  <StarRating rating={teacherInfo.rating} textColor={true}/>
                 </div>
                 <div className="success">
                   <h4  style={{color: 'white'}}>Thành công</h4>
-                  <div className="ratio ml-2 mt-1 d-flex " > 
+                  <div className="ratio ml-2 mt-1 d-flex "  style={{color: 'white'}} > 
                           <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
                           <div className=""> {`${teacherInfo.successRatio || 100}%`} </div>
                       </div>
