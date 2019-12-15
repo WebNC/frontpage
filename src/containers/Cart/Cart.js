@@ -50,15 +50,20 @@ class Content extends React.Component {
                         <StarRating rating={cartInfor.rating}/>
                         <div className=" mr-5 ml-5"></div>
                          <div className="ratio ml-5 mt-1 d-flex " > 
-                            <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
+                            <Icon type="trophy" theme="filled" style={{color: 'green',  fontSize: '20px'}} className="mr-2" />
                             <div className=""> {`Thành công : ${cartInfor.successRatio || 100}%`} </div>
                            </div>
 
                     </div>
                     <div className="d-flex justify-content-between status">
-                         <div>{ cartInfor ? cartInfor.sex : ' '}</div>
-                         <div>{cartInfor ?  cartInfor.phone : ' '}</div>
-                        <div>{( cartInfor.address && cartInfor.address.address && cartInfor.address.district) ? `${cartInfor.address.address} , ${cartInfor.address.district}` : ' '}</div>
+                         <div> <Icon type="crown" style={{ fontSize: '20px', color: '#08c' }}  className="mr-2"/>
+                             { cartInfor ? cartInfor.sex : ' '}</div>
+                         <div>
+                         <Icon type="phone" style={{ fontSize: '20px', color: '#08c' }}  className="mr-2" />
+                             {cartInfor ?  cartInfor.phone : ' '}</div>
+                        <div>
+                        <Icon type="home" style={{ fontSize: '20px', color: '#08c' }} className="mr-2" />
+                            {( cartInfor.address && cartInfor.address.address && cartInfor.address.district) ? `${cartInfor.address.address} , ${cartInfor.address.district}` : ' '}</div>
                     </div>
 
 
