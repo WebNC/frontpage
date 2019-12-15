@@ -27,6 +27,12 @@ class Content extends React.Component {
         this.setState({skills})
     }
 
+    UNSAFE_componentWillReceiveProps = (nextProps) => {
+        this.setState({
+            cartInfor: nextProps.cartInfor
+        })
+    }
+
     handleClickContact = () =>{
         const {handleCloseModal, handleContact} = this.props;
         const {cartInfor} = this.state
@@ -39,6 +45,7 @@ class Content extends React.Component {
 
     render() {
         const {cartInfor, skills} = this.state;
+        // console.log(cartInfor)
         return (
             <div className="cart d-flex">
                 <img src="http://placehold.it/1000" height="80" width="80" alt="avatar" className="avartar"/>

@@ -16,10 +16,19 @@ class Filter extends React.Component {
     }
 
     componentDidMount = () =>{
-        const {data,name} = this.props;
+        const {data,type} = this.props;
+        let name = "";
+        if(type === 1) {
+            name= " Quận "
+        } else if(type === 2){
+            name= "Giá"
+        }
+        else name = "Kỹ năng"
+
         this.setState({
             data: ['All', ...data.slice(0, data.size)],
             name,
+            type,
             selected: name ? ` ${name}` : 'All'
         })
         this.props.filterSkill(DEFAULT)
@@ -35,7 +44,7 @@ class Filter extends React.Component {
     }
 
     handleClick = e => {
-        const {name, data} = this.state
+        const { data, type} = this.state
         let selected = e.target.getAttribute('name')
         this.setState({selected})
 
@@ -45,11 +54,14 @@ class Filter extends React.Component {
 
 
 
-        if(name === 'Skill'){
+        if(type === 3){
             this.props.filterSkill(selected)
         }
-        else if (name === 'Cost'){
-            this.props.filterCost(data.indexOf(selected));
+        else if (type === 2){
+            if(data.indexOf(selected) === -1)
+                this.props.filterCost(null)
+            else
+                this.props.filterCost(data.indexOf(selected))
         }
         else {
             this.props.filterAdress(selected)}

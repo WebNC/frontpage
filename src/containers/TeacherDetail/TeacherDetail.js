@@ -33,13 +33,7 @@ class TeacherDetail extends React.Component {
     const {id} = this.props.match.params
 
     getDetailTeacher(id).then(res=>{
-      // console.log(res.message)
-      // console.log(allSkill)
-
-      // allSkill.forEach(item => {
-      //   if( item._id && res.message.skill.indexOf(item._id) !== -1 && !item.isDeleted)
-      //     skills.push(item)
-      // });
+      console.log(res.message)
       this.setState({
         teacherInfo : res.message,
         skills : res.message.skill,

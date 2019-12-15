@@ -47,6 +47,7 @@ class Content extends React.Component {
 
     UNSAFE_componentWillReceiveProps = nextProps =>{
         const types = nextProps.teachers;
+        // console.log(types)
         if(!types.skill && !types.address && !types.cost){
             teacherAction.getAllUserTeacher(0).then(res=>{
                 this.setState({
@@ -54,8 +55,8 @@ class Content extends React.Component {
                 })
             })
         } else {
+            // console.log(types.address, types.cost, types.skill)
             teacherAction.filterTeacher(types.address, types.cost, types.skill).then(res => {
-                console.log(res)
                 this.setState({
                     teachers: res.user
                 })
@@ -107,6 +108,8 @@ class Content extends React.Component {
             );
         }
         // handleCloseModal, open, teacher
+
+
       
         return (
             <div>
@@ -120,9 +123,9 @@ class Content extends React.Component {
                     <Icon type="filter"  className="ml-2" style={{ fontSize: '20px', color: '#08c' }} />
 
                     </h6>
-                    <Filter data={district} name=" Quận"/>
-                    <Filter data={hourRate} name="Gía"/>
-                    <Filter data={allSkill} name="Kỹ năng"/>
+                    <Filter data={district} type={1}/>
+                    <Filter data={hourRate} type={2}/>
+                    <Filter data={allSkill} type={3}/>
 
                     {/* <div className="ml-auto d-flex">
                         <h6>Sort By : </h6>
