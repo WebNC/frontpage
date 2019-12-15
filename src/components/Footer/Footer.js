@@ -7,7 +7,7 @@ class Footer extends React.Component {
   render() {
     return (
       <div className="footer">
-        <h6 >Looking to hire for many awesome classes to develope yourself</h6>
+        <h6 >Các thông tin tham khảo </h6>
         <div className="d-flex justify-content-between p-3 sub-infor">
           <h5>About Us</h5>
           <h5>Resources</h5>
