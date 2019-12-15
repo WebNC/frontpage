@@ -115,10 +115,10 @@ class Content extends React.Component {
                 
             <div className="content">
                 <div className="d-flex filter-banner">
-                    <h6 className="filter">Filter</h6>
-                    <Filter data={district} name=" District"/>
-                    <Filter data={hourRate} name="Cost"/>
-                    <Filter data={allSkill} name="Skill"/>
+                    <h6 className="filter">Bộ lọc</h6>
+                    <Filter data={district} name=" Quận"/>
+                    <Filter data={hourRate} name="Gía"/>
+                    <Filter data={allSkill} name="Kỹ năng"/>
 
                     {/* <div className="ml-auto d-flex">
                         <h6>Sort By : </h6>

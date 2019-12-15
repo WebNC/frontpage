@@ -70,9 +70,9 @@ class Content extends React.Component {
 
                     <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
                     <Link to={`/teachers/${cartInfor._id}`}     >
-                        <Button variant="success" size="sm" className="mr-3" onClick={this.handleClickContact} >Expand Profile</Button>
+                        <Button variant="success" size="sm" className="mr-3" onClick={this.handleClickContact} >Xem chi tiết</Button>
                     </Link>
-                    <Button variant="primary"  size="sm"  onClick={this.handleClickContact}>Contact Now</Button>
+                    <Button variant="primary"  size="sm"  onClick={this.handleClickContact}>Liên hệ ngay</Button>
 
 
 

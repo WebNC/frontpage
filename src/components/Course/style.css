@@ -12,6 +12,16 @@
   display: block;
 }
 
+.course .course-info .skill {
+ 
+  padding:5px 15px;
+  background: rgb(212, 209, 209);
+  color: black;
+  margin-right: 10px;
+  border-radius: 5px;
+
+}
+
 .course .course-info h3 {
   font-size: 22px;
   line-height: 30px;

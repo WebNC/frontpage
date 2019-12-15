@@ -21,10 +21,8 @@ class ContactModal extends React.Component {
 
     componentDidMount = () =>{
      const {allSkill} = this.props.skills;
-     const skills = [...allSkill.slice(0, allSkill.length-1)];
+     const skills = [...allSkill.slice(0, allSkill.length)];
      this.setState({skills})
-    //  console.log(skills)
-    //  console.log(allSkill)
     }
 
    
@@ -34,16 +32,16 @@ class ContactModal extends React.Component {
 
         const {skills} = this.state;
         const notification = <h6 
-        > <Icon type="warning" className="mr-5" style={{color: 'red'}}/>You must login first to contact with teacher !</h6>
+        > <Icon type="warning" className="mr-5" style={{color: 'red'}}/>Bạn phải đăng nhập trước khi liên hệ với giao viên nhé !</h6>
 
         return (
           <>
           <Modal show={open} onHide={handleCloseModal} size="lg">
             <Modal.Header closeButton>
-              <Modal.Title>Contact to teacher</Modal.Title>
+              <Modal.Title>Thông tin hợp đồng</Modal.Title>
             </Modal.Header>
             {
-              (loggedIn && !isTeacher) ?  <Modal.Body>Please fill out all information to contact successfully
+              (loggedIn && !isTeacher) ?  <Modal.Body>Hãy điền đầy đủ thông tin đề giáo viên sắp xếp bạn nhé
               <WrapContactForm skills={skills} userInfo={userInfo}
                teacherInfo={teacherInfo}
                getDetail = {getDetail}

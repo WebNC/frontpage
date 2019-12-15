@@ -20,7 +20,7 @@ class Filter extends React.Component {
         this.setState({
             data: ['All', ...data.slice(0, data.size)],
             name,
-            selected: name ? `Any ${name}` : 'All'
+            selected: name ? ` ${name}` : 'All'
         })
         this.props.filterSkill(DEFAULT)
         this.props.filterCost(DEFAULT);

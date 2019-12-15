@@ -10,6 +10,9 @@ import {getDetailTeacher} from '../../actions/teacher.actions'
 import StarRating from '../../components/Rating/Rating'
 import{ connect } from 'react-redux';
 
+import moment from 'moment';
+  
+
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -22,23 +25,25 @@ class TeacherDetail extends React.Component {
       teacherInfo: {},
       skills: [],
       openModal: false,
+      history: []
     }
   }
 
   UNSAFE_componentWillMount() {
     const {id} = this.props.match.params
-    const {allSkill} = this.props;
-    let {skills} = this.state;
 
     getDetailTeacher(id).then(res=>{
-      console.log(res.message)
-      allSkill.forEach(item => {
-        if( item._id && res.message.skill.indexOf(item._id) !== -1 && !item.isDeleted)
-          skills.push(item)
-      });
+      // console.log(res.message)
+      // console.log(allSkill)
+
+      // allSkill.forEach(item => {
+      //   if( item._id && res.message.skill.indexOf(item._id) !== -1 && !item.isDeleted)
+      //     skills.push(item)
+      // });
       this.setState({
         teacherInfo : res.message,
-        skills
+        skills : res.message.skill,
+        history: res.message.history
       })
     })
   }
@@ -61,7 +66,7 @@ class TeacherDetail extends React.Component {
 
 
   render() {
-    const {skills, teacherInfo, openModal} = this.state
+    const {skills, teacherInfo, openModal, history} = this.state
     var userSkill =[];
 
     skills.forEach(element => {
@@ -84,13 +89,31 @@ class TeacherDetail extends React.Component {
               <div class="name-component">
                 <h3>{teacherInfo.username}</h3>
                 <h4>{teacherInfo.major}</h4>
+                <div className="mt-4">
+                    <Button type="primary" onClick={this.handleClickContact}>
+                  <Icon type="contacts" theme="filled" size="large" />
+                    Liên hệ ngay</Button>
+                </div>
+               
               </div>
             </div>
-            <div className="btns-component">
-                <Button type="primary" onClick={this.handleClickContact}>
-                <Icon type="contacts" theme="filled" size="large" />
-                  Contact Now</Button>
+            <div className="d-flex" >
+                <div className="rating mr-5">
+                  <h4  style={{color: 'white'}}>Đánh giá</h4>
+                  <StarRating rating={teacherInfo.rating}/>
+                </div>
+                <div className="success">
+                  <h4  style={{color: 'white'}}>Thành công</h4>
+                  <div className="ratio ml-2 mt-1 d-flex " > 
+                          <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
+                          <div className=""> {`${teacherInfo.successRatio || 100}%`} </div>
+                      </div>
+
+                </div>
             </div>
+           
+
+
           </div>
 
         <div className="content-component">
@@ -98,18 +121,7 @@ class TeacherDetail extends React.Component {
             <TabPane tab="Thông tin cá nhân" key="1">
               <div className="basic-info-component">
                 <h3>Thông tin cơ bản</h3>
-                  <span className="mt-3">Rating: 
-                    <div className="d-flex rating-ratio mb-3 mt-2 ">
-                      <StarRating rating={teacherInfo.rating}/>
-                      <div className=" mr-5 ml-5"></div>
-                      <div className="ratio ml-5 mt-1 d-flex " > 
-                          <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
-                          <div className=""> {`Success Ratio : ${teacherInfo.successRatio || 100}%`} </div>
-                      </div>
-                    </div>
-                  </span>
-
-                
+                 
                 <span>Địa chỉ: 
                   <h5>
                     {teacherInfo.address === undefined ? '' : `${teacherInfo.address.address}, ${teacherInfo.address.district}, Hồ Chí Minh` }
@@ -119,7 +131,7 @@ class TeacherDetail extends React.Component {
                   <h5>{teacherInfo.phone}</h5>
                 </span>
                 <span>Ngày Sinh:
-                  <h5>{teacherInfo.birthday}</h5>
+                  <h5>{!teacherInfo.birthday ? '' : moment(teacherInfo.birthday).format('DD/MM/YYYY') }</h5>
                 </span>
                 <span>Giới tính:
                   <h5>{teacherInfo.sex}</h5>
@@ -136,11 +148,15 @@ class TeacherDetail extends React.Component {
                 {userSkill}
               </div>
             </TabPane>
-            <TabPane tab="Các khóa học" key="2">
+            <TabPane tab="Lịch sử dạy học" key="2">
               <div class="courses-component">
-                <h3>Khóa học hiện có</h3>
-                <Course/>
-                <Course/>
+                <h3>Lịch sử các khóa dạy học</h3>
+                {
+                  history.map((item, index) => 
+                    <Course key={index} data={history[0]}/>
+                  )
+                }
+                
               </div>
             </TabPane>
            

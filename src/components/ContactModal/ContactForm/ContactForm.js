@@ -31,8 +31,7 @@ class ContactForm extends React.Component {
 
     componentDidMount = () =>{
         this.props.form.validateFields();
-        const {teacherInfo, skills, getDetail, userInfo} = this.props;
-        // console.log(getDetail)
+        const {teacherInfo, skills, getDetail} = this.props;
         getDetail();
         let skillList = []
         skills.forEach(skill => {
@@ -40,7 +39,7 @@ class ContactForm extends React.Component {
                 skillList.push(skill)
             }
         });
-        this.setState({skillList})
+        this.setState({skillList : skills})
     }
 
     handleSubmit = (e) =>{
@@ -127,12 +126,12 @@ class ContactForm extends React.Component {
             <Form className="contact-form" onSubmit={this.handleSubmit}>
 
                 <div className="d-flex">
-                    <Form.Item  className="mr-3" label="Frome Date" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
+                    <Form.Item  className="mr-3" label="Ngày bắt đầu" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
                         {getFieldDecorator('fromdate', {
                         rules: [
                             {
                             required: true,
-                            message: 'Enter date from please !',
+                            message: 'Hãy chọn ngày  !',
                             },
                         ],
                         })(
@@ -166,7 +165,7 @@ class ContactForm extends React.Component {
                 </Form.Item>
            
 
-                <Form.Item label="Skill" validateStatus={skillError ? 'error': ''} help={skillError || ''}>
+                <Form.Item label="Kỹ năng" validateStatus={skillError ? 'error': ''} help={skillError || ''}>
                     {getFieldDecorator('skill', {
                         rules: [
                             {
@@ -185,7 +184,7 @@ class ContactForm extends React.Component {
                 </Form.Item>
 
                 <div className="d-flex">
-                    <Form.Item label="Number of studying hour" validateStatus={hourError ? 'error' : ''} help={hourError || ''}>
+                    <Form.Item label="Tổng số giờ" validateStatus={hourError ? 'error' : ''} help={hourError || ''}>
                         {getFieldDecorator('hour', {
                             rules: [
                             {
@@ -203,14 +202,14 @@ class ContactForm extends React.Component {
                             />
                             )}
                     </Form.Item>
-                    <div className="total">
+                    <div className="Tổng tiền">
                         {`Total : ${total} VND`}
                     </div>
              </div>
 
                 <Form.Item>
                   <Button type="primary" htmlType="submit" className="" disabled={hasErrors(getFieldsError())}>
-                    Contact now
+                    Hoàn tất
                   </Button>
                 </Form.Item>  
 
