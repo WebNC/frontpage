@@ -35,6 +35,10 @@ class AddressInput extends React.Component {
     };
   }
 
+  // componentDidMount = () =>{
+  //   console.log(this.props.value)
+  // }
+
   handleAddressChange = e => {
     if (!('value' in this.props)) {
       this.setState({ address: e.target.value  });

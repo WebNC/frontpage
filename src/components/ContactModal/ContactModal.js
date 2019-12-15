@@ -5,6 +5,7 @@ import{ connect } from 'react-redux';
 import { Icon} from 'antd';
 import 'antd/dist/antd.css';
 import WrapContactForm from './ContactForm/ContactForm'
+import {userActions} from '../../actions/user.actions'
 
 
 
@@ -28,12 +29,12 @@ class ContactModal extends React.Component {
 
    
     render() {
-        const {handleCloseModal, open, loggedIn, isTeacher, userInfo, teacherInfo} = this.props;
+        const {handleCloseModal, open, loggedIn, isTeacher, userInfo, teacherInfo, getDetail} = this.props;
         // const skills = [{_id: '1', name: 'skill 1'}]
 
         const {skills} = this.state;
         const notification = <h6 
-        > <Icon type="warning" className="mr-5" style={{color: 'red'}}/>You must loggin first to contact with teacher !</h6>
+        > <Icon type="warning" className="mr-5" style={{color: 'red'}}/>You must login first to contact with teacher !</h6>
 
         return (
           <>
@@ -43,7 +44,10 @@ class ContactModal extends React.Component {
             </Modal.Header>
             {
               (loggedIn && !isTeacher) ?  <Modal.Body>Please fill out all information to contact successfully
-              <WrapContactForm skills={skills} userInfo={userInfo} teacherInfo={teacherInfo} handleCloseModal={handleCloseModal}/>
+              <WrapContactForm skills={skills} userInfo={userInfo}
+               teacherInfo={teacherInfo}
+               getDetail = {getDetail}
+               handleCloseModal={handleCloseModal}/>
             </Modal.Body>
             :
             <Modal.Body>{notification} </Modal.Body>
@@ -70,11 +74,11 @@ function mapStateToProps(state) {
 
   };
 }
-// const mapDispatchToProps = (dispatch) => ({
-//   getAllSkill:() => dispatch(skillActions.getAll()),
-//   handleContact : (teacherInfo) => dispatch(handleContact(teacherInfo))
-// });
+const mapDispatchToProps = (dispatch) => ({
+  getDetail: () => dispatch(userActions.getDetail()),
+
+});
 
 
 
-export default connect(mapStateToProps, null)(ContactModal)
+export default connect(mapStateToProps, mapDispatchToProps)(ContactModal)

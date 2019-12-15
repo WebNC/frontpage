@@ -6,7 +6,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from './containers/LoginPage/LoginPage';
 import RegisterPage from './containers/RegisterPage/RegisterPage';
 import HomePage from './containers/HomePage/Homepage';
-import UserInfoPage from './containers/UserInfoPage/UserInfoPage';
+// import UserInfoPage from './containers/UserInfoPage/UserInfoPage';
 import RegisterTeacherPage from './containers/RegisterTeacherPage/RegisterTeacherPage';
 import TeacherHomePage from './containers/TeacherHomePage/TeacherHomePage';
 import EditInfoTeacherPage from './containers/EditInfoTeacherPage/EditInfoTeacherPage';
@@ -33,9 +33,9 @@ function App(props) {
           {isTeacher ? <TeacherHomePage/> : <HomePage/>}
           </Route> */}
 
-          <Route exact path="/user-info" >
+          {/* <Route exact path="/user-info" >
             {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}
-          </Route>
+          </Route> */}
           <Route exact path="/teacher-register">
             {loggedIn && isTeacher ? <RegisterTeacherPage/> : <Redirect to="/register"/>}
           </Route>
