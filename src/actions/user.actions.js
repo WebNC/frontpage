@@ -444,6 +444,7 @@ const requestContract = (studentID, teacherID, fromDate, toDate, hour, skill,val
             studentID, teacherID,fromDate, toDate, hour, skill, value, address
         })
         .then(res => {
+            console.log(res.data)
             return res.data
         }).catch(error => console.log(error));
 }

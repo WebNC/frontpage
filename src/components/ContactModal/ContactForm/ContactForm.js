@@ -41,26 +41,21 @@ class ContactForm extends React.Component {
             }
         });
         this.setState({skillList})
-
-        console.log(userInfo)
-
     }
 
     handleSubmit = (e) =>{
         const {getFieldsValue} = this.props.form;
         const {userInfo, teacherInfo, handleCloseModal} = this.props;
         const {total} = this.state;
+        console.log(userInfo)
         e.preventDefault();
         const values = getFieldsValue();
           handleCloseModal()
 
-        userActions.requestContract(userInfo.userId, teacherInfo._id,values.fromdate[0].toString(),
+        userActions.requestContract(userInfo.user._id, teacherInfo._id,values.fromdate[0].toString(),
         values.fromdate[1].toString(), values.hour, values.skill, total, values.address).then(res=>{
             console.log(res)
         })
-
-        //requestContract
-
     }
 
     range = (start, end) => {
