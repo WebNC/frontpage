@@ -10,6 +10,7 @@ import Footer from '../../components/Footer/Footer';
 import {history} from '../../helper';
 import NavBar from '../../components/NavBar/NavBar';
 import MyAvatar from '../../components/MyAvatar/MyAvatar';
+import NotificationContract from '../../components/NotificationContract/NotificationContract';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -51,6 +52,15 @@ class TeacherHomePage extends React.Component {
         </h5>)
       });
     }
+    console.log(user);
+    const listContract = [];
+    if(user.history !== null && user.history !== undefined ) {
+      console.log(user.history);
+      user.history.forEach(element => {
+        listContract.push(<NotificationContract isTeacher={true} contractInfo={element}/>)
+      });
+    }
+
     
     return (
       <div className="teacher-home-page">
@@ -117,7 +127,8 @@ class TeacherHomePage extends React.Component {
             </TabPane>
             <TabPane tab="Yêu cầu từ người học" key="2">
               <div className="requirement-component">
-                Danh sách người học gửi yêu cầu
+                <h3>Danh sách người học gửi yêu cầu </h3>
+                {listContract}
               </div>
             </TabPane>
             <TabPane tab="Lịch sử" key="3">

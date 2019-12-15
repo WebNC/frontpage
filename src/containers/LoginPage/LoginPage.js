@@ -111,7 +111,7 @@ class LoginForm extends React.Component {
               <Link className="login-form-forgot" to="/forget-password">
                 Quên mật khẩu?
               </Link>
-              <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
+              <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} >
                 Đăng nhập
               </Button>
               <p>Bạn có thể đăng nhập với các tài khoản xã hội: </p>
