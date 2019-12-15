@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'
 import 'antd/dist/antd.css';
-import Logo from '../../components/Logo';
 import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
@@ -41,20 +40,20 @@ class ActiveEmailPage extends React.Component {
           </div>
           <div className="active-email-component">
             <div>
-              { successMessage !== undefined ?  
+              { (successMessage !== undefined && errMessage === undefined) &&  
                 (<p>
                   Chào {user.username}, <br/>
                   Bạn đã kích hoạt tài khoản thành công. <br/>
                   Nhấn vào <Link to='/'> đây</Link> để đến Trang chủ. <br />
                 </p> 
-                ):(
-                  <p>
+                )}
+              {(successMessage === undefined && errMessage !== undefined) &&
+                (<p>
                   Chào {user.username}, <br/>
                   Đã có lỗi xảy ra khi xác nhận mail của bạn. <br />
                   Hãy thử <Link to='/login'> đăng nhập </Link> để nhận lại mail xác nhận! <br />
                 </p>
-                )
-              }
+              )}
             </div>
           </div>
         </div>

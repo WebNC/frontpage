@@ -1,6 +1,5 @@
 import React from 'react';
 import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload} from 'antd';
-import Course from '../../components/Course/Course';
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
@@ -25,7 +24,6 @@ class TeacherHomePage extends React.Component {
     componentDidMount() {
       const { getDetail } = this.props;
       getDetail();
-
     }
 
     // handleSubmit = e => {
@@ -41,33 +39,34 @@ class TeacherHomePage extends React.Component {
 
   render() {
     var {user} = this.props;
-    
-    if(user === null || user === undefined) {
-      user = {skill: []};
-    }
     console.log(user.skill);
     var userSkill =[];
-    user.skill.forEach(element => {
-      userSkill.push(
-      <h5>
-        <Icon type="check" className="icon"/>
-        {element.name}
-      </h5>)
-    });
+
+    if(user.skill !== null && user.skill !== undefined) {
+      user.skill.forEach(element => {
+        userSkill.push(
+        <h5>
+          <Icon type="check" className="icon"/>
+          {element.name}
+        </h5>)
+      });
+    }
+    
     return (
       <div className="teacher-home-page">
         <Header username={user.username}/>
-        <NavBar/>
         <div class="cover-component">
+          <div className="info-component">
             <MyAvatar imageUrl={user.url}/>
-            <div class="info-component">
+            <div class="name-component">
               <h3 className="username">{user.username}</h3>
               <h4>{user.major}</h4>
             </div>
-            <div className="btns-component">
-              <Button icon="edit" type="normal" className="btn" onClick = {() => history.push('/teacher-edit-info')}>Cập nhật thông tin cá nhân</Button>
-              <Button icon="plus" type="normal" className="btn">Thêm khóa học mới</Button>
-            </div>
+          </div>
+          <div className="btns-component">
+            <Button icon="edit" type="normal" className="btn" onClick = {() => history.push('/teacher-edit-info')}>Cập nhật thông tin cá nhân</Button>
+            <Button icon="plus" type="normal" className="btn">Thêm khóa học mới</Button>
+          </div>
         </div>
         <div class="content-component">
           <Tabs tabPosition="left">
@@ -101,7 +100,7 @@ class TeacherHomePage extends React.Component {
                 <div className="item-info">
                   <h5 className="info-title">Mức lương:</h5> 
                   <h5 >
-                    {user.price} đ
+                    {user.price === undefined ? `0 đ` : `${user.price} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                   </h5>
                 </div>
               </div>
@@ -116,24 +115,17 @@ class TeacherHomePage extends React.Component {
                 {userSkill}
               </div>
             </TabPane>
-            <TabPane tab="Các khóa học" key="2">
-              <div class="courses-component">
-                <h3>Khóa học hiện có</h3>
-                <Course/>
-                <Course/>
-              </div>
-            </TabPane>
-            <TabPane tab="Yêu cầu từ người học" key="3">
+            <TabPane tab="Yêu cầu từ người học" key="2">
               <div className="requirement-component">
                 Danh sách người học gửi yêu cầu
               </div>
             </TabPane>
-            <TabPane tab="Lịch sử" key="4">
+            <TabPane tab="Lịch sử" key="3">
               <div className="history-component">
                 Lịch sử yêu cầu từ người học
               </div>
             </TabPane>
-            <TabPane tab="Doanh thu" key="5">
+            <TabPane tab="Doanh thu" key="4">
               <div className="history-component">
                 Doanh thu
               </div>

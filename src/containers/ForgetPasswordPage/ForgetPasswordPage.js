@@ -5,6 +5,7 @@ import {Form, Button, Input, Icon} from 'antd';
 import Logo from '../../components/Logo';
 import{ connect } from 'react-redux';
 import './style.scss';
+import { userActions } from '../../actions/user.actions';
 
 require('dotenv').config()
 
@@ -24,11 +25,21 @@ class ForgetPasswordForm extends React.Component {
     }
 
     handleSubmit = e => {
+      e.preventDefault();
+      const {getFieldsValue} = this.props.form;
+      const values = getFieldsValue();
+
+      this.props.requireResetPassword({
+          email: values.email,
+      });
+
+      this.setState({isFirstLoad:false});
     }
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const {message, pending} = this.props;
+    const {pending, errMessage, successMessage} = this.props;
+    console.log(successMessage);
     const emailError = isFieldTouched('email') && getFieldError('email');
 
     return (
@@ -45,8 +56,11 @@ class ForgetPasswordForm extends React.Component {
                   <div>Nhập email của bạn để đặt lại mật khẩu</div>
                 </Form.Item>
                 <Form.Item >
-                    {!this.state.isFirstLoad && message &&
-                      <div className="error-message">{message}</div>
+                    {successMessage && !this.state.isFirstLoad &&
+                      <div className="success-message">{successMessage}</div>
+                    }
+                    {errMessage && !this.state.isFirstLoad &&
+                      <div className="error-message">{errMessage}</div>
                     }
                 </Form.Item>
                 <Form.Item validateStatus={emailError ? 'error' : ''} help={emailError || ''}>
@@ -65,7 +79,7 @@ class ForgetPasswordForm extends React.Component {
                 </Form.Item>
                 <Form.Item>
                   <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} className="forget-pass-btn" loading={pending}>
-                    Xác nhận
+                    Nhận email
                   </Button>
                 </Form.Item>
               </Form>
@@ -80,12 +94,14 @@ class ForgetPasswordForm extends React.Component {
 
 function mapStateToProps(state) {
   return {  
-    message: state.user.errMessage,
+    errMessage: state.user.errMessage,
+    successMessage: state.user.successMessage,
     pending: state.user.pending,
   };
 }
 
 const mapDispatchToProps = (dispatch) => ({
+  requireResetPassword: (email) => dispatch(userActions.requireResetPassword(email)),
 });
 
 const ForgetPasswordPage = Form.create({ name: 'forget-pass' })(ForgetPasswordForm)

@@ -6,13 +6,16 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import LoginPage from './containers/LoginPage/LoginPage';
 import RegisterPage from './containers/RegisterPage/RegisterPage';
 import HomePage from './containers/HomePage/Homepage';
-import UserInfoPage from './containers/UserInfoPage/UserInfoPage';
 import RegisterTeacherPage from './containers/RegisterTeacherPage/RegisterTeacherPage';
 import TeacherHomePage from './containers/TeacherHomePage/TeacherHomePage';
 import EditInfoTeacherPage from './containers/EditInfoTeacherPage/EditInfoTeacherPage';
 import TeacherDetail from './containers/TeacherDetail/TeacherDetail';
 import ActiveEmailPage from './containers/ActiveEmailPage/ActiveEmailPage';
 import ConfirmEmailPage from './containers/ConfirmEmailPage/ConfirmEmailPage';
+import ContactModal from './components/ContactModal/ContactModal';
+import ForgetPasswordPage from './containers/ForgetPasswordPage/ForgetPasswordPage';
+import ResetPasswordPage from './containers/ResetPasswordPage/ResetPasswordPage';
+import StudentInfoPage from './containers/StudentInfoPage/StudentInfoPage';
 import { connect } from 'react-redux'
 require('dotenv').config()
 
@@ -33,9 +36,9 @@ function App(props) {
           {isTeacher ? <TeacherHomePage/> : <HomePage/>}
           </Route> */}
 
-          <Route exact path="/user-info" >
+          {/* <Route exact path="/user-info" >
             {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}
-          </Route>
+          </Route> */}
           <Route exact path="/teacher-register">
             {loggedIn && isTeacher ? <RegisterTeacherPage/> : <Redirect to="/register"/>}
           </Route>
@@ -45,9 +48,14 @@ function App(props) {
           <Route exact path="/teacher-edit-info">
             {loggedIn && isTeacher ? <EditInfoTeacherPage/> : <Redirect to="/"/>}
           </Route>
+          <Route exact path="/student/info">
+            {loggedIn && !isTeacher ? <StudentInfoPage/> : <Redirect to="/"/>}
+          </Route>
           <Route exact path="/comfirm-email" component={ConfirmEmailPage} />
-          <Route exact path="/active/:id" component={ActiveEmailPage} />
-          <Route exact path="/test" component={ConfirmEmailPage} />
+          <Route exact path="/active/:token" component={ActiveEmailPage} />
+          <Route exact path="/forget-password" component={ForgetPasswordPage} />
+          <Route exact path="/forget/:token" component={ResetPasswordPage} />
+          <Route exact path="/test" component={ResetPasswordPage} />
           {/* <Route exact path="/update"> 
             {loggedIn ? <UpdateInfoPage/> : <Redirect to="/login" />}
           </Route>

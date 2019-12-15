@@ -1,4 +1,5 @@
 import { userConstants } from '../constants';
+import { arrowFunctionExpression } from '@babel/types';
 
 const initialState = {
   loggedIn: false,
@@ -161,6 +162,65 @@ const user = (state = initialState, action) => {
         ...state,
         errMessage: action.error,
       };
+    case userConstants.REQUIRE_RESET_PASS_REQUEST:
+      return {
+        ...state,
+        pending: true,
+        errMessage: undefined,
+        successMessage: undefined,
+      };
+    case userConstants.REQUIRE_RESET_PASS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: action.message,
+        errMessage: undefined,
+      }
+    case userConstants.REQUIRE_RESET_PASS_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        successMessage: undefined,
+        errMessage: action.error
+      }
+    case userConstants.VERIFIED_ACCOUNT_FORGET_REQUEST:
+      return {
+        ...state,
+        errMessage: undefined,
+        successMessage: undefined,
+      };
+    case userConstants.VERIFIED_ACCOUNT_FORGET_SUCCESS:
+      return {
+        ...state,
+        userId: action.userId,
+      };
+    case userConstants.VERIFIED_ACCOUNT_FORGET_FAILURE:
+      return {
+        ...state,
+        errMessage: action.error,
+        successMessage: undefined,
+      }
+    case userConstants.RESET_PASS_REQUEST: 
+      return {
+        ...state,
+        pending: true,
+        errMessage: undefined,
+        successMessage: undefined,
+      };
+    case userConstants.RESET_PASS_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        successMessage: action.message,
+        errMessage: undefined,
+      }
+    case userConstants.RESET_PASS_FAILURE:
+      return {
+        ...state,
+        pending: false,
+        successMessage: undefined,
+        errMessage: action.error
+      } 
     default:
       return state
   }

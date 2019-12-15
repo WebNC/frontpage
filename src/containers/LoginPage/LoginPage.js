@@ -108,7 +108,7 @@ class LoginForm extends React.Component {
                 valuePropName: 'checked',
                 initialValue: true,
               })}
-              <Link className="login-form-forgot">
+              <Link className="login-form-forgot" to="/forget-password">
                 Quên mật khẩu?
               </Link>
               <Button type="primary" htmlType="submit" className="login-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>

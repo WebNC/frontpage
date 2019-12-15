@@ -25,7 +25,7 @@ const login = ({email, password}) => {
                     }
                 })
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                    return dispatch(failure(error.response.data.message || 'Tài khoản hoặc mật khẩu không đúng!'));
                 })
         }, 1000)
     };
@@ -221,6 +221,7 @@ const getDetail = () => {
 }
 
 const updateTeacherInfo = ({id, username, address, phone, birthday, sex, price }) => {
+    console.log({id, username, address, phone, birthday, sex, price });
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
@@ -320,39 +321,84 @@ const updateAvatar = ({id, file}) => {
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
-const requireResetPassword = ({email}) => {
+const requireResetPassword = (email) => {
     return dispatch => {
         dispatch(request());
 
         setTimeout(() => {
             axios
-                .post(`${API_URL}upload/avatar`,
+                .post(`${API_URL}users/forget-password/send-email`,
                     email)
                 .then( result => { 
-                        return dispatch(success("Cập nhật thông tin thành công!", result.data));
+                        return dispatch(success("Chúng tôi đã gửi email cho bạn, hãy kiểm tra mail để đặt lại mật khẩu!"));
                     }
                 )
                 .catch(error => {
-                    return dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
+                    return dispatch(failure("Email chưa được đăng ký!"));
                 })
         }, 1000)
     };
 
-    function request() { return { type: userConstants.UPDATE_REQUEST} }
-    function success(message, user) { return { type: userConstants.UPDATE_SUCCESS, message, user} }
-    function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
+    function request() { return { type: userConstants.REQUIRE_RESET_PASS_REQUEST} }
+    function success(message) { return { type: userConstants.REQUIRE_RESET_PASS_SUCCESS, message} }
+    function failure(error) { return { type: userConstants.REQUIRE_RESET_PASS_FAILURE, error } }
 }
-const update = ({_id, displayname}) => {
+
+const verifiedAcccountForget = (token) => {
+    return dispatch => {
+        dispatch(request());
+
+        setTimeout(() => {
+            axios
+                .get(`${API_URL}users/verified-account-forget/${token}`)
+                .then( result => { 
+                        return dispatch(success(result.data.id));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.VERIFIED_ACCOUNT_FORGET_REQUEST} }
+    function success(userId) { return { type: userConstants.VERIFIED_ACCOUNT_FORGET_SUCCESS, userId} }
+    function failure(error) { return { type: userConstants.VERIFIED_ACCOUNT_FORGET_FAILURE, error } }
+}
+
+const resetPassword = ({id, password}) => {
+    return dispatch => {
+        dispatch(request());
+
+        setTimeout(() => {
+            axios
+                .post(`${API_URL}users/forget-password/reset-password`,
+                    {id, password})
+                .then( result => { 
+                        return dispatch(success("Đã đặt lại mật khẩu thành công!"));
+                    }
+                )
+                .catch(error => {
+                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.RESET_PASS_REQUEST} }
+    function success(message) { return { type: userConstants.RESET_PASS_SUCCESS, message} }
+    function failure(error) { return { type: userConstants.RESET_PASS_FAILURE, error } }
+}
+
+const updateStudentInfo = ({id, username, address, sex, phone, birthday}) => {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post(API_URL + 'users/update', {
-                    _id,
-                    displayname
+                .post(`${API_URL}users/edit`, {
+                    id, username, address, sex, phone, birthday
                 })
                 .then( result => { 
-                        return dispatch(success(result.data.message, result.data.user));
+                        return dispatch(success("Cập nhật thông tin thành công!", result.data.user));
                     }
                 )
                 .catch(error => {
@@ -366,7 +412,7 @@ const update = ({_id, displayname}) => {
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
-const changepass = ({_id, passpresent, password}) => {
+const changePass = ({_id, passpresent, password}) => {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
@@ -408,8 +454,7 @@ export const userActions = {
     loginWithGG,
     logout,
     register,
-    update,
-    changepass,
+    changePass,
     getDetail,
     registerTeacher,
     updateTeacherInfo,
@@ -417,5 +462,9 @@ export const userActions = {
     updateTeacherMajorSkill,
     updateAvatar,
     activeEmail,
-    requestContract
+    requestContract,
+    requireResetPassword,
+    verifiedAcccountForget,
+    resetPassword,
+    updateStudentInfo
 };

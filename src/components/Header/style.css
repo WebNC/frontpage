@@ -8,7 +8,7 @@
   text-align: center;
   background-color: #b8d8f2;
   width: 100%;
-  height: 60px;
+  height: fit-content;
 }
 
 .tab-component {

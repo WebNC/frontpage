@@ -1,4 +1,4 @@
-.info-form, .intro-form, .major-skill-form {
+.student-info-form {
   width: 80%;
   position: relative;
   margin-left: auto;
@@ -7,15 +7,7 @@
   background: #FFFFFF;
 }
 
-.edit-teacher-page h3 {
-  font-size: 24px;
-  margin-bottom: 5px;
-  line-height: 35px;
-  font-weight: bold;
-  text-align: left;
-}
-
-.edit-teacher-page p, .intro {
+.edit-student-page p, .intro {
   font-size: 16px;
   text-align: left;
   line-height: 35px;
@@ -33,10 +25,10 @@ h5.info-title {
   width: 150px;
 }
 
-.edit-teacher-page .title {
+.student-home-page h3 {
+  font-size: 24px;
+  margin-bottom: 5px;
+  line-height: 35px;
+  font-weight: bold;
   text-align: center;
-}
-
-.input-number, .my-date-picker {
-  width: 100%;
 }

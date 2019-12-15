@@ -1,5 +1,6 @@
 import React from 'react'
-import { Upload, Icon, message, Modal, Button, Avatar } from 'antd';
+import { Upload, Icon, Button, Avatar} from 'antd';
+import { Modal} from 'react-bootstrap'
 import './style.css'
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
@@ -61,16 +62,16 @@ class MyAvatar extends React.Component {
         <Button className="btn-avatar" onClick={() => this.showModal()}>
           <Avatar size={130} src={imageUrl} className="avatar-img" />
         </Button>
-        <Modal 
-          title="Cập nhật ảnh đại diện"
-          visible={this.state.visible}
-          onOk={this.handleOk}
-          onCancel={this.handleCancel}
-        >
-          <form onSubmit={this.onFormSubmit}>
-            <input type="file" name="myImage" onChange={this.onChange} />
-            <button type="submit" className="btn-upload-avatar">Tải ảnh lên</button>
-          </form>
+        <Modal show={this.state.visible}>
+          <Modal.Header closeButton>
+            <Modal.Title>Cập nhật ảnh đại diện</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <form onSubmit={this.onFormSubmit}>
+              <input type="file" name="myImage" onChange={this.onChange} />
+              <button type="submit" className="btn-upload-avatar">Tải ảnh lên</button>
+            </form>
+          </Modal.Body>
         </Modal>
       </div>
     );

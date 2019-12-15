@@ -36,15 +36,17 @@ class EditInfoTeacherPage extends React.Component {
       <div className="edit-teacher-page">
         <Header username={user.username}/>
         <div class="cover-component">
+          <div className="info-component">
             <MyAvatar imageUrl={user.url}/>
-            <div class="info-component">
+            <div class="name-component">
               <h3 className="username">{user.username}</h3>
               <h4>{user.major}</h4>
             </div>
-            <div className="btns-component">
-              <Button icon="rollback" className="btn" onClick= {()=> history.push('/teacher-home')}>Trở về trang chủ</Button>
-              <Button icon="plus" className="btn" onClick={()=>logout()}>Thêm khóa học mới</Button>
-            </div>
+          </div>
+          <div className="btns-component">
+            <Button icon="edit" type="normal" className="btn" onClick = {() => history.push('/teacher-edit-info')}>Cập nhật thông tin cá nhân</Button>
+            <Button icon="plus" type="normal" className="btn">Thêm khóa học mới</Button>
+          </div>
         </div>
         <div class="content-component">
           <Tabs tabPosition="left">
