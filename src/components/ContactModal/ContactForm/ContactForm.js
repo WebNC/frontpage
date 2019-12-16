@@ -31,7 +31,7 @@ class ContactForm extends React.Component {
 
     componentDidMount = () =>{
         this.props.form.validateFields();
-        const {teacherInfo, skills, getDetail} = this.props;
+        const {teacherInfo, skills, getDetail, userInfo} = this.props;
         getDetail();
         let skillList = []
         skills.forEach(skill => {
@@ -40,20 +40,26 @@ class ContactForm extends React.Component {
             }
         });
         this.setState({skillList : skills})
+
+
     }
 
     handleSubmit = (e) =>{
         const {getFieldsValue} = this.props.form;
         const {userInfo, teacherInfo, handleCloseModal} = this.props;
         const {total} = this.state;
-        console.log(userInfo)
         e.preventDefault();
         const values = getFieldsValue();
           handleCloseModal()
 
+        // console.log(userInfo)
+
+        console.log(userInfo.user.id, teacherInfo._id,values.fromdate[0].toString(),
+        values.fromdate[1].toString(), values.hour, values.skill, total, values.address)
+
         userActions.requestContract(userInfo.user._id, teacherInfo._id,values.fromdate[0].toString(),
         values.fromdate[1].toString(), values.hour, values.skill, total, values.address).then(res=>{
-            console.log(res)
+            // console.log(res)
         })
     }
 

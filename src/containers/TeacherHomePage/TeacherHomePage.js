@@ -27,20 +27,9 @@ class TeacherHomePage extends React.Component {
       getDetail();
     }
 
-    // handleSubmit = e => {
-    //   const {getFieldsValue} = this.props.form;
-    //   e.preventDefault();
-      
-    //   const values = getFieldsValue();
-      
-    //   this.props.getDetail();
-      
-    //   this.setState({isFirstLoad: false})
-    // }
-
   render() {
     var {user} = this.props;
-    console.log(user.skill);
+    // console.log(user.skill);
     var userSkill =[];
 
     if(user.skill !== null && user.skill !== undefined) {
@@ -52,10 +41,9 @@ class TeacherHomePage extends React.Component {
         </h5>)
       });
     }
-    console.log(user);
+
     const listContract = [];
     if(user.history !== null && user.history !== undefined ) {
-      console.log(user.history);
       user.history.forEach(element => {
         listContract.push(<NotificationContract isTeacher={true} contractInfo={element}/>)
       });
