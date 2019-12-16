@@ -11,7 +11,7 @@
 }
 .notification-contract-component .status {
   font-weight: 800;
-  width: 85px;
+  width: 40%;
   text-align: left;
 } 
 
@@ -20,14 +20,24 @@
   font-weight: bold; 
 }
 
+.btn-status-component {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+}
+
 .pending-status {
   color: #fff566;
 }
 
-.deline-stuatus {
+.deline-status {
   color: #cf1322
 }
 
 .accept-status {
   color: #237804;
+}
+
+.paid-status {
+  color: #0625d4;
 }

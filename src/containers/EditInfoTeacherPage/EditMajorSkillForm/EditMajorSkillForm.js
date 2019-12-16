@@ -2,7 +2,7 @@ import React from 'react';
 import { Form, Input, Button, Select} from 'antd';
 import 'antd/dist/antd.css';
 import {userActions} from '../../../actions/user.actions';
-import {skillActions} from '../../../actions/skill.action';
+import {skillActions} from '../../../actions/skill.actions';
 import{ connect } from 'react-redux';
 
 // import './style.css';

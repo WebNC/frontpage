@@ -2,7 +2,7 @@ import React from 'react';
 import './Cart.scss'
 import {Link} from 'react-router-dom'
 import {Button} from 'react-bootstrap'
-import {skillActions} from '../../actions/skill.action'
+import {skillActions} from '../../actions/skill.actions'
 import{ connect } from 'react-redux';
 import { handleContact } from '../../actions/teacher.actions';
 import StarRating from '../../components/Rating/Rating'

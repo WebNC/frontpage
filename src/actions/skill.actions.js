@@ -10,7 +10,6 @@ const getAll = () => {
             axios
                 .get(`${API_URL}skill`)
                 .then(result => {
-                    console.log(result);
                     dispatch(success(result.data.message));
                 })
                 .catch(error => {

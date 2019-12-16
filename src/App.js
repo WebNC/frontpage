@@ -15,7 +15,7 @@ import ConfirmEmailPage from './containers/ConfirmEmailPage/ConfirmEmailPage';
 import ForgetPasswordPage from './containers/ForgetPasswordPage/ForgetPasswordPage';
 import ResetPasswordPage from './containers/ResetPasswordPage/ResetPasswordPage';
 import StudentInfoPage from './containers/StudentInfoPage/StudentInfoPage';
-import ContractDetailStudentPage from './containers/ContractDetailStudentPage/ContractDetailStudentPage';
+// import ContractDetailStudentPage from './containers/ContractDetailStudentPage/ContractDetailStudentPage';
 import { connect } from 'react-redux'
 require('dotenv').config()
 
@@ -56,7 +56,7 @@ function App(props) {
           <Route exact path="/forget-password" component={ForgetPasswordPage} />
           <Route exact path="/forget/:token" component={ResetPasswordPage} />
           <Route exact path="/test" component={ResetPasswordPage} />
-          <Route exact path="/student/contract/:id" component={ContractDetailStudentPage} />
+          {/* <Route exact path="/student/contract/:id" component={ContractDetailStudentPage} /> */}
           {/* <Route exact path="/update"> 
             {loggedIn ? <UpdateInfoPage/> : <Redirect to="/login" />}
           </Route>

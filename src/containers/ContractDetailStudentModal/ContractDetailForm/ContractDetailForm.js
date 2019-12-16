@@ -1,10 +1,11 @@
 import React from 'react';
 import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd';
 import 'antd/dist/antd.css';
-import './ContactForm.scss'
-import {userActions} from '../../../actions/user.actions'
+import { skillActions } from '../../../actions/skill.actions'
+import { contractActions } from '../../../actions/contract.actions'
 import AddressInput from '../../../components/AddressInput/AddressInput'
 import moment from 'moment';
+import {connect} from 'react-redux'
 
 
 const dateFormat = 'DD-MM-YYYY';
@@ -24,43 +25,32 @@ class ContractDetailForm extends React.Component {
         this.state = {
             isFirstLoad: true,
             total: 0,
-            hour: 0,
-            skillList: []
+            hour: 0
         }
     }
 
-    componentDidMount = () =>{
-        this.props.form.validateFields();
-        const {teacherInfo, skills, getDetail, userInfo} = this.props;
-        // console.log(getDetail)
-        getDetail();
-        let skillList = []
-        skills.forEach(skill => {
-            if(teacherInfo.skill.indexOf(skill._id) !== -1){
-                skillList.push(skill)
-            }
+    componentDidMount() {
+      // To disabled submit button at the beginning.
+      const {form, contractInfo } = this.props;
+      console.log(contractInfo.contract);
+
+      form.validateFields();
+      
+      const selectedSkill = [];
+      contractInfo.contract.skill.forEach((element)=>{
+        selectedSkill.push(element.id)
+      })
+      form.setFieldsValue({
+        skill: selectedSkill, 
+        fromdate: [moment(contractInfo.contract.fromDate),moment(contractInfo.contract.toDate)],
+        address: contractInfo.contract.address, 
+        hour: contractInfo.contract.hour,
         });
-        this.setState({skillList})
 
-        console.log(userInfo)
-
+      this.setState({total: contractInfo.contract.value});
     }
 
     handleSubmit = (e) =>{
-        const {getFieldsValue} = this.props.form;
-        const {userInfo, teacherInfo, handleCloseModal} = this.props;
-        const {total} = this.state;
-        e.preventDefault();
-        const values = getFieldsValue();
-          handleCloseModal()
-
-        userActions.requestContract(userInfo.userId, teacherInfo._id,values.fromdate[0].toString(),
-        values.fromdate[1].toString(), values.hour, values.skill, total, values.address).then(res=>{
-            console.log(res)
-        })
-
-        //requestContract
-
     }
 
     range = (start, end) => {
@@ -92,27 +82,24 @@ class ContractDetailForm extends React.Component {
     }
 
     onChange = e =>{
-        const {getFieldsValue} = this.props.form;
-        const {teacherInfo} = this.props;
-
-        const values = getFieldsValue();
-        const hour = values.hour
-        if(hour){
-            this.setState({
-                total : teacherInfo.price? teacherInfo.price*e : e*50000
-            })
-        }
-        
+      const { teacher } = this.props.contractInfo;
+      const {getFieldsValue} = this.props.form;
+      const values = getFieldsValue();
+      const hour = values.hour
+      
+      if(hour){
+        this.setState({
+          total : teacher.price ? teacher.price*e : e*50000
+        })
+      }
     }
 
 
     render(){
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        const {contractInfo, allSkill} = this.props;
+        const {allSkill, contractInfo, handleShowDetailContract} = this.props;
 
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
-        // const toDateError = isFieldTouched('todate') && getFieldError('todate');
-
         const hourError = isFieldTouched('hour') && getFieldError('hour');
         const skillError = isFieldTouched('skill') && getFieldError('skill');
         const addressError = isFieldTouched('address') && getFieldError('address');
@@ -122,18 +109,19 @@ class ContractDetailForm extends React.Component {
         allSkill.forEach(skill => {
         selectSkill.push(<Option key={ skill._id }>{skill.name}</Option>)
         });
+
         return(
-          <Form className="contact-form" onSubmit={this.handleSubmit}>
-            <Form.Item  className="mr-3" label="Frome Date" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
+          <Form onSubmit={this.handleSubmit} className="contract-detail-form">
+            <Form.Item label="Thời gian dạy" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
               {getFieldDecorator('fromdate', {
                 rules: [
-                  {
-                    required: true,
-                    message: 'Enter date from please !',
-                  },
-                  ],
-                  })(
-                      <RangePicker
+                {
+                  required: true,
+                   message: 'Vui lòng chọn ngày học!',
+                },
+                ],
+                })(
+                  <RangePicker
                         disabledDate={this.disabledDate}
                         disabledTime={this.disabledRangeTime}
                         name="range" id="range"
@@ -143,6 +131,7 @@ class ContractDetailForm extends React.Component {
                         defaultValue: [moment('00:00:00', 'HH:mm:ss'), moment('11:59:59', 'HH:mm:ss')],
                         }}
                         format={dateFormat}
+                        style={{width: '100%'}}
                       />
                 )}
             </Form.Item>
@@ -162,19 +151,18 @@ class ContractDetailForm extends React.Component {
                 rules: [
                   {
                     required: true,     
-                    message: 'Select skill',
+                    message: 'Vui lòng chọn kỹ năng bạn muốn học!',
                   },
                 ],
               })(<Select 
-                  mode="tags" 
-                  style={{ width: '80%' }} 
+                  mode="tags"
                   tokenSeparators={[',']}
                   placeholder="Skill">
                   {selectSkill}
                   </Select>,
                     )}
             </Form.Item>
-            <Form.Item label="Number of studying hour" validateStatus={hourError ? 'error' : ''} help={hourError || ''}>
+            <Form.Item label="Tổng số giờ" validateStatus={hourError ? 'error' : ''} help={hourError || ''}>
               {getFieldDecorator('hour', {
                 rules: [
                   {
@@ -182,26 +170,54 @@ class ContractDetailForm extends React.Component {
                     message: 'Enter number of studying hour',
                   },
                 ],
-              })(<InputNumber
-                  prefix={<Icon type="hourglass" 
-                  style={{ color: 'rgba(0,0,0,.25)' }} />}
-                  style={{width: 150}}
-                  formatter={value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                  parser={value => value.replace(/\$\s?|(,*)/g, '')}
-                  onChange={this.onChange}
-                />
+                  })(<InputNumber
+                    prefix={<Icon type="hourglass" 
+                    style={{ color: 'rgba(0,0,0,.25)' }} />}
+                    style={{width: '100%'}}
+                    formatter={value => ` ${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    parser={value => value.replace(/\$\s?|(,*)/g, '')}
+                    onChange={this.onChange}
+                  />
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="" disabled={hasErrors(getFieldsError())}>
-                Contact now
-              </Button>
+              {`Tổng tiền : ${total} đ`}
+            </Form.Item>
+            <Form.Item>
+              {contractInfo.contract.status === 'Đang chờ' ? (
+                <div style={{display: "flex", justifyContent: "space-between", paddingLeft: "10%", paddingRight: "10%"}}>
+                  <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+                    Cập nhật hợp đồng
+                  </Button>
+                  <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
+                    Xóa hợp đồng
+                  </Button>
+                </div>
+              ) : ( 
+                  <p></p>
+                )
+              }
+              
             </Form.Item>
           </Form>
         )
     }
 }
 
+function mapStateToProps(state) {
+  return {
+    allSkill: state.skill.allSkill,
+    contractInfo: state.contracts.contractInfo
+  };
+}
+const mapDispatchToProps = dispatch => ({
+  getAllSkill:() => dispatch(skillActions.getAll()),
+  getContractDetail: (id) => dispatch(contractActions.getContractDetail(id)),
+});
+
 const WrappedContractDetailForm = (Form.create({ name: 'contract-detail-form' })(ContractDetailForm));
 
-export default WrappedContractDetailForm;
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(WrappedContractDetailForm)

@@ -40,10 +40,8 @@ class StudentInfoPage extends React.Component {
     // }
   render() {
     const {user} = this.props;
-    
     const listContract = [];
     if(user.history !== null && user.history !== undefined ) {
-      console.log(user.history);
       user.history.forEach(element => {
         listContract.push(<NotificationContract isTeacher={false} contractInfo={element}/>)
       });
