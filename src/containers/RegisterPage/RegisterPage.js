@@ -172,7 +172,7 @@ class RegistrationForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())}>
+              <Button type="primary" htmlType="submit" className="register-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
                 Đăng ký
               </Button>
               <p>Bạn đã có tài khoản?<Link to={`/login`}> Đăng nhập ngay!</Link></p>

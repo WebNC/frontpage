@@ -24,7 +24,7 @@ function App(props) {
   return (
         <Switch>
           <Route exact path="/">
-            <Redirect to="/home" />
+            {loggedIn && isTeacher ? <Redirect to="/teacher-home"/> : <Redirect to="/home"/>}
           </Route>
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
@@ -40,7 +40,7 @@ function App(props) {
             {loggedIn && !isTeacher ? <UserInfoPage/> : <Redirect to="/login"/>}
           </Route> */}
           <Route exact path="/teacher-register">
-            {loggedIn && isTeacher ? <RegisterTeacherPage/> : <Redirect to="/register"/>}
+            {isTeacher ? <RegisterTeacherPage/> : <Redirect to="/register"/>}
           </Route>
           <Route exact path="/teacher-home">
             {loggedIn && isTeacher ? <TeacherHomePage/> : <Redirect to="/"/>}

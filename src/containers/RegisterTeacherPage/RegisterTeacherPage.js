@@ -34,15 +34,14 @@ class RegistrationTeacherForm extends React.Component {
     }
 
     handleSubmit = e => {
-      const {userId, allSkill} = this.props;
+      const {user} = this.props;
       const {getFieldsValue} = this.props.form;
 
       
       e.preventDefault();
       const values = getFieldsValue();
-      console.log(values);
       this.props.registerTeacher({
-          id: userId,
+          id: user.id,
           address: values.address,
           phone: values.phone,
           birthday: values.dob.toString(),
@@ -125,7 +124,7 @@ class RegistrationTeacherForm extends React.Component {
                 />
                 )}
             </Form.Item>
-            <Form.Item label="Mức lương mong muốn (/giờ)" validateStatus={salaryError ? 'error' : ''} help={salaryError || ''}>
+            <Form.Item label="Mức lương mong muốn (đ/giờ)" validateStatus={salaryError ? 'error' : ''} help={salaryError || ''}>
                   {getFieldDecorator('salary', {
                     rules: [
                       {
@@ -137,8 +136,8 @@ class RegistrationTeacherForm extends React.Component {
                     prefix={<Icon type="dollar" style={{ color: 'rgba(0,0,0,.25)' }}/>}
                     placeholder="Mức lương mong muốn"
                     min={0} step={10000}
-                    style={{maxWidth: 680}}
-                    formatter={value => `${value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                    style={{width: "100%"}}
+                    formatter={value => `${value}`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                     />
                     )}
                 </Form.Item>
@@ -221,7 +220,7 @@ function mapStateToProps(state) {
   return { 
     message: state.user.errMessage,
     pending: state.user.pending,
-    userId: state.user.userId,
+    user: state.user.user,
     allSkill: state.skill.allSkill
   };
 }

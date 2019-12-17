@@ -123,6 +123,7 @@ const register = ({email,password,username, type}) => {
                 })
                 .then( result => {
                     localStorage.setItem('token', result.data.user.token);
+                    console.log(result.data.user);
                     const isTeacher = (type ===  "Người dạy" )
                     dispatch(success(result.data.user, isTeacher));
                     if (isTeacher) {
@@ -134,7 +135,7 @@ const register = ({email,password,username, type}) => {
                     }
                 })
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                    return dispatch(failure('Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
                 })
         }, 1000)
 
