@@ -49,7 +49,14 @@ class EditInfoTeacherForm extends React.Component {
       
       this.setState({isFirstLoad: false})
     }
-
+    checkPhoneNumber = (rule, value, callback) => {
+      const isVNPhoneMobile = /^(0|\+84)(\s|\.)?((3[2-9])|(5[689])|(7[06-9])|(8[1-689])|(9[0-46-9]))(\d)(\s|\.)?(\d{3})(\s|\.)?(\d{3})$/;
+      if (isVNPhoneMobile(value) === false) {
+        callback('Số điện thoại không hợp lệ');
+      } else {
+        callback();
+      }
+    };
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const {successMessage, errMessage, pending} = this.props;
@@ -104,6 +111,9 @@ class EditInfoTeacherForm extends React.Component {
                       {
                         required: true,
                         message: 'Vui lòng nhập số điện thoại!',
+                      },
+                      {
+                        validator: this.checkPhoneNumber,
                       },
                     ],
                   })(<Input

@@ -61,7 +61,12 @@ class RegistrationForm extends React.Component {
     }
     callback();
   };
-
+  checkPassword = (rule,value, callback) => {
+    if(value.length<8 || value.length >20){
+      callback('Mật khẩu phải từ 8 đến 20 kí tự')
+    }
+    callback()
+  }
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const {message, pending} = this.props;
@@ -105,6 +110,10 @@ class RegistrationForm extends React.Component {
               {getFieldDecorator('email', {
                 rules: [
                   {
+                    type: 'email',
+                    message: 'Email không hợp lệ',
+                  },
+                  {
                     required: true,
                     message: 'Vui lòng nhập email!',
                   },
@@ -121,6 +130,9 @@ class RegistrationForm extends React.Component {
                   {
                     required: true,
                     message: 'Vui lòng nhập mật khẩu!',
+                  },
+                  {
+                    validator: this.checkPassword,
                   }
                 ],
               })(<Input

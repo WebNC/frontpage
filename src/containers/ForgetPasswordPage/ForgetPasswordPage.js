@@ -70,6 +70,10 @@ class ForgetPasswordForm extends React.Component {
                         required: true,
                         message: 'Vui lòng nhập email!',
                       },
+                      {
+                        type: 'email',
+                        message: 'Email không hợp lệ',
+                      },
                     ],
                   })(<Input
                     prefix={<Icon type="mail" style={{ color: 'rgba(0,0,0,.25)' }} />}

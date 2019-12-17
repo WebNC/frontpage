@@ -57,6 +57,12 @@ class ResetPasswordForm extends React.Component {
       }
       callback();
     };
+    checkPassword = (rule,value, callback) => {
+      if(value.length<8 || value.length >20){
+        callback('Mật khẩu phải từ 8 đến 20 kí tự')
+      }
+      callback()
+    }
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
@@ -90,6 +96,9 @@ class ResetPasswordForm extends React.Component {
                         {
                           required: true,
                           message: 'Vui lòng nhập mật khẩu!',
+                        },
+                        {
+                          validator: this.checkPassword,
                         }
                       ],
                     })(<Input
