@@ -12,6 +12,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import MyAvatar from '../../components/MyAvatar/MyAvatar';
 import NotificationContract from '../../components/NotificationContract/NotificationContract';
 import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm';
+import IncomeChart from '../IncomeChart/IncomeChart.container' 
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -127,8 +128,9 @@ class TeacherHomePage extends React.Component {
             </TabPane>
             <TabPane tab="Doanh thu" key="4">
               <div className="history-component">
-                Doanh thu
+                <h2>Doanh thu</h2>
               </div>
+              <IncomeChart></IncomeChart>
             </TabPane>
             <TabPane tab="Đổi mật khẩu" key="5">
               <div className="contract-history-component">

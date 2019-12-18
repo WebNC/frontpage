@@ -69,3 +69,11 @@ export const handleContact = (teacherInfo) =>{
     }
 }
 
+export const getIncomeData = (id) => {
+    return API
+        .get(`teachers/income/${id}`)
+        .then(res => {
+            return res.data
+        }).catch(error => console.log(error));
+}
+
