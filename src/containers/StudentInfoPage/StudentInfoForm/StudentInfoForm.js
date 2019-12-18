@@ -19,6 +19,7 @@ class StudentInfoForm extends React.Component {
       super(props);
       this.state = {
         isFirstLoad: true,
+        
       };
     }
 
@@ -32,7 +33,7 @@ class StudentInfoForm extends React.Component {
    
     handleSubmit = e => {
       const {getFieldsValue} = this.props.form;
-      const {updateStudentInfo, user} = this.props;
+      const {updateStudentInfo, user, getDetail} = this.props;
       e.preventDefault();
       
       const values = getFieldsValue();
@@ -45,7 +46,7 @@ class StudentInfoForm extends React.Component {
         sex: values.sex,
         birthday: values.dob,
       });
-      
+      getDetail();
       this.setState({isFirstLoad: false})
     }
 
@@ -60,7 +61,7 @@ class StudentInfoForm extends React.Component {
     const addressError = isFieldTouched('address') && getFieldError('address');
 
     return (
-              <Form className="student-info-form" onSubmit={this.handleSubmit}>
+              <Form onSubmit={this.handleSubmit} style={{width: "450px"}}>
                 <Form.Item>
                     {successMessage && !this.state.isFirstLoad &&
                       <div className="success-message">{successMessage}</div>
@@ -69,7 +70,7 @@ class StudentInfoForm extends React.Component {
                       <div className="error-message">{errMessage}</div>
                     }
                 </Form.Item>
-                <Form.Item validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
+                <Form.Item label="Tên hiển thị" validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
                   {getFieldDecorator('username', {
                     rules: [
                       {
@@ -152,7 +153,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  updateStudentInfo: (user) => dispatch(userActions.updateStudentInfo(user))
+  updateStudentInfo: (user) => dispatch(userActions.updateStudentInfo(user)),
+  getDetail: () => dispatch(userActions.getDetail()),
 });
 
 const WrappedStudentInfoForm = (Form.create({ name: 'edit-info-student' })(StudentInfoForm));

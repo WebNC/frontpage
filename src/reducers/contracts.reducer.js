@@ -27,6 +27,7 @@ const contracts = (state = initialState, action) => {
       return {
         ...state,
         pending: true,
+        contractUpdate: undefined,
       }
     case contractConstants.EDIT_CONTRACT_SUCCESS:
       return {
@@ -127,8 +128,15 @@ const contracts = (state = initialState, action) => {
     case 'RESET_CONTRACT_UPDATE': 
       return {
         ...state,
-        contractUpdate: undefined
+        contractUpdate: undefined,
+        contractDetail: undefined
     }
+    case 'LOGOUT':
+      return {
+        successMessage: undefined,
+        errMessage: undefined,
+        pending: false
+      }
     default:
       return state
     }
