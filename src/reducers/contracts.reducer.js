@@ -28,6 +28,8 @@ const contracts = (state = initialState, action) => {
         ...state,
         pending: true,
         contractUpdate: undefined,
+        errMessage: undefined,
+        successMessage: undefined
       }
     case contractConstants.EDIT_CONTRACT_SUCCESS:
       return {
