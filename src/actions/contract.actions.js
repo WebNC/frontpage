@@ -4,12 +4,11 @@ import {API_URL} from '../constants/index';
 
 const getContractDetail = (id) => {
     return dispatch => {
-
+        dispatch(request());
         setTimeout(() => {
             axios
                 .get(`${API_URL}users/contract/read/${id}`)
                 .then(result => {
-                    console.log(result.data);
                     dispatch(success(result.data));
                 })
                 .catch(error => {
@@ -18,6 +17,7 @@ const getContractDetail = (id) => {
         }, 1000)
     };
 
+    function request() { return { type: contractConstants.GET_CONTRACT_DETAIL_REQUEST} }
     function success(data) { return { type: contractConstants.GET_CONTRACT_DETAIL_SUCCESS, data} }
     function failure(error) { return { type: contractConstants.GET_CONTRACT_DETAIL_FAILURE, error } }
 }
@@ -128,7 +128,7 @@ const paymentContract = (id) => {
                 })
                 // eslint-disable-next-line no-unused-vars
                 .then( result => { 
-                        dispatch(success("Thanh toán hợp đồng thành công!"));
+                        dispatch(success('Thanh toán hợp đồng thành công!', result.data.contract));
                     }
                 )
                 .catch(error => {
@@ -138,10 +138,16 @@ const paymentContract = (id) => {
     };
 
     function request() { return { type: contractConstants.PAYMENT_CONTRACT_REQUEST} }
-    function success(message) { return { type: contractConstants.PAYMENT_CONTRACT_SUCCESS, message} }
+    function success(message, contract) { return { type: contractConstants.PAYMENT_CONTRACT_SUCCESS, message, contract} }
     function failure(error) { return { type: contractConstants.PAYMENT_CONTRACT_FAILURE, error } }
 }
 
+const resetContractUpdate = () =>
+{
+    return {
+        type: 'RESET_CONTRACT_UPDATE'
+    }
+}
 
 export const contractActions = {
   getContractDetail,
@@ -149,5 +155,6 @@ export const contractActions = {
   evaluateContract,
   deleteContract,
   reportContract,
-  paymentContract
+  paymentContract,
+  resetContractUpdate,
 };

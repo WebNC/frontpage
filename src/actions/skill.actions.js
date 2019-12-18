@@ -13,7 +13,7 @@ const getAll = () => {
                     dispatch(success(result.data.message));
                 })
                 .catch(error => {
-                    return dispatch(failure(error.response.data.message || 'Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                    return dispatch(failure('Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
                 })
         }, 1000)
     };
