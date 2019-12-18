@@ -110,7 +110,7 @@ class StudentInfoPage extends React.Component {
                   </>
                 ) :(
                   <> 
-                    <h3 className="title" style={{margin: 0}}>Cập nhật thông tin cá nhân</h3>
+                    <h3 className="title">Cập nhật thông tin cá nhân</h3>
                     <WrappedStudentInfoForm />
                   </>
                 )}

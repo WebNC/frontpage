@@ -62,14 +62,16 @@ class StudentInfoForm extends React.Component {
 
     return (
               <Form onSubmit={this.handleSubmit} style={{width: "450px"}}>
-                <Form.Item>
-                    {successMessage && !this.state.isFirstLoad &&
-                      <div className="success-message">{successMessage}</div>
-                    }
-                    {errMessage && !this.state.isFirstLoad &&
-                      <div className="error-message">{errMessage}</div>
-                    }
-                </Form.Item>
+                {successMessage && !this.state.isFirstLoad &&
+                  <Form.Item>
+                    <div className="success-message">{successMessage}</div>
+                  </Form.Item>
+                }
+                {errMessage && !this.state.isFirstLoad &&
+                  <Form.Item>
+                    <div className="error-message">{errMessage}</div>
+                  </Form.Item>
+                }
                 <Form.Item label="Tên hiển thị" validateStatus={usernameError ? 'error' : ''} help={usernameError || ''}>
                   {getFieldDecorator('username', {
                     rules: [
@@ -134,7 +136,7 @@ class StudentInfoForm extends React.Component {
                   )}
                 </Form.Item>
                 <Form.Item>
-                  <Button type="primary" htmlType="submit" className="register-teacher-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
+                  <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} loading={pending}>
                     Lưu thay đổi
                   </Button>
                 </Form.Item>  

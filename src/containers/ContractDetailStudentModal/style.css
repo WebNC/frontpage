@@ -1,0 +1,16 @@
+.item-info-contract {
+  display: flex;
+  margin-left: 20px;
+}
+
+.item-info-contract h5 {
+  font-size: 14px;
+  text-align: left;
+  line-height: 30px;
+}
+
+.item-info-contract h5.title {
+  width: 120px;
+  text-align: left;
+  line-height: 30px;
+}

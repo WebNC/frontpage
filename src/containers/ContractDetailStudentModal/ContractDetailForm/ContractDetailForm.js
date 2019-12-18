@@ -1,11 +1,11 @@
 import React from 'react';
-import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd';
-import 'antd/dist/antd.css';
+import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd'
+import AddressInput from '../../../components/AddressInput/AddressInput'
+import moment from 'moment'
+import 'antd/dist/antd.css'
 import { skillActions } from '../../../actions/skill.actions'
 import { contractActions } from '../../../actions/contract.actions'
-import AddressInput from '../../../components/AddressInput/AddressInput'
-import moment from 'moment';
-import {connect} from 'react-redux'
+import { connect } from 'react-redux'
 
 
 const dateFormat = 'DD-MM-YYYY';
@@ -25,32 +25,49 @@ class ContractDetailForm extends React.Component {
         this.state = {
             isFirstLoad: true,
             total: 0,
-            hour: 0
+            hour: 0,
+            data: null,
+            disabled: false,
         }
     }
 
     componentDidMount() {
       // To disabled submit button at the beginning.
-      const {form, contractInfo } = this.props;
-      console.log(contractInfo.contract);
-
-      form.validateFields();
+      const {form, contractDetail} = this.props;
+      console.log(contractDetail.contract);
       
       const selectedSkill = [];
-      contractInfo.contract.skill.forEach((element)=>{
+      contractDetail.contract.skill.forEach((element)=>{
         selectedSkill.push(element.id)
       })
+
       form.setFieldsValue({
-        skill: selectedSkill, 
-        fromdate: [moment(contractInfo.contract.fromDate),moment(contractInfo.contract.toDate)],
-        address: contractInfo.contract.address, 
-        hour: contractInfo.contract.hour,
+        skill: selectedSkill,
+        fromDate: [moment(contractDetail.contract.fromDate),moment(contractDetail.contract.toDate)],
+        address: contractDetail.contract.address, 
+        hour: contractDetail.contract.hour,
         });
 
-      this.setState({total: contractInfo.contract.value});
+      contractDetail.contract.status !== "Đang chờ" ? this.setState({disabled: true}) : this.setState({disabled: false});
+      this.setState({total: contractDetail.contract.value});
     }
 
     handleSubmit = (e) =>{
+      const {getFieldsValue} = this.props.form;
+      const {contractDetail, editContract} = this.props;
+      e.preventDefault();
+      
+      const values = getFieldsValue();
+      editContract({
+          id: contractDetail.contract._id,
+          fromDate: values.fromDate[0],
+          toDate: values.fromDate[1],
+          hour: values.hour,
+          skill: values.skill, 
+          value: this.state.total, 
+          address: values.address
+      });
+      this.setState({isFirstLoad: false})
     }
 
     range = (start, end) => {
@@ -82,7 +99,7 @@ class ContractDetailForm extends React.Component {
     }
 
     onChange = e =>{
-      const { teacher } = this.props.contractInfo;
+      const { teacher } = this.props.contractDetail;
       const {getFieldsValue} = this.props.form;
       const values = getFieldsValue();
       const hour = values.hour
@@ -97,7 +114,7 @@ class ContractDetailForm extends React.Component {
 
     render(){
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        const {allSkill, contractInfo, handleShowDetailContract} = this.props;
+        const {allSkill, contractDetail, errMessage, successMessage, pending} = this.props;
 
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
         const hourError = isFieldTouched('hour') && getFieldError('hour');
@@ -107,13 +124,23 @@ class ContractDetailForm extends React.Component {
 
         const selectSkill=[];
         allSkill.forEach(skill => {
-        selectSkill.push(<Option key={ skill._id }>{skill.name}</Option>)
+          selectSkill.push(<Option key={ skill._id }>{skill.name}</Option>)
         });
-
+        
         return(
           <Form onSubmit={this.handleSubmit} className="contract-detail-form">
+            {successMessage && !this.state.isFirstLoad &&
+              <Form.Item>
+                <div className="success-message">{successMessage}</div>
+              </Form.Item>
+            }
+            {errMessage && !this.state.isFirstLoad &&
+              <Form.Item>
+                <div className="error-message">{errMessage}</div>
+              </Form.Item>
+            }
             <Form.Item label="Thời gian dạy" validateStatus={fromDateError ? 'error' : ''} help={fromDateError || ''}>
-              {getFieldDecorator('fromdate', {
+              {getFieldDecorator('fromDate', {
                 rules: [
                 {
                   required: true,
@@ -181,23 +208,18 @@ class ContractDetailForm extends React.Component {
               )}
             </Form.Item>
             <Form.Item>
-              {`Tổng tiền : ${total} đ`}
+              <p style={{fontSize: "16px", textAlign: "left"}}>{`Tổng tiền : ${total} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
             </Form.Item>
             <Form.Item>
-              {contractInfo.contract.status === 'Đang chờ' ? (
-                <div style={{display: "flex", justifyContent: "space-between", paddingLeft: "10%", paddingRight: "10%"}}>
-                  <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
-                    Cập nhật hợp đồng
-                  </Button>
-                  <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())}>
-                    Xóa hợp đồng
-                  </Button>
-                </div>
-              ) : ( 
-                  <p></p>
-                )
-              }
-              
+              <Button 
+                type="primary" 
+                htmlType="submit" 
+                disabled={hasErrors(getFieldsError())} 
+                loading={pending}
+                style={{width: "50%", marginLeft: "25%", marginTop: 20}}
+                >
+                Cập nhật hợp đồng
+              </Button>
             </Form.Item>
           </Form>
         )
@@ -207,12 +229,14 @@ class ContractDetailForm extends React.Component {
 function mapStateToProps(state) {
   return {
     allSkill: state.skill.allSkill,
-    contractInfo: state.contracts.contractInfo
+    contractDetail: state.contracts.contractDetail,
+    errMessage: state.contracts.errMessage,
+    successMessage: state.contracts.successMessage,
+    pending: state.contracts.pending,
   };
 }
 const mapDispatchToProps = dispatch => ({
-  getAllSkill:() => dispatch(skillActions.getAll()),
-  getContractDetail: (id) => dispatch(contractActions.getContractDetail(id)),
+  editContract: (data) => dispatch(contractActions.editContract(data)),
 });
 
 const WrappedContractDetailForm = (Form.create({ name: 'contract-detail-form' })(ContractDetailForm));

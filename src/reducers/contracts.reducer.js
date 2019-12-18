@@ -12,6 +12,8 @@ const contracts = (state = initialState, action) => {
       return {
         ...state,
         contractDetail: undefined,
+        errMessage: undefined,
+        successMessage: undefined
       }
     case contractConstants.GET_CONTRACT_DETAIL_SUCCESS:
       return {
@@ -50,6 +52,8 @@ const contracts = (state = initialState, action) => {
       return {
         ...state,
         pending: true,
+        errMessage: undefined,
+        successMessage: undefined
       }
     case contractConstants.EVALUATE_CONTRACT_SUCCESS:
       return {
@@ -70,6 +74,8 @@ const contracts = (state = initialState, action) => {
       return {
         ...state,
         pending: true,
+        errMessage: undefined,
+        successMessage: undefined
       }
     case contractConstants.DELETE_CONTRACT_SUCCESS:
       return {
@@ -89,6 +95,8 @@ const contracts = (state = initialState, action) => {
       return {
         ...state,
         pending: true,
+        errMessage: undefined,
+        successMessage: undefined
       }
     case contractConstants.REPORT_CONTRACT_SUCCESS:
       return {
@@ -127,18 +135,31 @@ const contracts = (state = initialState, action) => {
         successPayMessage: undefined,
         errPayMessage: action.error
     }
+    case contractConstants.REPLY_CONTRACT_REQUEST: 
+      return {
+        pending: true,
+        successPayMessage: undefined,
+        errPayMessage: undefined,
+        contractDetail: undefined
+      }
+    case contractConstants.REPLY_CONTRACT_SUCCESS:
+      return {
+        pending: false,
+        successMessage: action.message,
+        errMessage: undefined
+      }
+    case contractConstants.REPLY_CONTRACT_FAILURE:
+      return {
+        pending: false,
+        successMessage: undefined,
+        errMessage: action.error
+      }
     case 'RESET_CONTRACT_UPDATE': 
       return {
         ...state,
         contractUpdate: undefined,
         contractDetail: undefined
     }
-    case 'LOGOUT':
-      return {
-        successMessage: undefined,
-        errMessage: undefined,
-        pending: false
-      }
     default:
       return state
     }

@@ -6,6 +6,7 @@ import './style.css'
 import DetailContract from './DetailContract/DetailContract'
 import ContractDetailStudentModal from '../../containers/ContractDetailStudentModal/ContractDetailStudentModal'
 import EvaluationContractModal from '../../containers/EvaluationContractModal/EvaluationContractModal'
+import ReportContractModal from '../../containers/ReportContractModal/ReportContractModal'
 import { Link } from 'react-router-dom'
 import { contractActions } from '../../actions/contract.actions'
 import { connect } from 'react-redux'
@@ -17,7 +18,8 @@ class NotificationContract extends React.Component {
     this.state = {
       openModal : false,
       openEvaluation: false,
-      openPayment: false
+      openPayment: false,
+      openReport: false
     }
   }
 
@@ -31,6 +33,8 @@ class NotificationContract extends React.Component {
 
   handleShowDetailContract = () =>{
     const {openModal} = this.state;
+    const {getContractDetail, contractInfo} = this.props;
+    getContractDetail(contractInfo._id)
     this.setState({
         openModal : !openModal,
         openEvaluation: false,
@@ -62,19 +66,30 @@ class NotificationContract extends React.Component {
   handlePaymentClose = () => {
     this.setState({
       openPayment : false
-  })
-
+    })
   }
+
+  handleShowReportForm = () => {
+    const {openReport} = this.state;
+    this.setState({
+        openReport: !openReport,
+        openEvaluation : false,
+        openModal: false,
+        openPayment: false,
+    })
+  }
+
     render() {
         const {isTeacher, contractInfo, successPayMessage, errPayMessage, contractUpdate} = this.props;
-        const {openModal, openEvaluation, openPayment} = this.state;
+        const {openModal, openEvaluation, openPayment, openReport} = this.state;
         console.log(contractInfo);
         return (
           <>
           { isTeacher && openModal &&
-            < DetailContract open={openModal}
+            <DetailContract open={openModal}
              handleShowDetailContract={this.handleShowDetailContract}
              contractInfo={contractInfo}
+             isWaiting={contractInfo.status === "Đang chờ"}
              /> 
           }
           { !isTeacher && openModal && 
@@ -88,6 +103,13 @@ class NotificationContract extends React.Component {
             <EvaluationContractModal 
             open={openEvaluation}
             handleShowEvaluationForm={this.handleShowEvaluationForm}
+            contractInfo={contractInfo} 
+          />
+          }
+          {openReport && 
+            <ReportContractModal 
+            open={openReport}
+            handleShowReportForm={this.handleShowReportForm}
             contractInfo={contractInfo} 
           />
           }
@@ -108,8 +130,8 @@ class NotificationContract extends React.Component {
                   Bạn có một hợp đồng từ <span className="username">{contractInfo.studentName}</span>
                 </p>
                 ):(
-                <p className="notify">
-                  Bạn có gửi hợp đồng đến <Link to={`/teachers/${contractInfo.teacherID}`}>{contractInfo.teacherName}</Link>
+                <p className="notify-teacher">
+                  Giáo viên: <Link to={`/teachers/${contractInfo.teacherID}`}>{contractInfo.teacherName}</Link>
                 </p>
                 )
               }
@@ -134,7 +156,12 @@ class NotificationContract extends React.Component {
                   <p className="status paid-status">
                     {contractInfo.status}
                   </p>
-                  {!isTeacher && <Button onClick={this.handleShowEvaluationForm}>Đánh giá</Button>}
+                  {!isTeacher &&
+                    <>
+                      <Button onClick={this.handleShowEvaluationForm}>Đánh giá</Button>
+                      <Button onClick={this.handleShowReportForm}>Khiếu nại</Button>
+                    </>
+                  }
                   <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
                 </div>
               )}
@@ -145,7 +172,12 @@ class NotificationContract extends React.Component {
                     <p className="status paid-status">
                       {contractUpdate.status}
                     </p>
-                    {!isTeacher && <Button onClick={this.handleShowEvaluationForm}>Đánh giá</Button> }
+                    {!isTeacher &&
+                    <>
+                      <Button onClick={this.handleShowEvaluationForm}>Đánh giá</Button>
+                      <Button onClick={this.handleReportContract}>Khiếu nại</Button>
+                    </>
+                    }
                     <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
                   </div>
                   ):(
@@ -172,11 +204,14 @@ function mapStateToProps(state) {
     successPayMessage: state.contracts.successPayMessage,
     errPayMessage: state.contracts.errPayMessage,
     contractUpdate: state.contracts.contractUpdate,
+    user: state.user.user
   };
 }
 const mapDispatchToProps = dispatch => ({
   paymentContract: (id) => dispatch(contractActions.paymentContract(id)),
   resetContractUpdate: () => dispatch(contractActions.resetContractUpdate()),
+  reportContract: (data) => dispatch(contractActions.reportContract(data)),
+  getContractDetail: (id) => dispatch(contractActions.getContractDetail(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationContract)

@@ -9,6 +9,12 @@
   width: 40%;
   text-align: left;
 }
+
+.notification-contract-component .notify-teacher {
+  width: 20%;
+  text-align: left;
+}
+
 .notification-contract-component .status {
   font-weight: 800;
   width: 40%;
@@ -22,12 +28,12 @@
 
 .btn-status-component {
   display: flex;
-  width: 50%;
+  width: 70%;
   justify-content: space-between;
 }
 
 .pending-status {
-  color: #fff566;
+  color: rgb(252, 186, 3);
 }
 
 .deline-status {
@@ -40,4 +46,8 @@
 
 .paid-status {
   color: #0625d4;
+}
+
+.modal-600 {
+  max-width: 600px;
 }
