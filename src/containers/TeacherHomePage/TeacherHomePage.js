@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload} from 'antd';
+import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload, Spin} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
@@ -16,11 +16,7 @@ import IncomeChart from '../IncomeChart/IncomeChart.container'
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
-const dateFormat = 'DD-MM-YYYY';
-
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class TeacherHomePage extends React.Component {
 
@@ -71,49 +67,57 @@ class TeacherHomePage extends React.Component {
         <div class="content-component">
           <Tabs tabPosition="left">
             <TabPane tab="Thông tin cá nhân" key="1">
-              <div className="basic-info-component">
-                <h3>Thông tin cơ bản</h3>
-                <div className="item-info">
-                  <h5 className="info-title">Địa chỉ:</h5>
-                  <h5>
-                    {user.address === undefined ? '' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` } 
-                  </h5>
+              {user.address !== undefined ? (
+                <>
+                  <div className="basic-info-component">
+                    <h3>Thông tin cơ bản</h3>
+                    <div className="item-info">
+                      <h5 className="info-title">Địa chỉ:</h5>
+                      <h5>
+                        {user.address === undefined ? '' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` } 
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Số điện thoại:</h5> 
+                      <h5>
+                        {user.phone}
+                      </h5> 
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Ngày Sinh:</h5> 
+                      <h5>
+                        {user.birthday === undefined ? '' : moment(user.birthday).format('DD/MM/YYYY') }
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Giới tính: </h5>
+                      <h5>
+                        {user.sex}
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Mức lương:</h5> 
+                      <h5 >
+                        {user.price === undefined ? `0 đ` : `${user.price} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      </h5>
+                    </div>
+                  </div>
+                  <div className="intro-component">
+                    <h3>Giới thiệu</h3>
+                    <Paragraph class="intro">
+                      {user.intro === "" ? "Chưa có bài tự giới thiệu." : user.intro}
+                    </Paragraph>
+                  </div>
+                  <div class="skill-component">
+                    <h3>Kỹ năng</h3>
+                    {userSkill}
+                  </div>
+                </>
+              ): (
+                <div style={{textAlign: "center"}}>
+                  <Spin indicator={antIcon} />
                 </div>
-                <div className="item-info">
-                  <h5 className="info-title">Số điện thoại:</h5> 
-                  <h5>
-                    {user.phone}
-                  </h5> 
-                </div>
-                <div className="item-info">
-                  <h5 className="info-title">Ngày Sinh:</h5> 
-                  <h5>
-                    {user.birthday === undefined ? '' : moment(user.birthday).format('DD/MM/YYYY') }
-                  </h5>
-                </div>
-                <div className="item-info">
-                  <h5 className="info-title">Giới tính: </h5>
-                  <h5>
-                    {user.sex}
-                  </h5>
-                </div>
-                <div className="item-info">
-                  <h5 className="info-title">Mức lương:</h5> 
-                  <h5 >
-                    {user.price === undefined ? `0 đ` : `${user.price} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
-                  </h5>
-                </div>
-              </div>
-              <div className="intro-component">
-                <h3>Giới thiệu</h3>
-                <Paragraph class="intro">
-                  {user.intro === "" ? "Chưa có bài tự giới thiệu." : user.intro}
-                </Paragraph>
-              </div>
-              <div class="skill-component">
-                <h3>Kỹ năng</h3>
-                {userSkill}
-              </div>
+              )}
             </TabPane>
             <TabPane tab="Yêu cầu từ người học" key="2">
               <div className="requirement-component">

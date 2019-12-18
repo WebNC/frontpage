@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon, Button} from 'antd';
+import { Icon, Button, Spin} from 'antd';
 import {Modal, InputGroup} from 'react-bootstrap'
 import 'antd/dist/antd.css';
 import './style.css'
@@ -7,6 +7,8 @@ import moment from 'moment';
 import { connect } from 'react-redux'
 import { contractActions } from '../../../actions/contract.actions';
 import { userActions } from '../../../actions/user.actions';
+
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 class DetailContract extends React.Component {
 
   constructor(props){
@@ -62,21 +64,21 @@ class DetailContract extends React.Component {
             ):(
               <Modal.Body>
                 <div className="error-message">{errMessage}</div>
-                {contractDetail !== undefined && 
-                  <div className="info-contract-teacher">
-                  <div className="item-info-contract-teacher">
-                    <h5 className="title-contract-teacher">Địa chỉ học :</h5>
-                    <h5>
-                      {`${contractDetail.contract.address.address}, ${contractDetail.contract.address.district}, Hồ Chí Minh` } 
-                    </h5>
-                  </div>
-                  <div className="item-info-contract-teacher">
-                    <h5 className="title-contract-teacher">Tên học viên: </h5> 
-                    <h5>
-                      {contractDetail.student.username}
-                    </h5> 
-                  </div>
-                  <div className="item-info-contract-teacher">
+                {contractDetail !== undefined ?  
+                  (<div className="info-contract-teacher">
+                    <div className="item-info-contract-teacher">
+                      <h5 className="title-contract-teacher">Địa chỉ học :</h5>
+                      <h5>
+                        {`${contractDetail.contract.address.address}, ${contractDetail.contract.address.district}, Hồ Chí Minh` } 
+                      </h5>
+                    </div>
+                    <div className="item-info-contract-teacher">
+                      <h5 className="title-contract-teacher">Tên học viên: </h5> 
+                      <h5>
+                        {contractDetail.student.username}
+                      </h5> 
+                    </div>
+                    <div className="item-info-contract-teacher">
                       <h5 className="title-contract-teacher">Thời gian dạy:</h5>
                       <h5>
                         {contractDetail.contract.fromDate !== undefined ? 
@@ -109,7 +111,12 @@ class DetailContract extends React.Component {
                         {`${contractDetail.contract.value} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
                       </h5>
                     </div>
-                </div>
+                </div> 
+                ):(
+                  <div style={{textAlign: "center"}}>
+                    <Spin indicator={antIcon} />
+                  </div>
+                )
                 }
               </Modal.Body>
             )}

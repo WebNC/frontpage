@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Form, InputNumber, Icon, Select, DatePicker } from "antd";
+import { Button, Form, InputNumber, Icon, Select, DatePicker , Spin} from "antd";
 import AddressInput from '../../components/AddressInput/AddressInput'
 import "antd/dist/antd.css";
 import './style.css'
@@ -13,14 +13,7 @@ import {connect} from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 
-const dateFormat = 'DD-MM-YYYY';
-const { Option } = Select;
-const { RangePicker } = DatePicker;
-
-
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class ContractDetailForm extends React.Component {
 
@@ -75,7 +68,7 @@ class ContractDetailForm extends React.Component {
           	<Modal.Title>Thông tin chi tiết hợp đồng</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          { contractDetail !== undefined && 
+          { contractDetail !== undefined ? ( 
           <>
             <p style={{textAlign: "left", fontSize: 16}}>Giáo viên: <Link to={`/teachers/${contractDetail.teacher._id}`}>{contractDetail.teacher.username}</Link></p>
             <p style={{textAlign: "left", fontSize: 16}}>Trạng thái: {contractDetail.contract.status}</p>
@@ -127,6 +120,11 @@ class ContractDetailForm extends React.Component {
               )
             }
             </>
+          ):(
+            <div style={{textAlign: "center"}}>
+              <Spin indicator={antIcon} />
+            </div>
+          )
         }
         </Modal.Body>
       </Modal>

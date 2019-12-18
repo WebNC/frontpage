@@ -1,5 +1,5 @@
 import React from 'react';
-import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload} from 'antd';
+import { Button, Typography, Tabs, Spin, Icon} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
@@ -17,6 +17,7 @@ import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassFor
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
 const dateFormat = 'DD-MM-YYYY';
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -78,8 +79,8 @@ class StudentInfoPage extends React.Component {
         <div class="content-component">
           <Tabs tabPosition="left" onChange={this.handleTabChange} activeKey={this.state.activeKey}>
             <TabPane tab="Thông tin cá nhân" key="1">
+            {user.address !== undefined ? (
               <div className="basic-info-component">
-                
                 {this.state.isEdit === false ? (
                   <>
                     <h3 className="title">Thông tin cơ bản</h3>
@@ -115,6 +116,12 @@ class StudentInfoPage extends React.Component {
                   </>
                 )}
               </div>
+              ):(
+                <div style={{textAlign: "center"}}>
+                  <Spin indicator={antIcon} />
+                </div>
+              )}
+              
             </TabPane>
             <TabPane tab="Danh sách hợp đồng" key="2">
               <div className="contract-history-component">
