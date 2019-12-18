@@ -24,13 +24,15 @@ function App(props) {
   return (
         <Switch>
           <Route exact path="/">
-            {loggedIn && isTeacher ? <Redirect to="/teacher-home"/> : <Redirect to="/home"/>}
+            {isTeacher ? <Redirect to="/teacher-home"/> : <Redirect to="/home"/>}
           </Route>
           <Route exact path="/register" component={RegisterPage} />
           <Route exact path="/login" component={LoginPage} />
           <Route exact path="/teachers/:id"  component={TeacherDetail} />
 
-          <Route exact path="/home"  component={HomePage} />
+          <Route exact path="/home" >
+            {!isTeacher ? <HomePage/> : <Redirect to="/"/>}
+          </Route>
           
           {/* <Route exact path="/home">
           {isTeacher ? <TeacherHomePage/> : <HomePage/>}

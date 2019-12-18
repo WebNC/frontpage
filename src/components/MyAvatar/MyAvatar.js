@@ -1,5 +1,5 @@
 import React from 'react'
-import { Upload, Icon, Button, Avatar} from 'antd';
+import { Upload, Icon, Button, Avatar, Tooltip, Result} from 'antd';
 import { Modal} from 'react-bootstrap'
 import './style.css'
 import{ connect } from 'react-redux';
@@ -13,6 +13,7 @@ class MyAvatar extends React.Component {
       loading: false,
       visible: false,
       file: null,
+      isFirstLoadModal: true,
     };
     this.onFormSubmit = this.onFormSubmit.bind(this);
     this.onChange = this.onChange.bind(this);
@@ -24,17 +25,11 @@ class MyAvatar extends React.Component {
     });
   };
 
-  handleOk = (e) => {
-    console.log(e);
-    this.setState({
-      visible: false,
-    });
-  };
-
   handleCancel = (e) => {
     console.log(e);
     this.setState({
       visible: false,
+      isFirstLoadModal: true
     });
   };
 
@@ -48,29 +43,73 @@ class MyAvatar extends React.Component {
     })
 
     this.setState({
-      visible: false,
+      isFirstLoadModal: false
     });
 }
   onChange = (e) => {
       this.setState({file: e.target.files[0]});
+      
+      let reader = new FileReader();
+       
+      reader.onloadend = () => {
+        this.setState({
+          imagePreviewUrl: reader.result
+        });
+      }
+   
+      reader.readAsDataURL(e.target.files[0])
   }
 
   render() {
-    const { imageUrl} = this.props;
+    const { imageUrl, successMessage, errMessage, pending} = this.props;
     return (
       <div>
-        <Button className="btn-avatar" onClick={() => this.showModal()}>
-          <Avatar size={130} src={imageUrl} className="avatar-img" />
-        </Button>
+        <Tooltip placement="bottom" title="Cập nhật ảnh đại diện">
+          <Button className="btn-avatar" onClick={() => this.showModal()}>
+            <Avatar size={130} src={imageUrl} className="avatar-img" />
+          </Button>
+        </Tooltip>
         <Modal show={this.state.visible} onHide={this.handleCancel}>
           <Modal.Header closeButton>
             <Modal.Title>Cập nhật ảnh đại diện</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <form onSubmit={this.onFormSubmit}>
-              <input type="file" name="myImage" onChange={this.onChange} />
-              <button type="submit" className="btn-upload-avatar">Tải ảnh lên</button>
-            </form>
+            {successMessage !== undefined && !this.state.isFirstLoadModal ? (
+              <Result
+                status="success"
+                title="Cập nhật ảnh đại diện thành công!"
+              />
+            ): (
+              <>
+                {errMessage !== undefined ? (
+                <Result
+                  status="warning"
+                  title="There are some problems with your operation."
+                />
+                ):(
+                  <>
+                    <div className="preview-avatar">
+                      <Avatar size={200} src={this.state.imagePreviewUrl ? this.state.imagePreviewUrl : imageUrl}></Avatar>
+                    </div>
+                    <form onSubmit={this.onFormSubmit} >
+                      <div className="update-avatar-form">
+                        <input type="file" name="myImage" onChange={this.onChange} />
+                      </div>
+                      <div className="update-avatar-form">
+                        <button type="submit" className="btn-upload-avatar">
+                          {
+                            pending && <Icon type="loading" style={{ fontSize: 14, marginRight: 5 }} spin />
+                          }
+                          Tải ảnh lên
+                          </button>
+                      </div>
+                    </form>
+                  </>
+                )
+              }
+            </>
+            )
+          }
           </Modal.Body>
         </Modal>
       </div>
@@ -83,6 +122,7 @@ function mapStateToProps(state) {
     user: state.user.user,
     successMessage: state.user.successMessage,
     errMessage: state.user.errMessage,
+    pending: state.user.pending,
   }
 }
 
