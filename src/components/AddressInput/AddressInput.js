@@ -65,7 +65,7 @@ class AddressInput extends React.Component {
   };
 
   render() {
-    const { size } = this.props;
+    const { size, disabled } = this.props;
     const { district, address } = this.state;
     return (
       <div>
@@ -76,12 +76,14 @@ class AddressInput extends React.Component {
           value={address}
           onChange={this.handleAddressChange}
           style={{ width: '65%', marginRight: '3%' }}
+          disabled = {disabled}
         />
         <Select
           value={district}
           size={size}
           style={{ width: '32%' }}
           onChange={this.handleDistrictChange}
+          disabled={disabled}
         >
           {listDistrict}
         </Select>

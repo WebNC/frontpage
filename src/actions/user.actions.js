@@ -398,7 +398,7 @@ const updateStudentInfo = ({id, username, address, sex, phone, birthday}) => {
                 .post(`${API_URL}users/edit`, {
                     id, username, address, sex, phone, birthday
                 })
-                .then( result => { 
+                .then( result => {
                         return dispatch(success("Cập nhật thông tin thành công!", result.data.user));
                     }
                 )
@@ -413,23 +413,22 @@ const updateStudentInfo = ({id, username, address, sex, phone, birthday}) => {
     function failure(error) { return { type: userConstants.UPDATE_FAILURE, error } }
 }
 
-const changePass = ({_id, passpresent, password}) => {
+const changePass = ({id,  password}) => {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
             axios
-                .post('https://hw6-caro-api.herokuapp.com/user/changepass', {
-                    _id,
-                    passpresent,
+                .post(`${API_URL}users/change-pass`, {
+                    id,
                     password
                 })
                 // eslint-disable-next-line no-unused-vars
                 .then( result => { 
-                        dispatch(success(result.data.message));
+                        dispatch(success("Đổi mật khẩu thành công"));
                     }
                 )
                 .catch(error => {
-                    dispatch(failure(error.response.data.message));
+                    dispatch(failure(error.response.data.message || "Đã có lỗi xảy ra, vui lòng thử lại!"));
                 })
         }, 1000)
     };

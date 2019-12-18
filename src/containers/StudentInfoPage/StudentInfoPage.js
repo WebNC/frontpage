@@ -12,6 +12,7 @@ import NavBar from '../../components/NavBar/NavBar';
 import MyAvatar from '../../components/MyAvatar/MyAvatar';
 import WrappedStudentInfoForm from './StudentInfoForm/StudentInfoForm';
 import NotificationContract from '../../components/NotificationContract/NotificationContract';
+import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -23,23 +24,28 @@ function hasErrors(fieldsError) {
 
 class StudentInfoPage extends React.Component {
 
+    constructor(props) {
+      super(props);
+      this.state = {
+        isEdit: false,
+        activeKey: "1",
+      };
+    }
     componentDidMount() {
       const { getDetail } = this.props;
       getDetail();
     }
 
-    // handleSubmit = e => {
-    //   const {getFieldsValue} = this.props.form;
-    //   e.preventDefault();
-      
-    //   const values = getFieldsValue();
-      
-    //   this.props.getDetail();
-      
-    //   this.setState({isFirstLoad: false})
-    // }
+    handleEdit = e => {
+      this.setState({isEdit: !this.state.isEdit, activeKey: "1"})
+    }
+
+    handleTabChange = activeKey => {
+      this.setState({isEdit: false, activeKey: activeKey})
+    }
+
   render() {
-    const {user} = this.props;
+    const {user, changePass, errMessage, successMessage, pending} = this.props;
     const listContract = [];
     if(user.history !== null && user.history !== undefined ) {
       user.history.forEach(element => {
@@ -57,19 +63,75 @@ class StudentInfoPage extends React.Component {
                 <h3 className="username">{user.username}</h3>
               </div>
             </div>
+            <div className="btns-component">
+            {this.state.isEdit === false ? (
+              <Button icon="edit" type="normal" className="btn" onClick = {this.handleEdit}>
+                Cập nhật thông tin cá nhân
+              </Button>
+            ):(
+              <Button icon="rollback" type="normal" className="btn" onClick = {this.handleEdit}>
+                Trở về trang cá nhân
+              </Button>
+             )}
+          </div>
         </div>
         <div class="content-component">
-          <Tabs tabPosition="left">
+          <Tabs tabPosition="left" onChange={this.handleTabChange} activeKey={this.state.activeKey}>
             <TabPane tab="Thông tin cá nhân" key="1">
               <div className="basic-info-component">
-                <h3 className="title">Thông tin cơ bản</h3>
-                <WrappedStudentInfoForm />
+                
+                {this.state.isEdit === false ? (
+                  <>
+                    <h3 className="title">Thông tin cơ bản</h3>
+                    <div className="item-info">
+                      <h5 className="info-title">Địa chỉ:</h5>
+                      <h5 className="item-content">
+                        {user.address === undefined ? '' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` } 
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Số điện thoại:</h5> 
+                      <h5 className="item-content">
+                        {user.phone}
+                      </h5> 
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Ngày Sinh:</h5> 
+                      <h5 className="item-content">
+                        {user.birthday === undefined ? '' : moment(user.birthday).format('DD/MM/YYYY') }
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Giới tính: </h5>
+                      <h5 className="item-content">
+                        {user.sex}
+                      </h5>
+                    </div>
+                  </>
+                ) :(
+                  <> 
+                    <h3 className="title" style={{margin: 0}}>Cập nhật thông tin cá nhân</h3>
+                    <WrappedStudentInfoForm />
+                  </>
+                )}
               </div>
             </TabPane>
             <TabPane tab="Danh sách hợp đồng" key="2">
               <div className="contract-history-component">
                 <h3>Danh sách hợp đồng</h3>
                 {listContract}
+              </div>
+            </TabPane>
+            <TabPane tab="Đổi mật khẩu" key="3">
+              <div className="contract-history-component">
+                <h3>Đổi mật khẩu</h3>
+                <WrappedChangePassForm 
+                  userId={user._id} 
+                  changePass={changePass} 
+                  errMessage={errMessage} 
+                  successMessage={successMessage}
+                  pending={pending}
+                />
               </div>
             </TabPane>
           </Tabs> 
@@ -83,7 +145,8 @@ class StudentInfoPage extends React.Component {
 
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    errMessage: state.user.errMessage,
+    successMessage: state.user.successMessage,
     pending: state.user.pending,
     user: state.user.user
   };
@@ -91,7 +154,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   getDetail: () => dispatch(userActions.getDetail()),
-  logout: () => dispatch(userActions.logout())
+  logout: () => dispatch(userActions.logout()),
+  changePass: (data) => dispatch(userActions.changePass(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentInfoPage)

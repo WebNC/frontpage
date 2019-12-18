@@ -11,6 +11,7 @@ import {history} from '../../helper';
 import NavBar from '../../components/NavBar/NavBar';
 import MyAvatar from '../../components/MyAvatar/MyAvatar';
 import NotificationContract from '../../components/NotificationContract/NotificationContract';
+import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -28,7 +29,7 @@ class TeacherHomePage extends React.Component {
     }
 
   render() {
-    var {user} = this.props;
+    var {user, errMessage, successMessage, changePass, pending} = this.props;
     // console.log(user.skill);
     var userSkill =[];
 
@@ -129,6 +130,18 @@ class TeacherHomePage extends React.Component {
                 Doanh thu
               </div>
             </TabPane>
+            <TabPane tab="Đổi mật khẩu" key="5">
+              <div className="contract-history-component">
+                <h3>Đổi mật khẩu</h3>
+                <WrappedChangePassForm 
+                  userId={user._id} 
+                  changePass={changePass} 
+                  errMessage={errMessage} 
+                  successMessage={successMessage}
+                  pending={pending}
+                />
+              </div>
+            </TabPane>
           </Tabs> 
         </div>
         <Footer />
@@ -140,7 +153,8 @@ class TeacherHomePage extends React.Component {
 
 function mapStateToProps(state) {
   return { 
-    message: state.user.message,
+    errMessage: state.user.errMessage,
+    successMessage: state.user.successMessage,
     pending: state.user.pending,
     user: state.user.user
   };
@@ -148,7 +162,8 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = (dispatch) => ({
   getDetail: () => dispatch(userActions.getDetail()),
-  logout: () => dispatch(userActions.logout())
+  logout: () => dispatch(userActions.logout()),
+  changePass: (data) => dispatch(userActions.changePass(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherHomePage)
