@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon,  Typography, Avatar, Tabs, Button} from 'antd';
+import { Icon,  Typography, Avatar, Tabs, Button, Pagination} from 'antd';
 import Course from '../../components/Course/Course';
 import 'antd/dist/antd.css';
 import '../TeacherHomePage/style.css';
@@ -25,19 +25,25 @@ class TeacherDetail extends React.Component {
       teacherInfo: {},
       skills: [],
       openModal: false,
-      history: []
+      history: [],
+      data: [],
+      amount: 0,
+      pageSize: 10,
     }
   }
 
-  UNSAFE_componentWillMount() {
+  componentDidMount() {
     const {id} = this.props.match.params
-
+    const {pageSize} = this.state
     getDetailTeacher(id).then(res=>{
       console.log(res.message)
+      const his = res.message.history.slice(0,pageSize);
       this.setState({
         teacherInfo : res.message,
         skills : res.message.skill,
-        history: res.message.history
+        data: res.message.history,
+        history: his,
+        amount: res.message.history.length,
       })
     })
   }
@@ -57,15 +63,27 @@ class TeacherDetail extends React.Component {
     })
   }
     
-
-
+  getStar = () =>{
+    
+    const {teacherInfo} = this.state;
+    console.log(teacherInfo.rating)
+    return teacherInfo.rating;
+  }
+  handleChange = (value) => {
+    const {data, pageSize} = this.state;
+    const start = (value-1)*pageSize;
+    const end = start + pageSize;
+    const his = data.slice(start,end);
+    this.setState({history: his});
+  }
   render() {
-    const {skills, teacherInfo, openModal, history} = this.state
+    const {skills, teacherInfo, openModal, history, amount, pageSize} = this.state
     var userSkill =[];
-
+    let index = 0
     skills.forEach(element => {
+      index += 1;
       userSkill.push(
-      <h5 key={element._id}>
+      <h5 key={element._id + String(index)}>
         <Icon type="check" className="icon"/>
         {element.name}
       </h5>)
@@ -88,13 +106,12 @@ class TeacherDetail extends React.Component {
                   <Icon type="contacts" theme="filled" size="large" />
                     Liên hệ ngay</Button>
                 </div>
-               
               </div>
             </div>
             <div className="d-flex" >
                 <div className="rating mr-5">
                   <h4  style={{color: 'white'}}>Đánh giá</h4>
-                  <StarRating rating={teacherInfo.rating} textColor={true}/>
+                  <StarRating key={teacherInfo._id} rating={teacherInfo.rating} textColor={true}/>
                 </div>
                 <div className="success">
                   <h4  style={{color: 'white'}}>Thành công</h4>
@@ -147,11 +164,12 @@ class TeacherDetail extends React.Component {
                 <h3>Lịch sử các khóa dạy học</h3>
                 {
                   history.map((item, index) => 
-                    <Course key={index} data={history[0]}/>
+                    <Course key={item._id} data={item}/>
                   )
                 }
                 
               </div>
+              {amount>0?<Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>:''}
             </TabPane>
            
           </Tabs> 

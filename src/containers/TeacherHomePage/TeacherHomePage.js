@@ -59,10 +59,6 @@ class TeacherHomePage extends React.Component {
               <h4>{user.major}</h4>
             </div>
           </div>
-          <div className="btns-component">
-            <Button icon="edit" type="normal" className="btn" onClick = {() => history.push('/teacher-edit-info')}>Cập nhật thông tin cá nhân</Button>
-            <Button icon="plus" type="normal" className="btn">Thêm khóa học mới</Button>
-          </div>
         </div>
         <div class="content-component">
           <Tabs tabPosition="left">
@@ -123,11 +119,6 @@ class TeacherHomePage extends React.Component {
               <div className="requirement-component">
                 <h3>Danh sách người học gửi yêu cầu </h3>
                 {listContract}
-              </div>
-            </TabPane>
-            <TabPane tab="Lịch sử" key="3">
-              <div className="history-component">
-                Lịch sử yêu cầu từ người học
               </div>
             </TabPane>
             <TabPane tab="Doanh thu" key="4">

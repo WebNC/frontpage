@@ -41,7 +41,7 @@ class StarRating extends React.Component {
         
         return (
             <div className="d-flex rating">
-                <p className="number-of-review mr-1 p-1" style={style}>{`${rating}.0`}</p>
+                <p className="number-of-review mr-1 p-1" style={style}>{`${rating.toFixed(1)}`}</p>
                 <StarRatings
                     rating={rating}
                     starRatedColor={starRatedColor}
