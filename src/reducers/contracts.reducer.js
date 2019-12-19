@@ -116,30 +116,28 @@ const contracts = (state = initialState, action) => {
       return {
         ...state,
         pending: true,
-        successPayMessage: undefined,
-        errPayMessage: undefined,
-        contractUpdate: undefined
+        successMessage: undefined,
+        errMessage: undefined,
       }
     case contractConstants.PAYMENT_CONTRACT_SUCCESS:
       return {
         ...state,
         pending: false,
-        successPayMessage: action.message,
-        contractUpdate: action.contract,
-        errPayMessage: undefined
+        successMessage: action.message,
+        errMessage: undefined
       }
     case contractConstants.PAYMENT_CONTRACT_FAILURE:
       return {
         ...state,
         pending: false,
-        successPayMessage: undefined,
-        errPayMessage: action.error
+        successMessage: undefined,
+        errMessage: action.error
     }
     case contractConstants.REPLY_CONTRACT_REQUEST: 
       return {
         pending: true,
-        successPayMessage: undefined,
-        errPayMessage: undefined,
+        successMessage: undefined,
+        errMessage: undefined,
         contractDetail: undefined
       }
     case contractConstants.REPLY_CONTRACT_SUCCESS:
@@ -154,12 +152,6 @@ const contracts = (state = initialState, action) => {
         successMessage: undefined,
         errMessage: action.error
       }
-    case 'RESET_CONTRACT_UPDATE': 
-      return {
-        ...state,
-        contractUpdate: undefined,
-        contractDetail: undefined
-    }
     default:
       return state
     }

@@ -130,10 +130,12 @@ const user = (state = initialState, action) => {
         pending: false,
       };
     case userConstants.CHANGEPASS_REQUEST:
-        return {
-          ...state,
+      return {
+        ...state,
           pending: true,
-        };
+        errMessage: undefined,
+        successMessage: undefined,
+      };
     case userConstants.CHANGEPASS_SUCCESS:
       return {
         ...state,
@@ -150,7 +152,9 @@ const user = (state = initialState, action) => {
       };
     case userConstants.GETDETAIL_REQUEST: 
       return {
-        ...state
+        ...state,
+        errMessage: undefined,
+        successMessage: undefined,
       };
     case userConstants.GETDETAIL_SUCCESS:
       return {

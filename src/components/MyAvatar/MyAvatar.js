@@ -26,22 +26,23 @@ class MyAvatar extends React.Component {
   };
 
   handleCancel = (e) => {
-    console.log(e);
+    const { getDetail } = this.props;
     this.setState({
       visible: false,
       isFirstLoadModal: true
     });
+    getDetail();
   };
 
   onFormSubmit = (e) => {
     e.preventDefault();
     const {user, updateAvatar} = this.props;
-    console.log(user);
+    
     updateAvatar({
       id: user._id,
       file: this.state.file
     })
-
+    
     this.setState({
       isFirstLoadModal: false
     });
@@ -84,7 +85,7 @@ class MyAvatar extends React.Component {
                 {errMessage !== undefined ? (
                 <Result
                   status="warning"
-                  title="There are some problems with your operation."
+                  title="Đã có lỗi xảy ra, vui lòng thử lại!"
                 />
                 ):(
                   <>
@@ -127,7 +128,8 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-  updateAvatar: (data) => dispatch(userActions.updateAvatar(data))
+  updateAvatar: (data) => dispatch(userActions.updateAvatar(data)),
+  getDetail: () => dispatch(userActions.getDetail()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MyAvatar)

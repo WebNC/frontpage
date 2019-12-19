@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Button, Result, Icon, Spin } from 'antd';
 import { Modal } from 'react-bootstrap'
 import 'antd/dist/antd.css';
 import './style.css'
@@ -9,8 +9,10 @@ import EvaluationContractModal from '../../containers/EvaluationContractModal/Ev
 import ReportContractModal from '../../containers/ReportContractModal/ReportContractModal'
 import { Link } from 'react-router-dom'
 import { contractActions } from '../../actions/contract.actions'
+import { userActions } from '../../actions/user.actions'
 import { connect } from 'react-redux'
 
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 class NotificationContract extends React.Component {
 
   constructor(props){
@@ -19,7 +21,8 @@ class NotificationContract extends React.Component {
       openModal : false,
       openEvaluation: false,
       openPayment: false,
-      openReport: false
+      openReport: false,
+      openComplete: false,
     }
   }
 
@@ -37,8 +40,6 @@ class NotificationContract extends React.Component {
     getContractDetail(contractInfo._id)
     this.setState({
         openModal : !openModal,
-        openEvaluation: false,
-        openPayment: false
     })
   }
 
@@ -46,21 +47,18 @@ class NotificationContract extends React.Component {
     const {openEvaluation} = this.state;
     this.setState({
         openEvaluation : !openEvaluation,
-        openModal: false,
-        openPayment: false,
     })
   }
 
   handlePayment = () => {
     const {openPayment} = this.state;
-    const { paymentContract, contractInfo } = this.props;
+    const { paymentContract, contractInfo, getDetail } = this.props;
 
     paymentContract(contractInfo._id);
     this.setState({
         openPayment : !openPayment,
-        openModal: false,
-        openEvaluation: false
     })
+    getDetail();
   }
 
   handlePaymentClose = () => {
@@ -69,19 +67,33 @@ class NotificationContract extends React.Component {
     })
   }
 
+  handleComplete = () => {
+    const {openComplete} = this.state;
+    const { completeContract, contractInfo, getDetail } = this.props;
+
+    completeContract(contractInfo._id);
+    this.setState({
+        openComplete : !openComplete,
+    })
+    getDetail();
+  }
+
+  handleCompleteClose = () => {
+    this.setState({
+      openComplete : false
+    })
+  }
+
   handleShowReportForm = () => {
     const {openReport} = this.state;
     this.setState({
         openReport: !openReport,
-        openEvaluation : false,
-        openModal: false,
-        openPayment: false,
     })
   }
 
     render() {
-        const {isTeacher, contractInfo, successPayMessage, errPayMessage, contractUpdate} = this.props;
-        const {openModal, openEvaluation, openPayment, openReport} = this.state;
+        const {isTeacher, contractInfo, successMessage, errMessage} = this.props;
+        const {openModal, openEvaluation, openPayment, openReport, openComplete} = this.state;
         console.log(contractInfo);
         return (
           <>
@@ -120,11 +132,54 @@ class NotificationContract extends React.Component {
                   <Modal.Title>Thanh toán hợp đồng</Modal.Title>
               </Modal.Header>
               <Modal.Body>
-                <p>{errPayMessage !== undefined ? errPayMessage : successPayMessage}</p>
+                {errMessage !== undefined && 
+                  <Result
+                    status="warning"
+                    title={errMessage}
+                  />
+                }
+                {successMessage !== undefined && 
+                  <Result
+                    status="success"
+                    title={successMessage}
+                  />
+                } 
+                { errMessage === undefined && successMessage === undefined &&
+                  <div style={{textAlign: "center"}}>
+                    <Spin indicator={antIcon} />
+                  </div>
+                }
               </Modal.Body>
             </Modal>
           }
-          <div className="notification-contract-component">
+
+          {openComplete && 
+            <Modal className="notification-contract-component" show={openComplete} onHide={this.handleCompleteClose}>
+              <Modal.Header closeButton>
+                  <Modal.Title>Xác nhật hoàn thành hợp đồng</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {errMessage !== undefined && 
+                  <Result
+                    status="warning"
+                    title={errMessage}
+                  />
+                }
+                {successMessage !== undefined && 
+                  <Result
+                    status="success"
+                    title={successMessage}
+                  />
+                } 
+                { errMessage === undefined && successMessage === undefined &&
+                  <div style={{textAlign: "center"}}>
+                    <Spin indicator={antIcon} />
+                  </div>
+                }
+              </Modal.Body>
+            </Modal>
+          }
+            <div className="notification-contract-component">
               {isTeacher === true ? (
                 <p className="notify">
                   Bạn có một hợp đồng từ <span className="username">{contractInfo.studentName}</span>
@@ -136,62 +191,63 @@ class NotificationContract extends React.Component {
                 )
               }
               {contractInfo.status === "Đang chờ" && (
-                <div className="btn-status-component">
+                <>
                   <p className="status pending-status">
                     {contractInfo.status}
                   </p>
-                  <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
-                </div>
+                  <div className="btn-status-component">
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                  </div>
+                </>
               )}
               {contractInfo.status === "Từ chối" && (
-                <div className="btn-status-component">
+                <>
                   <p className="status deline-status">
                     {contractInfo.status}
                   </p>
-                  <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
-                </div>
+                  <div className="btn-status-component">
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                  </div>
+                </>
+              )}
+              {contractInfo.status === "Đã chấp nhận" && (
+                <>
+                  <p className="status accept-status">
+                    {contractInfo.status}
+                  </p>
+                  <div className="btn-status-component"> 
+                    {!isTeacher && <Button onClick={this.handlePayment} className="status-btn">Thanh toán</Button>}
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                  </div>
+                </>
               )}
               {contractInfo.status === "Đã thanh toán" && (
-                <div className="btn-status-component"> 
+                <>
                   <p className="status paid-status">
                     {contractInfo.status}
                   </p>
+                  <div className="btn-status-component"> 
+                    {!isTeacher && <Button onClick={this.handleComplete} className="status-btn">Hoàn thành</Button>}
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                  </div>
+                </>
+              )}
+              
+
+              {contractInfo.status === "Đã hoàn thành" && (
+                <>
+                  <p className="status complete-status">
+                    {contractInfo.status}
+                  </p>
+                  <div className="btn-status-component"> 
                   {!isTeacher &&
                     <>
-                      <Button onClick={this.handleShowEvaluationForm}>Đánh giá</Button>
-                      <Button onClick={this.handleShowReportForm}>Khiếu nại</Button>
+                      <Button onClick={this.handleShowEvaluationForm} className="status-btn">Đánh giá</Button>
+                      <Button onClick={this.handleShowReportForm} className="status-btn">Khiếu nại</Button>
                     </>
                   }
-                  <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
-                </div>
-              )}
-              {contractInfo.status === "Đã chấp nhận" && (
-                <> 
-                  {contractUpdate !== undefined ? (
-                    <div className="btn-status-component"> 
-                    <p className="status paid-status">
-                      {contractUpdate.status}
-                    </p>
-                    {!isTeacher &&
-                    <>
-                      <Button onClick={this.handleShowEvaluationForm}>Đánh giá</Button>
-                      <Button onClick={this.handleReportContract}>Khiếu nại</Button>
-                    </>
-                    }
-                    <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
                   </div>
-                  ):(
-                    <div className="btn-status-component"> 
-                      <p className="status accept-status">
-                        {contractInfo.status}
-                      </p>
-                      {!isTeacher && <Button onClick={this.handlePayment}>Thanh toán</Button>}
-                      <Button onClick={this.handleShowDetailContract}>Xem chi tiết</Button>
-                    </div>
-                    
-                  )
-                  }
-                  
                 </>
               )}
           </div>
@@ -201,9 +257,8 @@ class NotificationContract extends React.Component {
 }
 function mapStateToProps(state) {
   return {
-    successPayMessage: state.contracts.successPayMessage,
-    errPayMessage: state.contracts.errPayMessage,
-    contractUpdate: state.contracts.contractUpdate,
+    successMessage: state.contracts.successMessage,
+    errMessage: state.contracts.errMessage,
     user: state.user.user
   };
 }
@@ -211,7 +266,9 @@ const mapDispatchToProps = dispatch => ({
   paymentContract: (id) => dispatch(contractActions.paymentContract(id)),
   resetContractUpdate: () => dispatch(contractActions.resetContractUpdate()),
   reportContract: (data) => dispatch(contractActions.reportContract(data)),
-  getContractDetail: (id) => dispatch(contractActions.getContractDetail(id))
+  getContractDetail: (id) => dispatch(contractActions.getContractDetail(id)),
+  completeContract: (id) => dispatch(contractActions.completeContract(id)),
+  getDetail: () => dispatch(userActions.getDetail()),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationContract)

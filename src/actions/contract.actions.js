@@ -172,6 +172,30 @@ const replyContract = ({id, status}) => {
     function success(message) { return { type: contractConstants.REPLY_CONTRACT_SUCCESS, message} }
     function failure(error) { return { type: contractConstants.REPLY_CONTRACT_FAILURE, error } }
 }
+
+const completeContract = (id) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+                .post(`${API_URL}student/contract/complete`, {
+                    id
+                })
+                // eslint-disable-next-line no-unused-vars
+                .then( result => { 
+                        dispatch(success("Cập nhật trạng thái hợp đồng thành công"));
+                    }
+                )
+                .catch(error => {
+                    dispatch(failure('Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
+                })
+        }, 1000)
+    };
+
+    function request() { return { type: contractConstants.REPLY_CONTRACT_REQUEST} }
+    function success(message) { return { type: contractConstants.REPLY_CONTRACT_SUCCESS, message} }
+    function failure(error) { return { type: contractConstants.REPLY_CONTRACT_FAILURE, error } }
+}
 export const contractActions = {
   getContractDetail,
   editContract,
@@ -180,5 +204,6 @@ export const contractActions = {
   reportContract,
   paymentContract,
   resetContractUpdate,
-  replyContract
+  replyContract,
+  completeContract,
 };

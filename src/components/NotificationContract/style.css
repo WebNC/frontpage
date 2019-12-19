@@ -17,7 +17,7 @@
 
 .notification-contract-component .status {
   font-weight: 800;
-  width: 40%;
+  width: 20%;
   text-align: left;
 } 
 
@@ -26,10 +26,15 @@
   font-weight: bold; 
 }
 
+.status-btn {
+  width: 118px;
+  margin-left: 10px;
+}
+
 .btn-status-component {
   display: flex;
-  width: 70%;
-  justify-content: space-between;
+  width: 50%;
+  justify-content: flex-end;
 }
 
 .pending-status {
@@ -45,9 +50,12 @@
 }
 
 .paid-status {
-  color: #0625d4;
+  color: #c41d7f;
 }
 
+.complete-status {
+  color: #0625d4
+}
 .modal-600 {
   max-width: 600px;
 }

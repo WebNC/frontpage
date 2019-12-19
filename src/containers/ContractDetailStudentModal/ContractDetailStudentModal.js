@@ -93,8 +93,10 @@ class ContractDetailForm extends React.Component {
                     </h5>
                   </div>
                   <div className="item-info-contract">
-                    <h5 className="title">Kỹ năng:</h5> 
-                    {selectedSkill}
+                    <h5 className="title">Kỹ năng:</h5>
+                    <div>
+                      {selectedSkill}
+                    </div>
                   </div>
                   <div className="item-info-contract">
                     <h5 className="title">Tổng số giờ:</h5> 
