@@ -31,8 +31,6 @@ class ReportContractForm extends React.Component {
       reportContract({
         teacherID: contractInfo.teacherID,
         studentID: user._id,
-        teacherName: contractInfo.teacherName,
-        studentName: user.username,
         content: values.content
       });
 
