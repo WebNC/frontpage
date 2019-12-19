@@ -79,7 +79,7 @@ class TeacherDetail extends React.Component {
                 handleCloseModal= {this.handleCloseModal}/>
         <div class="cover-component">
             <div className="info-component">
-              <Avatar size={130}/>
+              <Avatar src = {teacherInfo.url} size={130}/>
               <div class="name-component">
                 <h3>{teacherInfo.username}</h3>
                 <h4>{teacherInfo.major}</h4>

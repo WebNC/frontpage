@@ -1,12 +1,11 @@
 import React from 'react';
-import {Pagination} from 'react-bootstrap'
 import Filter from '../../components/Filter/Filter'
 import Cart from '../Cart/Cart'
 import * as teacherAction from '../../actions/teacher.actions'
 import './Content.scss'
 import{ connect } from 'react-redux';
 import ContactModal from '../../components/ContactModal/ContactModal'
-import {Icon} from 'antd'
+import {Icon, Pagination} from 'antd'
 
 
 const hourRate = ['< 100K','100K - 500K','> 500K'];
@@ -26,14 +25,14 @@ class Content extends React.Component {
         this.state = {
             teachers: [],
             amount: 0, 
-            page : 0,
-            openModal: false
+            pageSize : 10,
+            openModal: false,
+            time:0,
         }
     }
 
     componentDidMount = () =>{
-        const {page} = this.state;
-        teacherAction.getAllUserTeacher(page).then(res=>{
+        teacherAction.getAllUserTeacher(1).then(res=>{
            this.setState({
                teachers: res.message
            })
@@ -49,14 +48,15 @@ class Content extends React.Component {
         const types = nextProps.teachers;
         // console.log(types)
         if(!types.skill && !types.address && !types.cost){
-            teacherAction.getAllUserTeacher(0).then(res=>{
+            teacherAction.getAllUserTeacher(1).then(res=>{
                 this.setState({
                     teachers: res.message
                 })
             })
         } else {
-            // console.log(types.address, types.cost, types.skill)
-            teacherAction.filterTeacher(types.address, types.cost, types.skill).then(res => {
+            const {allSkill} = this.props;
+            const skill = allSkill.find((ele) => ele.name === types.skill);
+            teacherAction.filterTeacher(types.address, types.cost, skill? skill._id:undefined).then(res => {
                 this.setState({
                     teachers: res.user
                 })
@@ -64,28 +64,7 @@ class Content extends React.Component {
         }
     }
 
-    handlePre = () =>{
-        const {page, amount} = this.state;
-        if(page  > Math.floor(amount/25)){
-          this.setState({page: page -1})
-          teacherAction.getAllUserTeacher(page).then(res=>{
-            this.setState({teachers: res.message})
-          })
-          
-        }
-        
-    }
-  
-    handleNext = () =>{
-        const {page, amount} = this.state;
-        if(page < Math.floor(amount/25) ){
-          this.setState({page: page + 1})
-          teacherAction.getAllUserTeacher(page).then(res=>{
-            this.setState({teachers: res.message})
-          })
-          
-        }
-    }
+    
 
     handleCloseModal = () =>{
         const {openModal} = this.state;
@@ -93,22 +72,19 @@ class Content extends React.Component {
             openModal : !openModal,
         })
     }
-      
-
+    
+    handleChange = (value) =>{
+        teacherAction.getAllUserTeacher(value).then(res=>{
+            this.setState({
+                teachers: res.message
+            })
+        })
+    }
     render() {
-        const {teachers, amount, page, openModal} = this.state;
+        const {teachers, amount, pageSize, openModal} = this.state;
         const {allSkill} = this.props
-        const items = [];
-        const active = page +1;
-        for (let number = 1; number <= amount/25+1; number+=1) {
-            items.push(
-            <Pagination.Item key={number}  active={number === active}>
-                {number}
-            </Pagination.Item>,
-            );
-        }
         // handleCloseModal, open, teacher
-
+        
 
       
         return (
@@ -135,16 +111,11 @@ class Content extends React.Component {
                 </div>
                 {
                     teachers.map((item, index) => 
-                        <Cart cartInfor={item} key={index} handleCloseModal={this.handleCloseModal}/>
+                        <Cart cartInfor={item} key={item._id} handleCloseModal={this.handleCloseModal}/>
                     )
                 }
                 <div className="mb-5 mr-4">
-                    <Pagination className="float-right" size="sm">
-                        <Pagination.First onClick={this.handlePre} />
-                        {items} 
-                        {/* <Pagination.Ellipsis /> */}
-                        <Pagination.Last onClick={this.handleNext}/>
-                    </Pagination>
+                    <Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>
                 </div>
             </div>        
        
