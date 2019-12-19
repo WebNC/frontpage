@@ -29,8 +29,10 @@ class ReportContractForm extends React.Component {
       
       const values = getFieldsValue();
       reportContract({
-        courseID: contractInfo._id,
-        userID: user._id,
+        teacherID: contractInfo.teacherID,
+        studentID: user._id,
+        teacherName: contractInfo.teacherName,
+        studentName: user.username,
         content: values.content
       });
 

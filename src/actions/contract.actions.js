@@ -94,13 +94,13 @@ const deleteContract = (id) => {
     function failure(error) { return { type: contractConstants.DELETE_CONTRACT_FAILURE, error } }
 }
 
-const reportContract = ({courseID, userID, content}) => {
+const reportContract = ({teacherID, studentID, teacherName, studentName, content}) => {
     return dispatch => {
         dispatch(request());
         setTimeout(() => {
             axios
                 .post(`${API_URL}student/contract/report`, {
-                    courseID, userID, content
+                    teacherID, studentID, teacherName, studentName, content
                 })
                 // eslint-disable-next-line no-unused-vars
                 .then( result => { 
