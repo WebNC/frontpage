@@ -1,40 +1,32 @@
 import React from 'react';
 import './Footer.scss';
+import { Tooltip, Badge, Button, Avatar, Layout } from 'antd';
+import Logo from '../../components/Logo'
 import { SocialIcon } from 'react-social-icons';
+const { Header, Footer, Sider, Content } = Layout;
 
-class Footer extends React.Component {
+class MyFooter extends React.Component {
   
   render() {
     return (
-      <div className="footer">
-        <h6 >Các thông tin tham khảo </h6>
-        <div className="d-flex justify-content-between p-3 sub-infor">
-          <h5>About Us</h5>
-          <h5>Resources</h5>
-          <h5>Browse</h5>
+      <Footer style={{ bottom: "0", backgroundColor: "#b8d8f2", color: "#0c6b94" }}>
+        <div style={{display: "flex", justifyContent: "center"}}>
+          <Logo size={90} />
         </div>
-        <div className="d-flex follow-us justify-content-between">
-          <div className="d-flex">
-            <p>Follow us</p>
-            <SocialIcon url="https://www.facebook.com/" label="facebook" style={{ height: 25, width: 25 }} className="mr-2 ml-4"/>
-            <SocialIcon url="http://twitter.com/" label="twitter" style={{ height: 25, width: 25 }}className="mr-2"/>
-            <SocialIcon url="https://www.instagram.com/" label="instagram" style={{ height: 25, width: 25 }}className="mr-2" />
-            <SocialIcon url="https://www.linkedin.com/" label="linkedin" style={{ height: 25, width: 25 }}className="mr-2"/>
-
-          </div>
-
-          <div className="d-flex">
-            <p>Other</p>
-            <SocialIcon url="https://www.youtube.com/" label="youtube" style={{ height: 25, width: 25 }} className="mr-2 ml-4"/>
-            <SocialIcon url="https://webchat.teamontherun.com/" label="twitter" style={{ height: 25, width: 25 }}className="mr-2"/>
-          </div>
-         
+        <div style={{display: "flex", justifyContent: "space-between", padding: "0px 10%", marginTop: "10px"}}>
+          <p style={{fontSize: "18px", fontWeight: "bold"}}>227 Nguyễn Văn Cừ, P4, Q5, Tp. Hồ Chí Minh</p>
+          <p style={{fontSize: "18px", fontWeight: "bold"}}>0397350xxx</p>
+          <p style={{fontSize: "18px", fontWeight: "bold"}}>WebTeam@mail.com</p>
         </div>
-        <h6 className="copyright">© 2015 - 2019 Upwork® Global Inc.</h6>
-      
-      </div> 
+        <div style={{display: "flex", justifyContent: "center", marginTop: "10px"}}>
+          <p style={{fontSize: "18px", fontWeight: "bold", paddingTop: "5px"}}>Follow us</p>
+          <SocialIcon url="https://www.facebook.com/" label="facebook" style={{ height: 40, width: 40 }} className="mr-2 ml-4"/>
+          <SocialIcon url="https://www.instagram.com/" label="instagram" style={{ height: 40, width: 40 }}className="mr-2" />
+          <SocialIcon url="https://www.linkedin.com/" label="linkedin" style={{ height: 40, width: 40 }}className="mr-2"/>
+        </div>
+      </Footer> 
     );
   }
 }
 
-export default Footer;
+export default MyFooter;

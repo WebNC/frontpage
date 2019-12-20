@@ -36,14 +36,13 @@ class ContactModal extends React.Component {
 
         return (
           <>
-          <Modal show={open} onHide={handleCloseModal} size="lg">
+          <Modal show={open} onHide={handleCloseModal} dialogClassName="modal-600">
             <Modal.Header closeButton>
               <Modal.Title>Thông tin hợp đồng</Modal.Title>
             </Modal.Header>
             {
               (loggedIn && !isTeacher) ?  <Modal.Body>
-                <Icon type="notification" theme="filled" className="mr-3" style={{color: 'red'}}/>
-                Hãy điền đầy đủ thông tin đề giáo viên sắp xếp bạn nhé !!!
+                
               <WrapContactForm skills={skills} userInfo={userInfo}
                teacherInfo={teacherInfo}
                getDetail = {getDetail}
@@ -71,12 +70,10 @@ function mapStateToProps(state) {
     loggedIn: state.user.loggedIn,
     isTeacher: state.user.isTeacher,
     skills : state.skill
-
   };
 }
 const mapDispatchToProps = (dispatch) => ({
   getDetail: () => dispatch(userActions.getDetail()),
-
 });
 
 

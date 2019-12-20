@@ -1,5 +1,5 @@
 import React from 'react';
-import { Icon,  Typography, Avatar, Tabs, Button, Pagination} from 'antd';
+import { Icon,  Typography, Avatar, Tabs, Button, Pagination, Spin} from 'antd';
 import Course from '../../components/Course/Course';
 import 'antd/dist/antd.css';
 import '../TeacherHomePage/style.css';
@@ -16,7 +16,7 @@ import moment from 'moment';
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
-
+const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
 class TeacherDetail extends React.Component {
   constructor(props){
@@ -99,7 +99,7 @@ class TeacherDetail extends React.Component {
             <div className="info-component">
               <Avatar src = {teacherInfo.url} size={130}/>
               <div class="name-component">
-                <h3>{teacherInfo.username}</h3>
+                <h3 className="username">{teacherInfo.username}</h3>
                 <h4>{teacherInfo.major}</h4>
                 <div className="mt-4">
                     <Button type="primary" onClick={this.handleClickContact}>
@@ -122,42 +122,62 @@ class TeacherDetail extends React.Component {
 
                 </div>
             </div>
-           
-
-
           </div>
 
         <div className="content-component">
           <Tabs tabPosition="left">
             <TabPane tab="Thông tin cá nhân" key="1">
-              <div className="basic-info-component">
-                <h3>Thông tin cơ bản</h3>
-                 
-                <span>Địa chỉ: 
-                  <h5>
-                    {teacherInfo.address === undefined ? '' : `${teacherInfo.address.address}, ${teacherInfo.address.district}, Hồ Chí Minh` }
-                  </h5>
-                </span>
-                <span>Số điện thoại:
-                  <h5>{teacherInfo.phone}</h5>
-                </span>
-                <span>Ngày Sinh:
-                  <h5>{!teacherInfo.birthday ? '' : moment(teacherInfo.birthday).format('DD/MM/YYYY') }</h5>
-                </span>
-                <span>Giới tính:
-                  <h5>{teacherInfo.sex}</h5>
-                </span>
+            {teacherInfo.address !== undefined ? (
+              <>
+                <div className="basic-info-component">
+                    <h3>Thông tin cơ bản</h3>
+                    <div className="item-info">
+                      <h5 className="info-title">Địa chỉ:</h5>
+                      <h5>
+                        {teacherInfo.address === undefined ? '' : `${teacherInfo.address.address}, ${teacherInfo.address.district}, Hồ Chí Minh` } 
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Số điện thoại:</h5> 
+                      <h5>
+                        {teacherInfo.phone}
+                      </h5> 
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Ngày Sinh:</h5> 
+                      <h5>
+                        {teacherInfo.birthday === undefined ? '' : moment(teacherInfo.birthday).format('DD/MM/YYYY') }
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Giới tính: </h5>
+                      <h5>
+                        {teacherInfo.sex}
+                      </h5>
+                    </div>
+                    <div className="item-info">
+                      <h5 className="info-title">Mức lương:</h5> 
+                      <h5 >
+                        {teacherInfo.price === undefined ? `0 đ` : `${teacherInfo.price} đ`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+                      </h5>
+                    </div>
+                  </div>
+                <div className="intro-component">
+                  <h3>Giới thiệu</h3>
+                  <Paragraph className="intro">
+                    {teacherInfo.intro === "" ? "Chưa có bài tự giới thiệu." : teacherInfo.intro}
+                  </Paragraph>
+                </div>
+                <div className="skill-component">
+                  <h3>Kỹ năng</h3>
+                  {userSkill}
+                </div>
+              </>
+            ):(
+              <div style={{textAlign: "center"}}>
+                <Spin indicator={antIcon} />
               </div>
-              <div className="intro-component">
-                <h3>Giới thiệu</h3>
-                <Paragraph className="intro">
-                  {teacherInfo.intro === "" ? "Chưa có bài tự giới thiệu." : teacherInfo.intro}
-                </Paragraph>
-              </div>
-              <div className="skill-component">
-                <h3>Kỹ năng</h3>
-                {userSkill}
-              </div>
+            )}
             </TabPane>
             <TabPane tab="Lịch sử dạy học" key="2">
               <div class="courses-component">
@@ -167,7 +187,6 @@ class TeacherDetail extends React.Component {
                     <Course key={item._id} data={item}/>
                   )
                 }
-                
               </div>
               {amount>0?<Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>:''}
             </TabPane>

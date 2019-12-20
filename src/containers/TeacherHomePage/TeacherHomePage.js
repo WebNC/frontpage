@@ -6,7 +6,7 @@ import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions';
 import moment from 'moment';
 import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
+import MyFooter from '../../components/Footer/Footer';
 import {history} from '../../helper';
 import NavBar from '../../components/NavBar/NavBar';
 import MyAvatar from '../../components/MyAvatar/MyAvatar';
@@ -141,7 +141,7 @@ class TeacherHomePage extends React.Component {
             </TabPane>
           </Tabs> 
         </div>
-        <Footer />
+        <MyFooter />
       </div>
       
     );

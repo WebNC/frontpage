@@ -438,19 +438,27 @@ const changePass = ({id,  password}) => {
     function failure(error) { return { type: userConstants.CHANGEPASS_FAILURE, error } }
 }
 
-const requestContract = (studentID, teacherID, fromDate, toDate, hour, skill,value, address) => {
-    return axios
-        .post(`${API_URL}student/contract/request`, {
-            studentID, teacherID,fromDate, toDate, hour, skill, value, address
-        })
-        .then(res => {
-            console.log(res.data)
-            return res.data
-        }).catch(error => console.log(error));
+const requestContract = ({studentID, teacherID, fromDate, toDate, hour, skill,value, address}) => {
+    return dispatch => {
+        dispatch(request());
+        setTimeout(() => {
+            axios
+            .post(`${API_URL}student/contract/request`, {
+                studentID, teacherID,fromDate, toDate, hour, skill, value, address
+            })
+            .then( result => { 
+                dispatch(success("Đã gửi yêu cầu của bạn đến giáo viên!"));
+            })
+            .catch(error => {
+                dispatch(failure("Đã có lỗi xảy ra, vui lòng thử lại!"));
+            })
+        }, 1000)
+    };
+
+    function request() { return { type: userConstants.REQUEST_CONTRACT_REQUEST} }
+    function success(message) { return { type: userConstants.REQUEST_CONTRACT_SUCCESS, message } }
+    function failure(error) { return { type: userConstants.REQUEST_CONTRACT_FAILURE, error } }
 }
-
-
-
 
 export const userActions = {
     login,

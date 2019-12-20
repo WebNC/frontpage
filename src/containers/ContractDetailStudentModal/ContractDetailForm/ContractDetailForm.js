@@ -25,7 +25,7 @@ class ContractDetailForm extends React.Component {
         this.state = {
             isFirstLoad: true,
             total: 0,
-            hour: 0,
+            hour: 1,
             data: null,
             disabled: false,
         }
@@ -100,14 +100,16 @@ class ContractDetailForm extends React.Component {
 
     onChange = e =>{
       const { teacher } = this.props.contractDetail;
-      const {getFieldsValue} = this.props.form;
-      const values = getFieldsValue();
-      const hour = values.hour
       
-      if(hour){
+      if(parseInt(e)) {
         this.setState({
-          total : teacher.price ? teacher.price*e : e*50000
+            total : e*teacher.price,
         })
+      }
+      else {
+          this.setState({
+              total : teacher.price,
+          })
       }
     }
 

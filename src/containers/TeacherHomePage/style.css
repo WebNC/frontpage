@@ -17,6 +17,7 @@
     align-items: center;
     justify-content: space-between;
     margin: 0 60px 0 60px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .cover-component .info-component {
@@ -49,7 +50,9 @@
     background-color:#ffffff;
     margin: 0px 60px 0 60px;
     padding-top: 40px;
-    min-height: 100%;
+    min-height: 550px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   }
 
   .basic-info-component, .intro-component, .skill-component, .courses-component, .requirement-component, .history-component{
@@ -77,4 +80,9 @@
 
   h3.username {
     color: #ffffff;
+  }
+
+  .ant-tabs .ant-tabs-left-content {
+    min-height: 500px;
+    padding-bottom: 30px;
   }

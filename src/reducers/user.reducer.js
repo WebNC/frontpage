@@ -225,6 +225,27 @@ const user = (state = initialState, action) => {
         successMessage: undefined,
         errMessage: action.error
       } 
+    case userConstants.REQUEST_CONTRACT_REQUEST:
+      return {
+        ...state,
+        pending: true,
+        errMessage: undefined,
+        successMessage: undefined,
+      }
+     case userConstants.REQUEST_CONTRACT_SUCCESS:
+       return {
+        ...state,
+        pending: false,
+        successMessage: action.message,
+        errMessage: undefined,
+       }
+    case userConstants.REQUEST_CONTRACT_FAILURE: 
+      return {
+        ...state,
+        pending: false,
+        successMessage: undefined,
+        errMessage: action.error
+      }    
     default:
       return state
   }
