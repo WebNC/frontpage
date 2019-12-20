@@ -32,7 +32,7 @@ class Content extends React.Component {
     }
 
     componentDidMount = () =>{
-        teacherAction.getAllUserTeacher(0).then(res=>{
+        teacherAction.getAllUserTeacher(1).then(res=>{
            this.setState({
                teachers: res.message
            })
@@ -84,42 +84,40 @@ class Content extends React.Component {
         const {teachers, amount, pageSize, openModal} = this.state;
         const {allSkill} = this.props
         // handleCloseModal, open, teacher
-        
-
-      
         return (
             <div>
-                <ContactModal open={openModal}
-                handleCloseModal= {this.handleCloseModal}
+                <ContactModal 
+                    open={openModal}
+                    handleCloseModal= {this.handleCloseModal}
                 />
                 
-            <div className="content">
-                <div className="d-flex filter-banner">
-                    <h6 className="filter">Bộ lọc
-                    <Icon type="filter"  className="ml-2" style={{ fontSize: '20px', color: '#08c' }} />
+                <div className="content">
+                    <div className="d-flex filter-banner">
+                        <h6 className="filter">
+                            Bộ lọc
+                            {/* <Icon type="filter"  className="ml-2" style={{ fontSize: '20px', color: '#08c' }} /> */}
+                        </h6>
+                        <Filter data={district} type={1}/>
+                        <Filter data={hourRate} type={2}/>
+                        <Filter data={allSkill} type={3}/>
 
-                    </h6>
-                    <Filter data={district} type={1}/>
-                    <Filter data={hourRate} type={2}/>
-                    <Filter data={allSkill} type={3}/>
+                        {/* <div className="ml-auto d-flex">
+                            <h6>Sort By : </h6>
+                            <Filter data={sort} />
 
-                    {/* <div className="ml-auto d-flex">
-                        <h6>Sort By : </h6>
-                        <Filter data={sort} />
-
-                    </div> */}
-                </div>
-                {
-                    teachers.map((item, index) => 
-                        <Cart cartInfor={item} key={item._id} handleCloseModal={this.handleCloseModal}/>
-                    )
-                }
-                <div className="mb-5 mr-4">
-                    <Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>
-                </div>
-            </div>        
-       
-            </div> )
+                        </div> */}
+                    </div>
+                    {
+                        teachers.map((item, index) => 
+                            <Cart cartInfor={item} key={item._id} handleCloseModal={this.handleCloseModal}/>
+                        )
+                    }
+                    <div className="mb-5 mr-4">
+                        <Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>
+                    </div>
+                </div>        
+            </div> 
+        )
     }
 }
 

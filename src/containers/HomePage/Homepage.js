@@ -7,7 +7,7 @@ import NavBar from '../../components/NavBar/NavBar'
 import Content from '../HomeContent/Content'
 import Intro from '../../components/Introduction/Intro'
 import MyFooter from '../../components/Footer/Footer'
-import Sliders from '../../components/Slider/Slider'
+import Sliders from '../../components/Sliders/Sliders'
 
 const categories = ['Web Dev', 'Mobile Dev', 'Design', 'Quality Control', 'Quality Assurance', 'Tester', 'Business Analyst',  'All Category']
 

@@ -32,7 +32,7 @@ class Intro extends React.Component {
                 <div className="feature" key={index}>
                   <Avatar src={item.src} size={160} />
                   <p className="name">{item.name}</p>
-                  <p>{item.description}</p>
+                  <p className="description">{item.description}</p>
                 </div>)
             }
         </div>

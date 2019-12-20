@@ -35,8 +35,6 @@ class Content extends React.Component {
         handleContact(cartInfor);
     }
 
-  
-
     render() {
         const {cartInfor, skills} = this.state;
         return (
@@ -44,28 +42,21 @@ class Content extends React.Component {
                 <Avatar src={cartInfor.url || './default-avatar.png'} size={120} className="avartar"/>
                 <div className="infor">
                     <Link to={`/teachers/${cartInfor._id}`} className="username mr-5">{`${cartInfor.username}`}</Link>
-                    <div className="d-flex subjects">{ cartInfor.major ? `${cartInfor.major}    -    ${cartInfor.email}` : cartInfor.email}</div>
-
-                    <div className="d-flex rating-ratio ">
-                        <StarRating rating={cartInfor.rating}/>
-                        <div className=" mr-5 ml-5"></div>
-                         <div className="ratio ml-5 mt-1 d-flex " > 
-                            <Icon type="trophy" theme="filled" style={{color: 'green',  fontSize: '20px'}} className="mr-2" />
-                            <div className=""> {`Thành công : ${cartInfor.successRatio || 100}%`} </div>
-                           </div>
-
+                    <div className="d-flex subjects">
+                        { cartInfor.major ? `${cartInfor.major}    -    ${cartInfor.email}` : cartInfor.email}
                     </div>
                     <div className="d-flex justify-content-between status">
-                         <div> <Icon type="crown" style={{ fontSize: '20px', color: '#08c' }}  className="mr-2"/>
-                             { cartInfor ? cartInfor.sex : ' '}</div>
-                         <div>
-                         <Icon type="phone" style={{ fontSize: '20px', color: '#08c' }}  className="mr-2" />
-                             {cartInfor ?  cartInfor.phone : ' '}</div>
-                        <div>
-                        <Icon type="home" style={{ fontSize: '20px', color: '#08c' }} className="mr-2" />
-                            {( cartInfor.address && cartInfor.address.address && cartInfor.address.district) ? `${cartInfor.address.address} , ${cartInfor.address.district}` : ' '}</div>
+                        <StarRating rating={cartInfor.rating}/>
+                        <p className="ratio ml-5 mt-1 d-flex" > 
+                            {`${cartInfor.successRatio || 100}% thành công`}
+                        </p>
+                        <p className="ratio ml-5 mt-1 d-flex " >
+                            {cartInfor ?  cartInfor.phone : ' '}
+                        </p>
+                        <p className="ratio ml-5 mt-1 d-flex " >
+                            {( cartInfor.address && cartInfor.address.address && cartInfor.address.district) ? `${cartInfor.address.address} , ${cartInfor.address.district}` : ' '}
+                        </p>
                     </div>
-
 
                     <div className="d-flex languages">
                         {skills.map((item, index) => 
@@ -73,34 +64,30 @@ class Content extends React.Component {
                         )}
                     </div>
 
-                    <div className="description">{cartInfor.intro ||  ` Wellcome everyone to my class`}</div>
+                    <div className="description">
+                        {cartInfor.intro ||  `Chưa có bài tự giới thiệu`}
+                    </div>
                     <Link to={`/teachers/${cartInfor._id}`}     >
-                        <Button variant="success" size="sm" className="mr-3" onClick={this.handleClickContact} >Xem chi tiết</Button>
+                        <Button variant="success" className="mr-3"  size="sm" onClick={this.handleClickContact} >Xem chi tiết</Button>
                     </Link>
-                    <Button variant="primary"  size="sm"  onClick={this.handleClickContact}>Liên hệ ngay</Button>
-
-
-
-                </div>
-                
+                    <Button variant="primary" type="primary" size="sm" onClick={this.handleClickContact}>
+                        Liên hệ ngay
+                    </Button>
+                </div>                
             </div>        
         )
     }
-
-
-
-
 }
-
 
 function mapStateToProps(state) {
     return {
       allSkill: state.skill.allSkill
     };
   }
-  const mapDispatchToProps = (dispatch) => ({
+
+const mapDispatchToProps = (dispatch) => ({
     getAllSkill:() => dispatch(skillActions.getAll()),
     handleContact : (teacherInfo) => dispatch(handleContact(teacherInfo))
-  });
+});
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Content)
+export default connect(mapStateToProps, mapDispatchToProps)(Content)
