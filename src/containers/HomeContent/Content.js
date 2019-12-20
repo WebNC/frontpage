@@ -32,7 +32,7 @@ class Content extends React.Component {
     }
 
     componentDidMount = () =>{
-        teacherAction.getAllUserTeacher(1).then(res=>{
+        teacherAction.getAllUserTeacher(0).then(res=>{
            this.setState({
                teachers: res.message
            })

@@ -18,7 +18,7 @@ class IncomeChart extends React.Component {
         const { data } = this.state;
       return (
         <>
-            <LineChart width={1200} height={400} data={data}>
+            <LineChart width={800} height={400} data={data}>
                 <XAxis dataKey="month"/>
                 <YAxis type="number">
                     <Label

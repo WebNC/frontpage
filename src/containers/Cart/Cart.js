@@ -6,7 +6,7 @@ import {skillActions} from '../../actions/skill.actions'
 import{ connect } from 'react-redux';
 import { handleContact } from '../../actions/teacher.actions';
 import StarRating from '../../components/Rating/Rating'
-import {Icon} from 'antd'
+import {Icon, Avatar} from 'antd'
 
 class Content extends React.Component {
     constructor(props) {
@@ -41,7 +41,7 @@ class Content extends React.Component {
         const {cartInfor, skills} = this.state;
         return (
             <div className="cart d-flex">
-                <img src={cartInfor.url || 'http://placehold.it/1000'} height="80" width="80" alt="avatar" className="avartar"/>
+                <Avatar src={cartInfor.url || './default-avatar.png'} size={120} className="avartar"/>
                 <div className="infor">
                     <Link to={`/teachers/${cartInfor._id}`} className="username mr-5">{`${cartInfor.username}`}</Link>
                     <div className="d-flex subjects">{ cartInfor.major ? `${cartInfor.major}    -    ${cartInfor.email}` : cartInfor.email}</div>

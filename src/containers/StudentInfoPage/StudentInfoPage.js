@@ -1,18 +1,20 @@
-import React from 'react';
-import { Button, Typography, Tabs, Spin, Icon} from 'antd';
-import 'antd/dist/antd.css';
-import './style.css';
-import{ connect } from 'react-redux';
-import {userActions} from '../../actions/user.actions';
-import moment from 'moment';
-import Header from '../../components/Header/Header';
-import Footer from '../../components/Footer/Footer';
-import {history} from '../../helper';
-import NavBar from '../../components/NavBar/NavBar';
-import MyAvatar from '../../components/MyAvatar/MyAvatar';
-import WrappedStudentInfoForm from './StudentInfoForm/StudentInfoForm';
-import NotificationContract from '../../components/NotificationContract/NotificationContract';
-import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm';
+import React from 'react'
+import { Button, Typography, Tabs, Spin, Icon} from 'antd'
+import 'antd/dist/antd.css'
+import './style.css'
+import{ connect } from 'react-redux'
+import {userActions} from '../../actions/user.actions'
+import {chatActions} from '../../actions/chat.actions'
+import moment from 'moment'
+import Header from '../../components/Header/Header'
+import MyFooter from '../../components/Footer/Footer'
+import {history} from '../../helper'
+import NavBar from '../../components/NavBar/NavBar'
+import MyAvatar from '../../components/MyAvatar/MyAvatar'
+import WrappedStudentInfoForm from './StudentInfoForm/StudentInfoForm'
+import NotificationContract from '../../components/NotificationContract/NotificationContract'
+import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm'
+import Message from '../../containers/Message/Message'
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -33,7 +35,11 @@ class StudentInfoPage extends React.Component {
       };
     }
     componentDidMount() {
-      const { getDetail } = this.props;
+      const { getDetail, getPartnerList, user } = this.props;
+      getPartnerList({
+        type: "Người học",
+        ID: user._id !== undefined ? user._id : user.id
+      });
       getDetail();
     }
 
@@ -129,7 +135,13 @@ class StudentInfoPage extends React.Component {
                 {listContract}
               </div>
             </TabPane>
-            <TabPane tab="Đổi mật khẩu" key="3">
+            <TabPane tab="Tin nhắn" key="3">
+              <h3 style={{fontSize: "28px", marginBottom: "20px", lineHeight: "35px"}}>
+                Tin nhắn
+              </h3>
+              <Message />
+            </TabPane>
+            <TabPane tab="Đổi mật khẩu" key="4">
               <div className="contract-history-component">
                 <h3>Đổi mật khẩu</h3>
                 <WrappedChangePassForm 
@@ -143,7 +155,7 @@ class StudentInfoPage extends React.Component {
             </TabPane>
           </Tabs> 
         </div>
-        <Footer />
+        <MyFooter />
       </div>
       
     );
@@ -163,6 +175,7 @@ const mapDispatchToProps = (dispatch) => ({
   getDetail: () => dispatch(userActions.getDetail()),
   logout: () => dispatch(userActions.logout()),
   changePass: (data) => dispatch(userActions.changePass(data)),
+  getPartnerList: (data) => dispatch(chatActions.getPartnerList(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(StudentInfoPage)

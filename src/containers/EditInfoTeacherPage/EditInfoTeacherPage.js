@@ -9,6 +9,7 @@ import WrappedEditInfoTeacherForm from './EditInfoTeacherForm/EditInfoTeacherFor
 import WrappedEditIntroTeacherForm from './EditIntroForm/EditIntroForm'
 import WrappedEditMajorSkillForm from './EditMajorSkillForm/EditMajorSkillForm'
 import MyAvatar from '../../components/MyAvatar/MyAvatar'
+import MyFooter from '../../components/Footer/Footer'
 import {history} from '../../helper'
 
 const { TabPane } = Tabs;
@@ -64,6 +65,7 @@ class EditInfoTeacherPage extends React.Component {
             </TabPane>
           </Tabs>
         </div>
+        <MyFooter />
       </div>
     );
   }

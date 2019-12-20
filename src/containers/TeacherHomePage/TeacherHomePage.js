@@ -59,6 +59,11 @@ class TeacherHomePage extends React.Component {
               <h4>{user.major}</h4>
             </div>
           </div>
+          <div className="btns-component">
+            <Button icon="edit" type="normal" className="btn" onClick = {this.handleEdit}>
+              Cập nhật thông tin cá nhân
+            </Button>
+          </div>
         </div>
         <div class="content-component">
           <Tabs tabPosition="left">
@@ -123,7 +128,7 @@ class TeacherHomePage extends React.Component {
             </TabPane>
             <TabPane tab="Doanh thu" key="4">
               <div className="history-component">
-                <h2>Doanh thu</h2>
+                <h3>Doanh thu</h3>
               </div>
               <IncomeChart></IncomeChart>
             </TabPane>

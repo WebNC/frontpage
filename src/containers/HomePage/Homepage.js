@@ -6,7 +6,7 @@ import Header from '../../components/Header/Header'
 import NavBar from '../../components/NavBar/NavBar'
 import Content from '../HomeContent/Content'
 import Intro from '../../components/Introduction/Intro'
-import Footer from '../../components/Footer/Footer'
+import MyFooter from '../../components/Footer/Footer'
 import Sliders from '../../components/Slider/Slider'
 
 const categories = ['Web Dev', 'Mobile Dev', 'Design', 'Quality Control', 'Quality Assurance', 'Tester', 'Business Analyst',  'All Category']
@@ -24,7 +24,7 @@ class HomePage extends React.Component {
        
            <Content/>
            <Intro/>
-           <Footer/>
+           <MyFooter/>
 
       </div> 
     );

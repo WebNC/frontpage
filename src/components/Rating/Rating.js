@@ -27,15 +27,8 @@ class StarRating extends React.Component {
         }
     }
 
-    changeRating = (newRating) => {
-        this.setState({
-            rating: newRating
-        });
-    }
-
-
     render() {
-        const { rating, starHoverColor, starRatedColor, starDimension, starSpacing, numberOfStars, name } = this.state;
+        const { rating } = this.state;
         const {rated, textColor} = this.props;
         const style = textColor && {color: 'white'}
         
@@ -44,14 +37,11 @@ class StarRating extends React.Component {
                 <p className="number-of-review mr-1 p-1" style={style}>{`${rating.toFixed(1)}`}</p>
                 <StarRatings
                     rating={rating}
-                    starRatedColor={starRatedColor}
-                    starHoverColor={starHoverColor}
-                    starDimension={starDimension}
-                    starSpacing={starSpacing}
-                    changeRating={!rated && this.changeRating}
-                    numberOfStars={numberOfStars}
-                    name={name}
-
+                    starRatedColor="#fcba03"
+                    numberOfStars={5}
+                    starDimension={20}
+                    starHoverColor="#fcba03"
+                    starSpacing = "2px"
                 />
             </div>
 

@@ -3,8 +3,9 @@ import { Icon,  Typography, Avatar, Tabs, Button, Pagination, Spin} from 'antd';
 import Course from '../../components/Course/Course';
 import 'antd/dist/antd.css';
 import '../TeacherHomePage/style.css';
-import Header from '../../components/Header/Header';
+import Header from '../../components/Header/Header'
 import NavBar from '../../components/NavBar/NavBar'
+import MyFooter from '../../components/Footer/Footer'
 import ContactModal from '../../components/ContactModal/ContactModal'
 import {getDetailTeacher} from '../../actions/teacher.actions'
 import StarRating from '../../components/Rating/Rating'
@@ -93,37 +94,35 @@ class TeacherDetail extends React.Component {
       <div className="teacher-home-page">
         <Header />
         <NavBar/>
-        <ContactModal open={openModal}
-                handleCloseModal= {this.handleCloseModal}/>
+        <ContactModal open={openModal} handleCloseModal= {this.handleCloseModal}/>
         <div class="cover-component">
-            <div className="info-component">
-              <Avatar src = {teacherInfo.url} size={130}/>
-              <div class="name-component">
-                <h3 className="username">{teacherInfo.username}</h3>
-                <h4>{teacherInfo.major}</h4>
-                <div className="mt-4">
-                    <Button type="primary" onClick={this.handleClickContact}>
+          <div className="info-component">
+            <Avatar src = {teacherInfo.url} size={130}/>
+            <div class="name-component">
+              <h3 className="username">{teacherInfo.username}</h3>
+              <h4>{teacherInfo.major}</h4>
+              <div className="mt-4">
+                <Button type="primary" onClick={this.handleClickContact}>
                   <Icon type="contacts" theme="filled" size="large" />
-                    Liên hệ ngay</Button>
-                </div>
+                  Liên hệ ngay
+                </Button>
               </div>
             </div>
-            <div className="d-flex" >
-                <div className="rating mr-5">
-                  <h4  style={{color: 'white'}}>Đánh giá</h4>
-                  <StarRating key={teacherInfo._id} rating={teacherInfo.rating} textColor={true}/>
-                </div>
-                <div className="success">
-                  <h4  style={{color: 'white'}}>Thành công</h4>
-                  <div className="ratio ml-2 mt-1 d-flex "  style={{color: 'white'}} > 
-                          <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
-                          <div className=""> {`${teacherInfo.successRatio || 100}%`} </div>
-                      </div>
-
-                </div>
+          </div>
+          <div className="d-flex" >
+            <div className="rating mr-5">
+              <h4  style={{color: 'white'}}>Đánh giá</h4>
+              <StarRating key={teacherInfo._id} rating={teacherInfo.rating} textColor={true}/>
+            </div>
+            <div className="success">
+              <h4  style={{color: 'white'}}>Thành công</h4>
+              <div className="ratio ml-2 mt-1 d-flex "  style={{color: 'white'}} > 
+                <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
+                <div className=""> {`${teacherInfo.successRatio || 100}%`} </div>
+              </div>
             </div>
           </div>
-
+        </div>
         <div className="content-component">
           <Tabs tabPosition="left">
             <TabPane tab="Thông tin cá nhân" key="1">
@@ -190,11 +189,10 @@ class TeacherDetail extends React.Component {
               </div>
               {amount>0?<Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>:''}
             </TabPane>
-           
           </Tabs> 
         </div>
+        <MyFooter />
       </div>
-      
     );
   }
 }
