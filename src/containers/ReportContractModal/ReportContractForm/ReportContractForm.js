@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input} from 'antd';
+import { Button, Form, Input, Result} from 'antd';
 import StarRatings from 'react-star-ratings';
 import 'antd/dist/antd.css';
 import { contractActions } from '../../../actions/contract.actions'
@@ -13,13 +13,6 @@ class ReportContractForm extends React.Component {
       this.state = {
         isFirstLoad: true,
       }
-    }
-
-    componentDidMount() {
-      const { form, contractInfo} = this.props;
-      this.setState({rating: contractInfo.rating})
-      form.setFieldsValue({comment: contractInfo.comment.comment}) ;
-      form.validateFields();
     }
 
     handleSubmit = (e) =>{
@@ -38,17 +31,17 @@ class ReportContractForm extends React.Component {
       this.setState({isFirstLoad: false})
     }
 
-
     render(){
         const {getFieldDecorator} = this.props.form;
-        const {successMessage, errMessage} = this.props;
+        const {successMessage, errMessage, pending} = this.props;
 
         return(
           <>
             {successMessage !== undefined && !this.state.isFirstLoad ? ( 
-              <p>
-                {successMessage}
-              </p> 
+              <Result
+                status="success"
+                title={successMessage}
+              />
             ): (
               <Form onSubmit={this.handleSubmit} className="evaluate-contract-form">
                 <Form.Item style={{marginBottom: "0px"}}>
@@ -65,7 +58,7 @@ class ReportContractForm extends React.Component {
                     )}
                 </Form.Item>
                 <Form.Item style={{marginBottom: "0px"}}>
-                  <Button type="primary" htmlType="submit" className="register-teacher-form-button">
+                  <Button type="primary" htmlType="submit" className="register-teacher-form-button" loading={pending}>
                     Gửi khiếu nại
                   </Button>
                 </Form.Item>
@@ -80,7 +73,8 @@ function mapStateToProps(state) {
   return {
     errMessage: state.contracts.errMessage,
     successMessage: state.contracts.successMessage,
-    user: state.user.user
+    user: state.user.user,
+    pending: state.contracts.pending
   };
 }
 const mapDispatchToProps = dispatch => ({

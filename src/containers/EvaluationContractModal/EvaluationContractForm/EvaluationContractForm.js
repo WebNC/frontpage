@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Form, Input} from 'antd';
+import { Button, Form, Input, Result} from 'antd';
 import StarRatings from 'react-star-ratings';
 import 'antd/dist/antd.css';
 import { contractActions } from '../../../actions/contract.actions'
@@ -50,14 +50,15 @@ class EvaluationContractForm extends React.Component {
 
     render(){
         const {getFieldDecorator} = this.props.form;
-        const {successMessage, errMessage} = this.props;
+        const {successMessage, errMessage, pending} = this.props;
 
         return(
           <>
             {successMessage !== undefined && !this.state.isFirstLoad ? ( 
-              <p>
-                {successMessage}
-              </p> 
+              <Result
+                status="success"
+                title={successMessage}
+              />
             ): (
               <Form onSubmit={this.handleSubmit} className="evaluate-contract-form">
                 <Form.Item style={{marginBottom: "0px"}}>
@@ -87,7 +88,7 @@ class EvaluationContractForm extends React.Component {
                     )}
                 </Form.Item>
                 <Form.Item style={{marginBottom: "0px"}}>
-                  <Button type="primary" htmlType="submit" className="register-teacher-form-button">
+                  <Button type="primary" htmlType="submit" className="register-teacher-form-button" loading={pending}>
                     Gửi đánh giá
                   </Button>
                 </Form.Item>
@@ -101,7 +102,8 @@ class EvaluationContractForm extends React.Component {
 function mapStateToProps(state) {
   return {
     errMessage: state.contracts.errMessage,
-    successMessage: state.contracts.successMessage
+    successMessage: state.contracts.successMessage,
+    pending: state.contracts.pending
   };
 }
 const mapDispatchToProps = dispatch => ({

@@ -72,7 +72,7 @@ class ContractDetailForm extends React.Component {
           <>
             <p style={{textAlign: "left", fontSize: 16}}>Giáo viên: <Link to={`/teachers/${contractDetail.teacher._id}`}>{contractDetail.teacher.username}</Link></p>
             <p style={{textAlign: "left", fontSize: 16}}>Trạng thái: {contractDetail.contract.status}</p>
-            <p style={{textAlign: "left", fontSize: 16}}>Ngày tạo: {moment(contractDetail.contract.createAt).format("DD/MM/YYYY")}</p>
+            <p style={{textAlign: "left", fontSize: 16}}>Ngày tạo: {moment(contractDetail.contract.createAt).format('DD/MM/YYYY')}</p>
             <p style={{textAlign: "left", fontSize: 16}}>Chi tiết hợp đồng:</p>
             {this.state.isEdit === true ? (
               <WrappedContractDetailForm />
