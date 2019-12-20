@@ -60,7 +60,7 @@ class TeacherHomePage extends React.Component {
             </div>
           </div>
           <div className="btns-component">
-            <Button icon="edit" type="normal" className="btn" onClick = {this.handleEdit}>
+            <Button icon="edit" type="normal" className="btn" onClick = {() => history.push('/teacher-edit-info')}>
               Cập nhật thông tin cá nhân
             </Button>
           </div>

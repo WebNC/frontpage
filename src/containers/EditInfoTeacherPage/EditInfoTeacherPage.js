@@ -46,7 +46,6 @@ class EditInfoTeacherPage extends React.Component {
           </div>
           <div className="btns-component">
             <Button icon="rollback" type="normal" className="btn" onClick = {() => history.push('/teacher-home')}>Trở về trang chủ</Button>
-            <Button icon="plus" type="normal" className="btn">Thêm khóa học mới</Button>
           </div>
         </div>
         <div class="content-component">

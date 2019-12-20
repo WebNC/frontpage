@@ -1,9 +1,11 @@
+.edit-teacher-page {
+  margin-top: 61px;
+}
 .info-form, .intro-form, .major-skill-form {
-  width: 80%;
+  min-width: 450px;
+  max-width: 600px;
   position: relative;
-  margin-left: auto;
-  margin-right: auto;
-  padding: 30px 40px 10px 40px;
+  padding: 0px 40px 10px 40px;
   background: #FFFFFF;
 }
 
@@ -33,7 +35,7 @@ h5.info-title {
 }
 
 .edit-teacher-page .title {
-  text-align: center;
+  margin-left: 40px;
 }
 
 .input-number, .my-date-picker {

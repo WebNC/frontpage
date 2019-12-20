@@ -59,7 +59,7 @@ class EditIntroTeacherForm extends React.Component {
           )}
         </Form.Item>
         <Form.Item>
-          <Button type="primary" htmlType="submit" className="register-teacher-form-button" disabled={hasErrors(getFieldsError())} loading={pending}>
+          <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} loading={pending}>
             Lưu thay đổi
           </Button>
         </Form.Item>  

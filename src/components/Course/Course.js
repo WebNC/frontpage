@@ -17,7 +17,8 @@ class Course extends React.Component {
         hour: 0,
         value: 0 ,
         rating: 5,
-        status: ''
+        status: '',
+        comment: ''
       };
     }
 
@@ -29,7 +30,6 @@ class Course extends React.Component {
         if( item._id && data.skill.indexOf(item._id) !== -1 && !item.isDeleted)
           skills.push(item)
       });
-
       this.setState({
         data,
         skills,
@@ -38,37 +38,33 @@ class Course extends React.Component {
         status: data.status,
         rating : data.rating,
         hour: data.hour,
-        value: data.value
+        value: data.value,
+        comment: data.comment !== undefined ? data.comment.comment : ''
       })
 
     }
 
   render() {
-    const {skills, from, to, status, rating, hour, value}  = this.state  
+    const {skills, from, to, status, rating, hour, comment}  = this.state  
     
 
     return (
       <div className="course">
         <div className="course-info">
-          
-        <div className="d-flex languages">
-          {skills.map((item) => 
-              <div className="skill" key={item._id}>{item.name}</div>
-          )}
-        </div>
-
+          <div className="d-flex languages">
+            {skills.map((item) => 
+                <div className="skill" key={item._id}>{item.name}</div>
+            )}
+          </div>
           <div className="d-flex mt-3">
-            <h4 className="mr-5 " style={{color: 'green'}}>{status}</h4>
-            <h4 className="ml-5 ">{`${value} VND`}</h4>
+            <Rating  rating={rating} rated={true}/>
+            <h5 className="mr-5 ml-1" >{comment}</h5>
           </div>
           <div className="d-flex mt-3">
             <h5 className= "mr-5">{`Ngày bắt đầu: ${from}`}</h5>
             <h5 className="ml-5">{`Ngày kết thúc : ${to}`}</h5>
           </div>
           <h5 className="mt-3">{`Tổng số giờ : ${hour}`}</h5>
-          <Rating  rating={rating} rated={true}/>
-          {/* <h5 className="mt-3">{` : ${rating}`}</h5> */}
-
         </div>
       </div>
       

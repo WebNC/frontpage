@@ -1,17 +1,17 @@
 import React from 'react';
 import { Icon,  Typography, Avatar, Tabs, Button, Pagination, Spin} from 'antd';
-import Course from '../../components/Course/Course';
-import 'antd/dist/antd.css';
-import '../TeacherHomePage/style.css';
+import StarRatings from 'react-star-ratings'
+import Course from '../../components/Course/Course'
+import 'antd/dist/antd.css'
+import '../TeacherHomePage/style.css'
 import Header from '../../components/Header/Header'
 import NavBar from '../../components/NavBar/NavBar'
 import MyFooter from '../../components/Footer/Footer'
 import ContactModal from '../../components/ContactModal/ContactModal'
 import {getDetailTeacher} from '../../actions/teacher.actions'
-import StarRating from '../../components/Rating/Rating'
-import{ connect } from 'react-redux';
+import{ connect } from 'react-redux'
 
-import moment from 'moment';
+import moment from 'moment'
   
 
 
@@ -101,9 +101,8 @@ class TeacherDetail extends React.Component {
             <div class="name-component">
               <h3 className="username">{teacherInfo.username}</h3>
               <h4>{teacherInfo.major}</h4>
-              <div className="mt-4">
+              <div className="mt-3">
                 <Button type="primary" onClick={this.handleClickContact}>
-                  <Icon type="contacts" theme="filled" size="large" />
                   Liên hệ ngay
                 </Button>
               </div>
@@ -111,15 +110,24 @@ class TeacherDetail extends React.Component {
           </div>
           <div className="d-flex" >
             <div className="rating mr-5">
-              <h4  style={{color: 'white'}}>Đánh giá</h4>
-              <StarRating key={teacherInfo._id} rating={teacherInfo.rating} textColor={true}/>
+              <div style={{display: "flex", justifyContent: "center"}} >
+                <p style={{fontSize: 30, marginBottom: 0, color: "#fff", lineHeight: "35px", marginRight: 10 }}>{teacherInfo.rating}</p>
+                <StarRatings 
+                  rating={teacherInfo.rating}
+                  starRatedColor="#fcba03"
+                  numberOfStars={1}
+                  starDimension={35}
+                  starHoverColor="#fcba03"
+                  starSpacing = "2px"
+                />
+              </div>
+              <h4  style={{color: 'white', marginTop: "10px", fontSize: "18px"}}>Đánh giá trung bình</h4>
             </div>
             <div className="success">
-              <h4  style={{color: 'white'}}>Thành công</h4>
-              <div className="ratio ml-2 mt-1 d-flex "  style={{color: 'white'}} > 
-                <Icon type="trophy" theme="filled" style={{color: 'green'}} className="mr-2" />
-                <div className=""> {`${teacherInfo.successRatio || 100}%`} </div>
-              </div>
+              <p style={{fontSize: 30, marginBottom: 0, color: "#fff", lineHeight: "35px"}}> 
+                {`${teacherInfo.successRatio || 100}%`} 
+              </p>
+              <h4 style={{color: 'white', marginTop: "10px", fontSize: "18px"}}>Thành công</h4>
             </div>
           </div>
         </div>
