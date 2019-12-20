@@ -12,7 +12,6 @@ const getPartnerList = ({type, ID}) => {
                   type, ID
                 })
                 .then(result => {
-                  console.log(type + ID)
                     dispatch(success(result.data.chat));
                 })
                 .catch(error => {
@@ -55,7 +54,7 @@ const sendMessage = ({teacherID, studentID, type, content}) => {
                 type, studentID, teacherID, content
               })
               .then(result => {
-                  dispatch(success());
+                  dispatch(success(result.data.chat));
               })
               .catch(error => {
                   return dispatch(failure('Đã có lỗi xảy ra trong quá trình xử lý. Vui lòng thử lại!'));
@@ -63,7 +62,7 @@ const sendMessage = ({teacherID, studentID, type, content}) => {
       }, 1000)
   };
   function request() { return { type: chatConstants.SEND_MESSAGE_REQUEST}}
-  function success() { return { type: chatConstants.SEND_MESSAGE_SUCCESS}}
+  function success(data) { return { type: chatConstants.SEND_MESSAGE_SUCCESS, data}}
   function failure(error) { return { type: chatConstants.SEND_MESSAGE_FAILURE, error}}
 }
 

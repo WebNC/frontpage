@@ -1,26 +1,26 @@
 import React from 'react'
-import { Tooltip, Typography } from 'antd';
+import { Tooltip, Typography, Avatar } from 'antd';
 
 const { Text } = Typography;
 
 class MessageContent extends React.Component {
 
   render() {
-    const { message, time, isReceived} = this.props;
+    const { message, time, isReceived, img} = this.props;
     var styleDiv = {
       display: "flex",
       justifyContent: "flex-end",
-      lineHeight: "30px",
-      margin: "10px 0"
+      margin: "10px 0",
+      wordWrap: "break-word"
     }
 
     var styleText = {
-      minWidth: "20%", 
-      maxWidth: "60%", 
+      maxWidth: "80%", 
       backgroundColor: "#1890ff",
       color: "#ffffff",
       padding: "0 10px",
-      borderRadius: "5px"
+      borderRadius: "5px",
+      lineHeight: "35px"
     }
 
     var tooltip = "left"
@@ -28,17 +28,18 @@ class MessageContent extends React.Component {
     if(isReceived) {
       styleDiv = {
         display: "flex",
-        lineHeight: "30px",
-        margin: "10px 0"
+        margin: "10px 0",
+        wordWrap: "break-word"
       }
   
       styleText = {
-        minWidth: "20%", 
-        maxWidth: "60%", 
+        maxWidth: "80%", 
         backgroundColor: "#f5f5f5",
         color: "#262626",
         padding: "0 10px",
-        borderRadius: "5px"
+        borderRadius: "5px",
+        marginLeft: "5px",
+        lineHeight: "35px"
       }
   
       tooltip = "right"
@@ -47,9 +48,9 @@ class MessageContent extends React.Component {
     return (
       <div style={styleDiv}>
         <Tooltip placement={tooltip} title={time}>
-          <Text style={styleText} >
-            {message}
-          </Text>
+           <Text style={styleText} >
+              {message}
+            </Text>
         </Tooltip>
       </div>
     );

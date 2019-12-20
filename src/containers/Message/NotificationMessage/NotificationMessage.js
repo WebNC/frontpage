@@ -14,10 +14,26 @@ class NotificationMessage extends React.Component {
     const { unSeen } = this.props;
     this.setState({unSeen: unSeen})
   }
+
   handelClick = () => {
+    const { getMessage, userID, fromID, isTeacher } = this.props;
+    if(isTeacher) {
+      getMessage({
+        type: 'Người dạy',
+        studentID: fromID,
+        teacherID: userID,
+      });
+    }
+    else {
+      getMessage({
+        type: 'Người học',
+        studentID: userID,
+        teacherID: fromID,
+      });
+    }
     this.setState({unSeen: 0})
   }
-  
+
   render() {
     const {from, unSeen, avatar} = this.props;
 

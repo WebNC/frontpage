@@ -1,18 +1,19 @@
-import React from 'react';
-import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload, Spin} from 'antd';
-import 'antd/dist/antd.css';
-import './style.css';
-import{ connect } from 'react-redux';
-import {userActions} from '../../actions/user.actions';
-import moment from 'moment';
-import Header from '../../components/Header/Header';
-import MyFooter from '../../components/Footer/Footer';
-import {history} from '../../helper';
-import NavBar from '../../components/NavBar/NavBar';
-import MyAvatar from '../../components/MyAvatar/MyAvatar';
-import NotificationContract from '../../components/NotificationContract/NotificationContract';
-import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm';
+import React from 'react'
+import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload, Spin} from 'antd'
+import 'antd/dist/antd.css'
+import './style.css'
+import{ connect } from 'react-redux'
+import {userActions} from '../../actions/user.actions'
+import {chatActions} from '../../actions/chat.actions'
+import moment from 'moment'
+import Header from '../../components/Header/Header'
+import MyFooter from '../../components/Footer/Footer'
+import {history} from '../../helper'
+import MyAvatar from '../../components/MyAvatar/MyAvatar'
+import NotificationContract from '../../components/NotificationContract/NotificationContract'
+import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm'
 import IncomeChart from '../IncomeChart/IncomeChart.container' 
+import Message from '../../containers/Message/Message'
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -21,8 +22,13 @@ const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 class TeacherHomePage extends React.Component {
 
     componentDidMount() {
-      const { getDetail } = this.props;
+      const { getDetail, getPartnerList, user } = this.props;
       getDetail();
+      console.log(user);
+      getPartnerList({
+        type: 'Người dạy',
+        ID: user._id !== undefined ? user._id : user.id
+      });
     }
 
   render() {
@@ -47,7 +53,6 @@ class TeacherHomePage extends React.Component {
       });
     }
 
-    
     return (
       <div className="teacher-home-page">
         <Header username={user.username}/>
@@ -126,11 +131,17 @@ class TeacherHomePage extends React.Component {
                 {listContract}
               </div>
             </TabPane>
-            <TabPane tab="Doanh thu" key="4">
+            <TabPane tab="Doanh thu" key="3">
               <div className="history-component">
                 <h3>Doanh thu</h3>
               </div>
               <IncomeChart></IncomeChart>
+            </TabPane>
+            <TabPane tab="Tin nhắn" key="4">
+              <h3 style={{fontSize: "28px", marginBottom: "20px", lineHeight: "35px"}}>
+                Tin nhắn
+              </h3>
+              <Message />
             </TabPane>
             <TabPane tab="Đổi mật khẩu" key="5">
               <div className="contract-history-component">
@@ -166,6 +177,7 @@ const mapDispatchToProps = (dispatch) => ({
   getDetail: () => dispatch(userActions.getDetail()),
   logout: () => dispatch(userActions.logout()),
   changePass: (data) => dispatch(userActions.changePass(data)),
+  getPartnerList: (data) => dispatch(chatActions.getPartnerList(data)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TeacherHomePage)

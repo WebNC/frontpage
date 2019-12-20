@@ -37,7 +37,7 @@ class StudentInfoPage extends React.Component {
     componentDidMount() {
       const { getDetail, getPartnerList, user } = this.props;
       getPartnerList({
-        type: "Người học",
+        type: 'Người học',
         ID: user._id !== undefined ? user._id : user.id
       });
       getDetail();
