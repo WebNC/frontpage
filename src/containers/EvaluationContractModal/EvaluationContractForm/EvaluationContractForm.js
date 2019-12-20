@@ -19,8 +19,10 @@ class EvaluationContractForm extends React.Component {
 
   componentDidMount() {
     const { form, contractInfo} = this.props;
-    this.setState({rating: contractInfo.rating})
-    form.setFieldsValue({comment: contractInfo.comment.comment}) ;
+    if (contractInfo.comment) {
+      this.setState({rating: contractInfo.rating})
+      form.setFieldsValue({comment: contractInfo.comment.comment}) ;
+    }
     form.validateFields();
   }
 
