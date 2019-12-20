@@ -29,7 +29,8 @@ class MyAvatar extends React.Component {
     const { getDetail } = this.props;
     this.setState({
       visible: false,
-      isFirstLoadModal: true
+      isFirstLoadModal: true,
+      err: undefined
     });
     getDetail();
   };
@@ -37,18 +38,22 @@ class MyAvatar extends React.Component {
   onFormSubmit = (e) => {
     e.preventDefault();
     const {user, updateAvatar} = this.props;
-    
-    updateAvatar({
-      id: user._id,
-      file: this.state.file
-    })
+    if (this.state.file === null || this.state.file === undefined) {
+      this.setState({err: "Vui lòng chọn hình ảnh!"})
+    }
+    else {
+      updateAvatar({
+        id: user._id,
+        file: this.state.file
+      })
+    }
     
     this.setState({
       isFirstLoadModal: false
     });
 }
   onChange = (e) => {
-      this.setState({file: e.target.files[0]});
+      this.setState({file: e.target.files[0], err: undefined});
       
       let reader = new FileReader();
        
@@ -75,42 +80,40 @@ class MyAvatar extends React.Component {
             <Modal.Title>Cập nhật ảnh đại diện</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            {successMessage !== undefined && !this.state.isFirstLoadModal ? (
+            {successMessage !== undefined && !this.state.isFirstLoadModal && 
               <Result
                 status="success"
                 title="Cập nhật ảnh đại diện thành công!"
               />
-            ): (
+            }
+
+            {errMessage !== undefined && !this.state.isFirstLoadModal &&
+              <Result
+                status="warning"
+                title="Đã có lỗi xảy ra, vui lòng thử lại!"
+              />
+            }
+            {successMessage === undefined && errMessage === undefined &&
               <>
-                {errMessage !== undefined ? (
-                <Result
-                  status="warning"
-                  title="Đã có lỗi xảy ra, vui lòng thử lại!"
-                />
-                ):(
-                  <>
-                    <div className="preview-avatar">
-                      <Avatar size={200} src={this.state.imagePreviewUrl ? this.state.imagePreviewUrl : imageUrl}></Avatar>
-                    </div>
-                    <form onSubmit={this.onFormSubmit} >
-                      <div className="update-avatar-form">
-                        <input type="file" name="myImage" onChange={this.onChange} />
-                      </div>
-                      <div className="update-avatar-form">
-                        <button type="submit" className="btn-upload-avatar">
-                          {
-                            pending && <Icon type="loading" style={{ fontSize: 14, marginRight: 5 }} spin />
-                          }
-                          Tải ảnh lên
-                          </button>
-                      </div>
-                    </form>
-                  </>
-                )
-              }
-            </>
-            )
-          }
+                {this.state.err !== undefined && <div className="error-message">{this.state.err}</div>}
+                <div className="preview-avatar">
+                  <Avatar size={200} src={this.state.imagePreviewUrl ? this.state.imagePreviewUrl : imageUrl}></Avatar>
+                </div>
+                <form onSubmit={this.onFormSubmit} >
+                  <div className="update-avatar-form">
+                    <input type="file" name="myImage" onChange={this.onChange} />
+                  </div>
+                  <div className="update-avatar-form">
+                    <button type="submit" className="btn-upload-avatar">
+                      {
+                        pending && <Icon type="loading" style={{ fontSize: 14, marginRight: 5 }} spin />
+                      }
+                      Tải ảnh lên
+                      </button>
+                  </div>
+                </form>
+              </>
+            }
           </Modal.Body>
         </Modal>
       </div>
