@@ -27,7 +27,7 @@ class Header extends React.Component {
           </div>
          
          {
-          user !== null ? (
+          user !== null && user!== undefined ? (
             <div className="user-component">
               <Button className="btn-header" type="link" onClick={() => history.push('/student/info')}>{user.username}</Button>
               <Button className="btn-header" type="link" onClick={()=> logout()}>Đăng xuất</Button>
