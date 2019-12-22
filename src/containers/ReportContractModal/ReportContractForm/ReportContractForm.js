@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, Form, Input, Result} from 'antd';
-import StarRatings from 'react-star-ratings';
 import 'antd/dist/antd.css';
 import { contractActions } from '../../../actions/contract.actions'
 import {userActions} from '../../../actions/user.actions';
@@ -22,6 +21,7 @@ class ReportContractForm extends React.Component {
       
       const values = getFieldsValue();
       reportContract({
+        contractID: contractInfo._id,
         teacherID: contractInfo.teacherID,
         studentID: user._id,
         content: values.content
