@@ -195,7 +195,7 @@ class TeacherDetail extends React.Component {
                   )
                 }
               </div>
-              {amount>0?<Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>:''}
+              {amount>0?<Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange} style={{marginBottom: "20px"}}/>:''}
             </TabPane>
           </Tabs> 
         </div>

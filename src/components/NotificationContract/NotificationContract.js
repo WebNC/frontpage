@@ -250,6 +250,26 @@ class NotificationContract extends React.Component {
                   </div>
                 </>
               )}
+              {contractInfo.status === "Đang giải quyết" && (
+                <>
+                  <p className="status pending-status">
+                    {contractInfo.status}
+                  </p>
+                  <div className="btn-status-component">
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                  </div>
+                </>
+              )}
+              {contractInfo.status == "Đã hoàn tiền" && (
+                <>
+                  <p className="status complete-status">
+                    {contractInfo.status}
+                  </p>
+                  <div className="btn-status-component">
+                    <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                  </div>
+                </>
+              )}
           </div>
         </>
        )
