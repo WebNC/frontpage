@@ -41,17 +41,15 @@ class DetailContract extends React.Component {
     render() {
         const {open, handleShowDetailContract, contractDetail, isWaiting, successMessage, errMessage} = this.props;
       
-        var selectedSkill =[];
+        let selectedSkill = '';
         if(contractDetail !== null && contractDetail !== undefined) {
-          console.log(contractDetail.contract.skill)
-
+          let str = ''
           contractDetail.contract.skill.forEach(element => {
-            selectedSkill.push(
-            <h5 style={{fontSize: 14, textAlign: "left"}} >
-              {element.name}
-            </h5>)
+            str += `${element.name}, ` 
           });
+          selectedSkill = str.slice(0, -2);
         }
+
         return (
          <Modal show={open} onHide={handleShowDetailContract} dialogClassName="modal-600">
             <Modal.Header closeButton>
@@ -95,9 +93,9 @@ class DetailContract extends React.Component {
                     </div>
                     <div className="item-info-contract-teacher">
                       <h5 className="title-contract-teacher">Kỹ năng:</h5>
-                      <div style={{display: "block"}}>
+                      <h5>
                         {selectedSkill}
-                      </div>
+                      </h5>
                     </div>
                     <div className="item-info-contract-teacher">
                       <h5 className="title-contract-teacher">Tổng số giờ:</h5> 

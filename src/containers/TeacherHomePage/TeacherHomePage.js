@@ -14,6 +14,7 @@ import NotificationContract from '../../components/NotificationContract/Notifica
 import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm'
 import IncomeChart from '../IncomeChart/IncomeChart.container' 
 import Message from '../../containers/Message/Message'
+import ListContact from '../../components/ListContract/ListContract'
 
 const { TabPane } = Tabs;
 const { Paragraph } = Typography;
@@ -24,7 +25,6 @@ class TeacherHomePage extends React.Component {
     componentDidMount() {
       const { getDetail, getPartnerList, user } = this.props;
       getDetail();
-      console.log(user);
       getPartnerList({
         type: 'Người dạy',
         ID: user._id !== undefined ? user._id : user.id
@@ -43,13 +43,6 @@ class TeacherHomePage extends React.Component {
           <Icon type="check" className="icon"/>
           {element.name}
         </h5>)
-      });
-    }
-
-    const listContract = [];
-    if(user.history !== null && user.history !== undefined ) {
-      user.history.forEach(element => {
-        listContract.push(<NotificationContract isTeacher={true} contractInfo={element}/>)
       });
     }
 
@@ -128,7 +121,9 @@ class TeacherHomePage extends React.Component {
             <TabPane tab="Yêu cầu từ người học" key="2">
               <div className="requirement-component">
                 <h3>Danh sách người học gửi yêu cầu </h3>
-                {listContract}
+                {user.history !== null && user.history !== undefined &&
+                  <ListContact contracts={user.history} isTeacher={true} />
+                }
               </div>
             </TabPane>
             <TabPane tab="Doanh thu" key="3">

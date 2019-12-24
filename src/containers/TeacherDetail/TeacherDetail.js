@@ -93,7 +93,7 @@ class TeacherDetail extends React.Component {
     return (
       <div className="teacher-home-page">
         <Header />
-        <NavBar/>
+        {/* <NavBar/> */}
         <ContactModal open={openModal} handleCloseModal= {this.handleCloseModal}/>
         <div className="cover-component">
           <div className="info-component">

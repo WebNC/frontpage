@@ -47,19 +47,15 @@ class ContractDetailForm extends React.Component {
 
   render() {
     const { open, handleShowDetailContract, contractDetail} = this.props;
-
-
-    var selectedSkill =[];
+    let selectedSkill = '';
     if(contractDetail !== null && contractDetail !== undefined) {
+      let str = ''
       contractDetail.contract.skill.forEach(element => {
-        selectedSkill.push(
-        <h5 style={{fontSize: 14}}>
-          <Icon type="check" className="icon"/>
-          {element.name}
-        </h5>)
+        str += `${element.name}, ` 
       });
+      selectedSkill = str.slice(0, -2);
     }
-
+    
     return (
       <Modal className="notification-contract-component" show={open} onHide={handleShowDetailContract}>
         <Modal.Header closeButton>
@@ -93,9 +89,9 @@ class ContractDetailForm extends React.Component {
                   </div>
                   <div className="item-info-contract">
                     <h5 className="title">Kỹ năng:</h5>
-                    <div>
+                    <h5>
                       {selectedSkill}
-                    </div>
+                    </h5>
                   </div>
                   <div className="item-info-contract">
                     <h5 className="title">Tổng số giờ:</h5> 

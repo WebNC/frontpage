@@ -17,14 +17,16 @@ class Header extends React.Component {
     return (
       <div className="header">
         <div className="tab-component">
-          <Logo size={60}></Logo>
-          <Button type="link" className="btn-header" onClick={()=> history.push('/home')}>Trang Chủ</Button>
+          <a href="/">
+            <img src="/logo-header.png" alt="" style={{height: "60px"}}/>
+          </a>
+          {/* <Button type="link" className="btn-header" onClick={()=> history.push('/home')}>Trang Chủ</Button> */}
         </div>
-        <div className="search-bar">
+        {/* <div className="search-bar">
             <Search placeholder="Nhập từ khóa"
               style={{ width: 400, color: "#0c6b94" }}
             />
-          </div>
+        </div> */}
          
          {
           user !== null && user!== undefined ? (

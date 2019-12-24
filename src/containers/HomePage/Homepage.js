@@ -19,7 +19,7 @@ class HomePage extends React.Component {
     return (
       <div className="home ">
         <Header username = {username}/>
-          <NavBar categories={categories}/>
+          {/* <NavBar categories={categories}/> */}
           <Sliders/>
        
            <Content/>

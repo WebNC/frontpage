@@ -6,7 +6,7 @@ import {skillActions} from '../../actions/skill.actions'
 import{ connect } from 'react-redux';
 import { handleContact } from '../../actions/teacher.actions';
 import StarRating from '../../components/Rating/Rating'
-import { Avatar} from 'antd'
+import { Avatar, Icon} from 'antd'
 
 class Content extends React.Component {
     constructor(props) {
@@ -51,9 +51,11 @@ class Content extends React.Component {
                             {`${cartInfor.successRatio || 100}% thành công`}
                         </p>
                         <p className="ratio ml-5 mt-1 d-flex " >
+                            <Icon type="phone" style={{marginTop: "3px", marginRight: "5px"}}/>
                             {cartInfor ?  cartInfor.phone : ' '}
                         </p>
                         <p className="ratio ml-5 mt-1 d-flex " >
+                            <Icon type="environment" style={{marginTop: "3px", marginRight: "5px"}}/> 
                             {( cartInfor.address && cartInfor.address.address && cartInfor.address.district) ? `${cartInfor.address.address} , ${cartInfor.address.district}` : ' '}
                         </p>
                     </div>

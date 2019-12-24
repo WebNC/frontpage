@@ -29,3 +29,8 @@
   h1, h2, p{
     text-align: center;
   }
+
+  .ant-pagination {
+    justify-content: center;
+    display: flex;
+  }

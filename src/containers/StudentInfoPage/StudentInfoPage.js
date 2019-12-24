@@ -8,13 +8,13 @@ import {chatActions} from '../../actions/chat.actions'
 import moment from 'moment'
 import Header from '../../components/Header/Header'
 import MyFooter from '../../components/Footer/Footer'
-import NavBar from '../../components/NavBar/NavBar'
+// import NavBar from '../../components/NavBar/NavBar'
 import MyAvatar from '../../components/MyAvatar/MyAvatar'
 import WrappedStudentInfoForm from './StudentInfoForm/StudentInfoForm'
 import NotificationContract from '../../components/NotificationContract/NotificationContract'
 import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassForm'
 import Message from '../../containers/Message/Message'
-
+import ListContact from '../../components/ListContract/ListContract'
 const { TabPane } = Tabs;
 
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
@@ -51,16 +51,11 @@ class StudentInfoPage extends React.Component {
 
   render() {
     const {user, changePass, errMessage, successMessage, pending} = this.props;
-    const listContract = [];
-    if(user.history !== null && user.history !== undefined ) {
-      user.history.forEach((element, index) => {
-        listContract.push(<NotificationContract isTeacher={false} contractInfo={element} key={index}/>)
-      });
-    }
+    
     return (
       <div className="student-info-page">
         <Header username={user.username}/>
-        <NavBar/>
+        {/* <NavBar/> */}
         <div className="cover-component">
             <div className="info-component">
               <MyAvatar imageUrl={user.url}/>
@@ -130,7 +125,10 @@ class StudentInfoPage extends React.Component {
             <TabPane tab="Danh sách hợp đồng" key="2">
               <div className="contract-history-component">
                 <h3>Danh sách hợp đồng</h3>
-                {listContract}
+                {/* {listContract} */}
+                {user.history !== null && user.history !== undefined &&
+                  <ListContact contracts={user.history} isTeacher={false} />
+                }
               </div>
             </TabPane>
             <TabPane tab="Tin nhắn" key="3">
