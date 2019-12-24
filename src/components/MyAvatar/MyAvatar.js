@@ -1,5 +1,5 @@
 import React from 'react'
-import { Upload, Icon, Button, Avatar, Tooltip, Result} from 'antd';
+import {  Icon, Button, Avatar, Tooltip, Result} from 'antd';
 import { Modal} from 'react-bootstrap'
 import './style.css'
 import{ connect } from 'react-redux';

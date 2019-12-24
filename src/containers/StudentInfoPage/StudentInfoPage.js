@@ -1,5 +1,5 @@
 import React from 'react'
-import { Button, Typography, Tabs, Spin, Icon} from 'antd'
+import { Button, Tabs, Spin, Icon} from 'antd'
 import 'antd/dist/antd.css'
 import './style.css'
 import{ connect } from 'react-redux'
@@ -8,7 +8,6 @@ import {chatActions} from '../../actions/chat.actions'
 import moment from 'moment'
 import Header from '../../components/Header/Header'
 import MyFooter from '../../components/Footer/Footer'
-import {history} from '../../helper'
 import NavBar from '../../components/NavBar/NavBar'
 import MyAvatar from '../../components/MyAvatar/MyAvatar'
 import WrappedStudentInfoForm from './StudentInfoForm/StudentInfoForm'
@@ -17,13 +16,12 @@ import WrappedChangePassForm from '../../components/ChangePassForm/ChangePassFor
 import Message from '../../containers/Message/Message'
 
 const { TabPane } = Tabs;
-const { Paragraph } = Typography;
-const dateFormat = 'DD-MM-YYYY';
+
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 
-function hasErrors(fieldsError) {
-  return Object.keys(fieldsError).some(field => fieldsError[field]);
-}
+// function hasErrors(fieldsError) {
+//   return Object.keys(fieldsError).some(field => fieldsError[field]);
+// }
 
 class StudentInfoPage extends React.Component {
 
@@ -55,16 +53,16 @@ class StudentInfoPage extends React.Component {
     const {user, changePass, errMessage, successMessage, pending} = this.props;
     const listContract = [];
     if(user.history !== null && user.history !== undefined ) {
-      user.history.forEach(element => {
-        listContract.push(<NotificationContract isTeacher={false} contractInfo={element}/>)
+      user.history.forEach((element, index) => {
+        listContract.push(<NotificationContract isTeacher={false} contractInfo={element} key={index}/>)
       });
     }
     return (
       <div className="student-info-page">
         <Header username={user.username}/>
         <NavBar/>
-        <div class="cover-component">
-            <div class="info-component">
+        <div className="cover-component">
+            <div className="info-component">
               <MyAvatar imageUrl={user.url}/>
               <div className="name-component">
                 <h3 className="username">{user.username}</h3>
@@ -82,7 +80,7 @@ class StudentInfoPage extends React.Component {
              )}
           </div>
         </div>
-        <div class="content-component">
+        <div className="content-component">
           <Tabs tabPosition="left" onChange={this.handleTabChange} activeKey={this.state.activeKey}>
             <TabPane tab="Thông tin cá nhân" key="1">
             {user.address !== undefined ? (

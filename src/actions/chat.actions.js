@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { chatConstants } from '../constants';
 import {API_URL} from '../constants/index';
-import {history} from '../helper';
 
 const getPartnerList = ({type, ID}) => {
     return dispatch => {

@@ -52,7 +52,7 @@ class EditMajorSkillForm extends React.Component {
 
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-    const {message, pending, allSkill,  successMessage, errMessage} = this.props;
+    const { pending, allSkill,  successMessage, errMessage} = this.props;
     // Only show error after a field is touched.
     const skillError = isFieldTouched('skill') && getFieldError('skill');
     const majorError = isFieldTouched('major') && getFieldError('major');

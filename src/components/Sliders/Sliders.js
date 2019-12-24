@@ -41,7 +41,7 @@ class Sliders extends React.Component {
     	const slidersContent = [];
     	data.forEach((item) => {
     		slidersContent.push(
-    			<div className="item">
+    			<div className="item" key={item}>
     				<div className="content-slider">
 							<p className="item-title">
 								{item.title}

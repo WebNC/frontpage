@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'antd';
 import 'antd/dist/antd.css';
 class Logo extends React.Component {
     // constructor(props) {

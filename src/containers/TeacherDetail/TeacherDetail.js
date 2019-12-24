@@ -37,7 +37,7 @@ class TeacherDetail extends React.Component {
     const {id} = this.props.match.params
     const {pageSize} = this.state
     getDetailTeacher(id).then(res=>{
-      console.log(res.message)
+      // console.log(res.message)
       const his = res.message.history.slice(0,pageSize);
       this.setState({
         teacherInfo : res.message,
@@ -95,10 +95,10 @@ class TeacherDetail extends React.Component {
         <Header />
         <NavBar/>
         <ContactModal open={openModal} handleCloseModal= {this.handleCloseModal}/>
-        <div class="cover-component">
+        <div className="cover-component">
           <div className="info-component">
             <Avatar src = {teacherInfo.url} size={130}/>
-            <div class="name-component">
+            <div className="name-component">
               <h3 className="username">{teacherInfo.username}</h3>
               <h4>{teacherInfo.major}</h4>
               <div className="mt-3">
@@ -116,7 +116,7 @@ class TeacherDetail extends React.Component {
                   rating={teacherInfo.rating}
                   starRatedColor="#fcba03"
                   numberOfStars={1}
-                  starDimension={35}
+                  starDimension={'35'}
                   starHoverColor="#fcba03"
                   starSpacing = "2px"
                 />

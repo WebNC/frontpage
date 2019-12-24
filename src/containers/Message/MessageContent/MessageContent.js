@@ -1,12 +1,12 @@
 import React from 'react'
-import { Tooltip, Typography, Avatar } from 'antd';
+import { Tooltip, Typography } from 'antd';
 
 const { Text } = Typography;
 
 class MessageContent extends React.Component {
 
   render() {
-    const { message, time, isReceived, img} = this.props;
+    const { message, time, isReceived} = this.props;
     var styleDiv = {
       display: "flex",
       justifyContent: "flex-end",

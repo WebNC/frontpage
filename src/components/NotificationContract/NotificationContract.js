@@ -94,7 +94,6 @@ class NotificationContract extends React.Component {
     render() {
         const {isTeacher, contractInfo, successMessage, errMessage} = this.props;
         const {openModal, openEvaluation, openPayment, openReport, openComplete} = this.state;
-        console.log(contractInfo);
         return (
           <>
           { isTeacher && openModal &&
@@ -260,7 +259,7 @@ class NotificationContract extends React.Component {
                   </div>
                 </>
               )}
-              {contractInfo.status == "Đã hoàn tiền" && (
+              {contractInfo.status === "Đã hoàn tiền" && (
                 <>
                   <p className="status complete-status">
                     {contractInfo.status}

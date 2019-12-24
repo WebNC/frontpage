@@ -5,7 +5,7 @@ import * as teacherAction from '../../actions/teacher.actions'
 import './Content.scss'
 import{ connect } from 'react-redux';
 import ContactModal from '../../components/ContactModal/ContactModal'
-import {Icon, Pagination} from 'antd'
+import { Pagination} from 'antd'
 
 
 const hourRate = ['< 100K','100K - 500K','> 500K'];
@@ -93,7 +93,7 @@ class Content extends React.Component {
                 
                 <div className="content">
                     <div className="d-flex filter-banner">
-                        <h6 className="filter">
+                        <h6 className="filter mr-5">
                             Bộ lọc
                             {/* <Icon type="filter"  className="ml-2" style={{ fontSize: '20px', color: '#08c' }} /> */}
                         </h6>

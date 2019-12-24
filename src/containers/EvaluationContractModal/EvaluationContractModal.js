@@ -1,5 +1,5 @@
 import React from "react"
-import { Icon, Button } from "antd"
+// import { Icon, Button } from "antd"
 import "antd/dist/antd.css"
 import WrappedEvaluationContractForm from "./EvaluationContractForm/EvaluationContractForm"
 import { Modal } from "react-bootstrap"

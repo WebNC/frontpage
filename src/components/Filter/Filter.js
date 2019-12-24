@@ -71,7 +71,7 @@ class Filter extends React.Component {
         const {selected} = this.state;
         let {data} = this.state
         return (
-            <div className="drop-down d-flex justify-content-between "  onClick={this.toggle}>
+            <div className="drop-down d-flex justify-content-between  ml-5"  onClick={this.toggle}>
                     <p className="sort-by">Lọc theo:
                         <span className="sort-by-selected">{selected }</span>
                     </p>

@@ -1,5 +1,4 @@
 import { userConstants } from '../constants';
-import { arrowFunctionExpression } from '@babel/types';
 
 const initialState = {
   loggedIn: false,

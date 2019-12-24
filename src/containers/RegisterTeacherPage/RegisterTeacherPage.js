@@ -6,7 +6,6 @@ import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions'
 import {skillActions} from '../../actions/skill.actions'
-import moment from 'moment';
 import Logo from '../../components/Logo';
 
 const { Option } = Select;

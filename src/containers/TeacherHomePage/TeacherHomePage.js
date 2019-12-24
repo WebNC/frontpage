@@ -1,5 +1,5 @@
 import React from 'react'
-import { Form, Input, Button, Icon, Select, Typography, Tabs, Upload, Spin} from 'antd'
+import {  Button, Icon, Typography, Tabs, Spin} from 'antd'
 import 'antd/dist/antd.css'
 import './style.css'
 import{ connect } from 'react-redux'

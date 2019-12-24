@@ -56,8 +56,8 @@ class ChangePassForm extends React.Component {
   render() {
     const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
     const {errMessage, successMessage, pending} = this.props;
-    console.log(errMessage);
-    console.log(successMessage);
+    // console.log(errMessage);
+    // console.log(successMessage);
     // Only show error after a field is touched
     const passwordError = isFieldTouched('password') && getFieldError('password');
     const confirmError = isFieldTouched('confirm') && getFieldError('confirm');

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tooltip, Badge, Button, Avatar} from 'antd';
+import {  Badge, Button, Avatar} from 'antd';
 
 class NotificationMessage extends React.Component {
 

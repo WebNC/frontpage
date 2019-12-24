@@ -3,7 +3,6 @@ import { Button, Form, InputNumber, Icon, Select, DatePicker} from 'antd'
 import AddressInput from '../../../components/AddressInput/AddressInput'
 import moment from 'moment'
 import 'antd/dist/antd.css'
-import { skillActions } from '../../../actions/skill.actions'
 import { contractActions } from '../../../actions/contract.actions'
 import { connect } from 'react-redux'
 
@@ -116,7 +115,7 @@ class ContractDetailForm extends React.Component {
 
     render(){
         const {getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-        const {allSkill, contractDetail, errMessage, successMessage, pending} = this.props;
+        const {allSkill, errMessage, successMessage, pending} = this.props;
 
         const fromDateError = isFieldTouched('fromdate') && getFieldError('fromdate');
         const hourError = isFieldTouched('hour') && getFieldError('hour');

@@ -1,6 +1,5 @@
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
 import{ connect } from 'react-redux'
-import {userActions} from '../../actions/user.actions'
 import {chatActions} from '../../actions/chat.actions'
 import {Button, Input, Spin, Icon} from 'antd';
 import MessageContent from './MessageContent/MessageContent'
@@ -32,7 +31,7 @@ class Message extends React.Component {
   }
 
   handleSendMessage = async () => {
-    const {sendMessage, user, partner, getMessage, isTeacher} = this.props;
+    const {sendMessage, user, partner, isTeacher} = this.props;
     // console.log(user);
     // console.log(partner);
     // console.log(this.state.mess);
@@ -73,8 +72,9 @@ class Message extends React.Component {
             { listPartner.length !== 0 ? (
               <div className="mesage-component">
                 <div className="from">
-                  {listPartner.map((element) => 
+                  {listPartner.map((element, index) => 
                     <NotificationMessage 
+                    key={index}
                       from={element.name} 
                       fromID={element.partnerID}
                       unSeen={element.unseen} 
@@ -100,11 +100,12 @@ class Message extends React.Component {
                             </div>
                           ):(
                             <>
-                              {messages[0].content.map((element) => 
+                              {messages[0].content.map((element, index) => 
                                 <MessageContent 
+                                key={index}
                                   message={element.content} 
                                   time={moment(element.time).format('lll')} 
-                                  isReceived={user._id == element.from ? false : true}
+                                  isReceived={user._id === element.from ? false : true}
                                   img={partner.url} 
                                 />
                               )}

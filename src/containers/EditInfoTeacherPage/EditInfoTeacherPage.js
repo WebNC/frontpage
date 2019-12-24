@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Avatar, Tabs} from 'antd';
+import { Button, Tabs} from 'antd';
 import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux'
@@ -31,7 +31,7 @@ class EditInfoTeacherPage extends React.Component {
     // }
 
   render() {
-    const {user, logout} = this.props;
+    const {user} = this.props;
     console.log(user);
     return (
       <div className="edit-teacher-page">

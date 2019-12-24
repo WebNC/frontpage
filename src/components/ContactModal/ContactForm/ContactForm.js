@@ -97,10 +97,7 @@ class ContactForm extends React.Component {
     }
 
     onChange = e =>{
-        const {getFieldsValue} = this.props.form;
         const { teacherInfo } = this.props;
-        // const values = getFieldsValue();
-        // const hour = values.hour
         console.log(e);
         if(parseInt(e)) {
             this.setState({

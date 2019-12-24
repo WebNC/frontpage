@@ -1,5 +1,4 @@
 import React from "react"
-import { Icon, Button } from "antd"
 import "antd/dist/antd.css"
 import WrappedReportContractForm from "./ReportContractForm/ReportContractForm"
 import { Modal } from "react-bootstrap"

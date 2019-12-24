@@ -5,7 +5,6 @@ import 'antd/dist/antd.css';
 import './style.css';
 import{ connect } from 'react-redux';
 import {userActions} from '../../actions/user.actions'
-import {history} from '../../helper'
 import Logo from '../../components/Logo'
 // import moment from 'moment';
 const { Option } = Select;

@@ -45,7 +45,7 @@ class Course extends React.Component {
     }
 
   render() {
-    const {skills, from, to, status, rating, hour, comment}  = this.state  
+    const {skills, from, to, rating, hour, comment}  = this.state  
     
 
     return (

@@ -6,7 +6,7 @@ import {skillActions} from '../../actions/skill.actions'
 import{ connect } from 'react-redux';
 import { handleContact } from '../../actions/teacher.actions';
 import StarRating from '../../components/Rating/Rating'
-import {Icon, Avatar} from 'antd'
+import { Avatar} from 'antd'
 
 class Content extends React.Component {
     constructor(props) {

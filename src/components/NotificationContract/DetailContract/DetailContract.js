@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Button, Spin} from 'antd';
-import {Modal, InputGroup} from 'react-bootstrap'
+import {Modal} from 'react-bootstrap'
 import 'antd/dist/antd.css';
 import './style.css'
 import moment from 'moment';
@@ -47,7 +47,7 @@ class DetailContract extends React.Component {
 
           contractDetail.contract.skill.forEach(element => {
             selectedSkill.push(
-            <h5 style={{fontSize: 14}} style={{textAlign: "left"}}>
+            <h5 style={{fontSize: 14, textAlign: "left"}} >
               {element.name}
             </h5>)
           });

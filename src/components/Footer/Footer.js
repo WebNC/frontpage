@@ -1,9 +1,9 @@
 import React from 'react';
 import './Footer.scss';
-import { Tooltip, Badge, Button, Avatar, Layout } from 'antd';
+import {  Layout } from 'antd';
 import Logo from '../../components/Logo'
 import { SocialIcon } from 'react-social-icons';
-const { Header, Footer, Sider, Content } = Layout;
+const {  Footer} = Layout;
 
 class MyFooter extends React.Component {
   

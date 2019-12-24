@@ -1,6 +1,5 @@
 import React from "react";
-import { Button, Form, InputNumber, Icon, Select, DatePicker , Spin} from "antd";
-import AddressInput from '../../components/AddressInput/AddressInput'
+import { Button, Form,  Icon,  Spin} from "antd";
 import "antd/dist/antd.css";
 import './style.css'
 // import {history} from '../../helper'
@@ -8,7 +7,6 @@ import WrappedContractDetailForm from "./ContractDetailForm/ContractDetailForm";
 import { Modal } from "react-bootstrap";
 import { skillActions } from '../../actions/skill.actions'
 import { contractActions } from '../../actions/contract.actions'
-import { userActions } from '../../actions/user.actions'
 import {connect} from 'react-redux'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
