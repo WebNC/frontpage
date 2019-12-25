@@ -78,7 +78,7 @@ class StudentInfoPage extends React.Component {
         <div className="content-component">
           <Tabs tabPosition="left" onChange={this.handleTabChange} activeKey={this.state.activeKey}>
             <TabPane tab="Thông tin cá nhân" key="1">
-            {user.address !== undefined ? (
+            {user.email !== undefined ? (
               <div className="basic-info-component">
                 {this.state.isEdit === false ? (
                   <>
@@ -86,25 +86,25 @@ class StudentInfoPage extends React.Component {
                     <div className="item-info">
                       <h5 className="info-title">Địa chỉ:</h5>
                       <h5 className="item-content">
-                        {user.address === undefined ? '' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` } 
+                        {user.address === undefined ? 'Chưa cập nhật' : `${user.address.address}, ${user.address.district}, Hồ Chí Minh` } 
                       </h5>
                     </div>
                     <div className="item-info">
                       <h5 className="info-title">Số điện thoại:</h5> 
                       <h5 className="item-content">
-                        {user.phone}
+                        {user.phone === undefined ? 'Chưa cập nhật' : user.phone}
                       </h5> 
                     </div>
                     <div className="item-info">
                       <h5 className="info-title">Ngày Sinh:</h5> 
                       <h5 className="item-content">
-                        {user.birthday === undefined ? '' : moment(user.birthday).format('DD/MM/YYYY') }
+                        {user.birthday === undefined ? 'Chưa cập nhật' : moment(user.birthday).format('DD/MM/YYYY') }
                       </h5>
                     </div>
                     <div className="item-info">
                       <h5 className="info-title">Giới tính: </h5>
                       <h5 className="item-content">
-                        {user.sex}
+                        {user.sex === undefined ? 'Chưa cập nhật' : user.sex}
                       </h5>
                     </div>
                   </>
@@ -123,13 +123,10 @@ class StudentInfoPage extends React.Component {
               
             </TabPane>
             <TabPane tab="Danh sách hợp đồng" key="2">
-              <div className="contract-history-component">
-                <h3>Danh sách hợp đồng</h3>
-                {/* {listContract} */}
-                {user.history !== null && user.history !== undefined &&
-                  <ListContact contracts={user.history} isTeacher={false} />
-                }
-              </div>
+              <h3>Danh sách hợp đồng</h3>
+              {user.history !== null && user.history !== undefined &&
+                <ListContact contracts={user.history} isTeacher={false} />
+              }
             </TabPane>
             <TabPane tab="Tin nhắn" key="3">
               <h3 style={{fontSize: "28px", marginBottom: "20px", lineHeight: "35px"}}>

@@ -45,10 +45,11 @@ class Content extends React.Component {
                     <div className="d-flex subjects">
                         { cartInfor.major ? `${cartInfor.major}    -    ${cartInfor.email}` : cartInfor.email}
                     </div>
+                    <h5 style={{textAlign: "left", marginTop: "0.5em", fontWeight: "bold"}}>{`${cartInfor.price}đ/h`.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</h5>
                     <div className="d-flex justify-content-between status">
                         <StarRating rating={cartInfor.rating}/>
                         <p className="ratio ml-5 mt-1 d-flex" > 
-                            {`${cartInfor.successRatio || 100}% thành công`}
+                            {`${cartInfor.successRatio || 100}% thành công  (${cartInfor.numJob})`}
                         </p>
                         <p className="ratio ml-5 mt-1 d-flex " >
                             <Icon type="phone" style={{marginTop: "3px", marginRight: "5px"}}/>

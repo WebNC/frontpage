@@ -49,6 +49,7 @@ const loginWithFB = (accessToken) => {
         setTimeout(() => {
             axios(authOptions)
             .then( result => {
+                localStorage.setItem('token', result.data.user.token);
                 const isTeacher = ( result.data.user.type ===  "Người dạy" )
                 dispatch(success(result.data.user, isTeacher));
                 if (isTeacher) {
@@ -83,6 +84,7 @@ const loginWithGG = (accessToken) => {
         setTimeout(() => {
             axios(authOptions)
             .then( result => { 
+                localStorage.setItem('token', result.data.user.token);
                 const isTeacher = ( result.data.user.type ===  "Người dạy" )
                     dispatch(success(result.data.user, isTeacher));
                     if (isTeacher) {

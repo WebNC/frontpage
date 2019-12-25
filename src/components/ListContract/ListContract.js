@@ -60,7 +60,7 @@ class ContractList extends React.Component {
       let presentContracts = [];
       let i = (value - 1)*pageSize;
 
-      while (i < value*pageSize && i<amount) {
+      while (i < value*pageSize && i < amount) {
         presentContracts.push(allContracts[i]);
         i = i + 1;
       }
@@ -84,14 +84,23 @@ class ContractList extends React.Component {
               <Spin indicator={antIcon} />
             </div>
           ):(
-            <div>
-            {listContracts}
-            {amount > pageSize && 
-              <div className="mb-5 mr-4">
-                <Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>
-              </div>      
-            }
-          </div>
+            <>
+              {listContracts.length === 0 ? (
+                <p style={{textAlign: "left", fontSize: "16px"}}>
+                  Bạn chưa có hợp đồng nào.
+                </p>
+              ):(
+                <div className="contract-history-component">
+                  {listContracts}
+                  {amount > pageSize && 
+                    <div className="mb-5 mr-4">
+                      <Pagination defaultCurrent={1} total= {amount} pageSize = {pageSize} onChange={this.handleChange}/>
+                    </div>      
+                  }
+                </div>
+              )} 
+            </>
+            
           )}
         </>   
         )

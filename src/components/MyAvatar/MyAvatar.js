@@ -68,11 +68,15 @@ class MyAvatar extends React.Component {
 
   render() {
     const { imageUrl, successMessage, errMessage, pending} = this.props;
+    let img = imageUrl;
+    if (!imageUrl) {
+      img = "/default-avatar.png"
+    }
     return (
       <div>
         <Tooltip placement="bottom" title="Cập nhật ảnh đại diện">
           <Button className="btn-avatar" onClick={() => this.showModal()}>
-            <Avatar size={130} src={imageUrl} className="avatar-img" />
+            <Avatar size={130} src={img} className="avatar-img" />
           </Button>
         </Tooltip>
         <Modal show={this.state.visible} onHide={this.handleCancel}>
