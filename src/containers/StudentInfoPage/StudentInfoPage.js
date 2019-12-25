@@ -124,9 +124,11 @@ class StudentInfoPage extends React.Component {
             </TabPane>
             <TabPane tab="Danh sách hợp đồng" key="2">
               <h3>Danh sách hợp đồng</h3>
+              <div className="requirement-component">
               {user.history !== null && user.history !== undefined &&
                 <ListContact contracts={user.history} isTeacher={false} />
               }
+              </div>
             </TabPane>
             <TabPane tab="Tin nhắn" key="3">
               <h3 style={{fontSize: "28px", marginBottom: "20px", lineHeight: "35px"}}>
