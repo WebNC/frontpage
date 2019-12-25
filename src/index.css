@@ -6,7 +6,13 @@ body {
     font-family: 'Montserrat', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: lightgray !important;
+  background: url('/a.jpeg');
+  /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-size: cover;
 }
 
 code {
