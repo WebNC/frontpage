@@ -1,11 +1,12 @@
 
-import React from 'react';
-import 'antd/dist/antd.css';
-import {Form, Button, Input, Icon} from 'antd';
-import Logo from '../../components/Logo';
-import{ connect } from 'react-redux';
-import './style.scss';
-import {userActions} from '../../actions/user.actions';
+import React from 'react'
+import 'antd/dist/antd.css'
+import {Form, Button, Input, Icon} from 'antd'
+import Logo from '../../components/Logo'
+import{ connect } from 'react-redux'
+import './style.scss'
+import {userActions} from '../../actions/user.actions'
+import { Link } from 'react-router-dom'
 
 require('dotenv').config()
 
@@ -82,53 +83,60 @@ class ResetPasswordForm extends React.Component {
               <Logo size={120}></Logo>
               {userId !== undefined ? (
                 <Form onSubmit={this.handleSubmit}>
-                  <Form.Item>
-                    {successMessage && !this.state.isFirstLoad &&
-                      <div className="success-message">{successMessage}</div>
-                    }
-                    {errMessage && !this.state.isFirstLoad &&
-                      <div className="error-message">{errMessage}</div>
-                    }
-                  </Form.Item>
-                  <Form.Item hasFeedback validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
-                    {getFieldDecorator('password', {
-                      rules: [
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập mật khẩu!',
-                        },
-                        {
-                          validator: this.checkPassword,
-                        }
-                      ],
-                    })(<Input
-                    prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="Mật khẩu"
-                    />
+                  <Form.Item />
+                    {successMessage && !this.state.isFirstLoad ? (
+                      <Form.Item>
+                        <div>{successMessage}</div>
+                        <div>Bấm vào <Link to='/login'>đây</Link> để đăng nhập bạn nhé!</div>
+                      </Form.Item>
+                    ):(
+                      <>
+                      {errMessage && !this.state.isFirstLoad &&
+                        <Form.Item>
+                          <div className="error-message">{errMessage}</div>
+                        </Form.Item>    
+                      }
+                      <Form.Item hasFeedback validateStatus={passwordError ? 'error' : ''} help={passwordError || ''}>
+                        {getFieldDecorator('password', {
+                          rules: [
+                            {
+                              required: true,
+                              message: 'Vui lòng nhập mật khẩu!',
+                            },
+                            {
+                              validator: this.checkPassword,
+                            }
+                          ],
+                        })(<Input
+                        prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        type="password"
+                        placeholder="Mật khẩu"
+                        />
+                        )}
+                      </Form.Item>
+                      <Form.Item hasFeedback validateStatus={confirmError ? 'error' : ''} help={confirmError || ''}>
+                        {getFieldDecorator('confirm', {
+                          rules: [
+                            {
+                              required: true,
+                              message: 'Vui lòng nhập lại mật khẩu!',
+                            },
+                            {
+                              validator: this.compareToFirstPassword,
+                            },
+                          ],
+                        })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
+                        type="password"
+                        placeholder="Nhập lại mật khẩu"
+                        />)}
+                      </Form.Item>
+                      <Form.Item>
+                        <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} className="reset-pass-btn" loading={pending}>
+                          Đặt lại mật khẩu
+                        </Button>
+                      </Form.Item>
+                      </>
                     )}
-                  </Form.Item>
-                  <Form.Item hasFeedback validateStatus={confirmError ? 'error' : ''} help={confirmError || ''}>
-                    {getFieldDecorator('confirm', {
-                      rules: [
-                        {
-                          required: true,
-                          message: 'Vui lòng nhập lại mật khẩu!',
-                        },
-                        {
-                          validator: this.compareToFirstPassword,
-                        },
-                      ],
-                    })(<Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
-                    type="password"
-                    placeholder="Nhập lại mật khẩu"
-                    />)}
-                  </Form.Item>
-                  <Form.Item>
-                    <Button type="primary" htmlType="submit" disabled={hasErrors(getFieldsError())} className="reset-pass-btn" loading={pending}>
-                      Đặt lại mật khẩu
-                    </Button>
-                  </Form.Item>
                 </Form> 
               ) : (
                   <div>
