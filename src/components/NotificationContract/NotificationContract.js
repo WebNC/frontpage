@@ -11,7 +11,7 @@ import { Link } from 'react-router-dom'
 import { contractActions } from '../../actions/contract.actions'
 import { userActions } from '../../actions/user.actions'
 import { connect } from 'react-redux'
-
+import moment from 'moment'
 const antIcon = <Icon type="loading" style={{ fontSize: 24 }} spin />;
 class NotificationContract extends React.Component {
 
@@ -180,23 +180,32 @@ class NotificationContract extends React.Component {
           }
             <div className="notification-contract-component">
               {isTeacher === true ? (
+                <>
                 <p className="notify">
                   Bạn có một hợp đồng từ <span className="username">{contractInfo.studentName}</span>
                 </p>
+                </>
                 ):(
                 <p className="notify-teacher">
                   Giáo viên: <Link to={`/teachers/${contractInfo.teacherID}`}>{contractInfo.teacherName}</Link>
                 </p>
                 )
               }
+              {isTeacher && 
+                <p> {moment(contractInfo.createAt).format("DD/MM/YYYY")}</p>
+              }
               {contractInfo.status === "Đang chờ" && (
                 <>
                   <p className="status pending-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component">
+                  {!isTeacher ? (
+                    <div className="btn-status-component"> 
+                      <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
+                  ):(
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  )}
                 </>
               )}
               {contractInfo.status === "Từ chối" && (
@@ -204,9 +213,13 @@ class NotificationContract extends React.Component {
                   <p className="status deline-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component">
+                  {!isTeacher ? (
+                    <div className="btn-status-component"> 
+                      <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
+                  ):(
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  )}
                 </>
               )}
               {contractInfo.status === "Đã chấp nhận" && (
@@ -214,10 +227,15 @@ class NotificationContract extends React.Component {
                   <p className="status accept-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component"> 
-                    {!isTeacher && <Button onClick={this.handlePayment} className="status-btn">Thanh toán</Button>}
+                  { !isTeacher && 
+                    <div className="btn-status-component"> 
+                      <Button onClick={this.handlePayment} className="status-btn">Thanh toán</Button>
+                      <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
+                  }
+                  {isTeacher &&
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  }
                 </>
               )}
               {contractInfo.status === "Đã thanh toán" && (
@@ -225,10 +243,15 @@ class NotificationContract extends React.Component {
                   <p className="status paid-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component"> 
-                    {!isTeacher && <Button onClick={this.handleComplete} className="status-btn">Hoàn thành</Button>}
+                  {!isTeacher &&
+                    <div className="btn-status-component"> 
+                       <Button onClick={this.handleComplete} className="status-btn">Hoàn thành</Button>
+                       <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
+                  }
+                  {isTeacher &&
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  }  
                 </>
               )}
               
@@ -238,15 +261,16 @@ class NotificationContract extends React.Component {
                   <p className="status complete-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component"> 
                   {!isTeacher &&
-                    <>
+                    <div className="btn-status-component">
                       <Button onClick={this.handleShowEvaluationForm} className="status-btn">Đánh giá</Button>
                       <Button onClick={this.handleShowReportForm} className="status-btn">Khiếu nại</Button>
-                    </>
+                      <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
                   }
+                  {isTeacher &&
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  }
                 </>
               )}
               {contractInfo.status === "Đang giải quyết" && (
@@ -254,9 +278,13 @@ class NotificationContract extends React.Component {
                   <p className="status pending-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component">
+                  {!isTeacher ? (
+                    <div className="btn-status-component"> 
+                      <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
+                  ):(
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  )}
                 </>
               )}
               {contractInfo.status === "Đã hoàn tiền" && (
@@ -264,9 +292,13 @@ class NotificationContract extends React.Component {
                   <p className="status complete-status">
                     {contractInfo.status}
                   </p>
-                  <div className="btn-status-component">
+                  {!isTeacher ? (
+                    <div className="btn-status-component"> 
+                      <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
+                    </div>
+                  ):(
                     <Button type="primary" onClick={this.handleShowDetailContract} className="status-btn">Xem chi tiết</Button>
-                  </div>
+                  )}
                 </>
               )}
           </div>

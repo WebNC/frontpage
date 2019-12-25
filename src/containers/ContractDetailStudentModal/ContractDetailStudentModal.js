@@ -27,18 +27,18 @@ class ContractDetailForm extends React.Component {
 
   componentDidMount() {
     // To disabled submit button at the beginning.
-    const { getAllSkill, getContractDetail, contractInfo, form} = this.props;
+    const { getAllSkill, getContractDetail, contractInfo} = this.props;
     getAllSkill();
     getContractDetail(contractInfo._id)
-    form.setFieldsValue({
-      skill: contractInfo.skill,
-      fromDate: [moment(contractInfo.fromDate),moment(contractInfo.toDate)],
-      address: contractInfo.address, 
-      hour: contractInfo.hour,
-    });
+    // form.setFieldsValue({
+    //   skill: contractInfo.skill,
+    //   fromDate: [moment(contractInfo.fromDate),moment(contractInfo.toDate)],
+    //   address: contractInfo.address, 
+    //   hour: contractInfo.hour,
+    // });
 
-    contractInfo.status !== "Đang chờ" ? this.setState({disabled: true}) : this.setState({disabled: false});
-    this.setState({total: contractInfo.value});
+    // contractInfo.status !== "Đang chờ" ? this.setState({disabled: true}) : this.setState({disabled: false});
+    // this.setState({total: contractInfo.value});
     }
 
     handleEdit = () => {
