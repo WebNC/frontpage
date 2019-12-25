@@ -38,8 +38,8 @@ class Content extends React.Component {
     render() {
         const {cartInfor, skills} = this.state;
         return (
-            <div className="cart d-flex">
-                <Avatar src={cartInfor.url || './default-avatar.png'} size={120} className="avartar"/>
+            <div className="cart d-flex ">
+                <Avatar src={cartInfor.url || './default-avatar.png'} size={120} className="avartar "/>
                 <div className="infor">
                     <Link to={`/teachers/${cartInfor._id}`} className="username mr-5">{`${cartInfor.username}`}</Link>
                     <div className="d-flex subjects">
