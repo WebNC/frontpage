@@ -20,11 +20,10 @@ class HomePage extends React.Component {
       <div className="home ">
         <Header username = {username}/>
           {/* <NavBar categories={categories}/> */}
-          <Sliders/>
-       
-           <Content/>
-           <Intro/>
-           <MyFooter/>
+        <Sliders/>
+        <Content/>
+        <Intro/>
+        <MyFooter/>
 
       </div> 
     );

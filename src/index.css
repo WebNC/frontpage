@@ -6,7 +6,11 @@ body {
     font-family: 'Montserrat', sans-serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+<<<<<<< HEAD
   background-image: linear-gradient(to right,#adc6ff,#22075e);
+=======
+  background-color: #ffffff;
+>>>>>>> a404516305a95bb77f68501859beb8b644839783
 }
 
 code {

@@ -52,16 +52,22 @@ class ForgetPasswordForm extends React.Component {
             <div>
               <Logo size={120}></Logo>
               <Form onSubmit={this.handleSubmit}>
+                <Form.Item />
+                    {successMessage && !this.state.isFirstLoad &&
+                      <Form.Item >
+                        <div>{successMessage}</div>
+                      </Form.Item>
+                    }
+                    
+                    {errMessage && !this.state.isFirstLoad &&
+                      <Form.Item>
+                        <div>{errMessage}</div>
+                      </Form.Item>
+                    }
+                {this.state.isFirstLoad && 
+                <>
                 <Form.Item>
                   <div>Nhập email của bạn để đặt lại mật khẩu</div>
-                </Form.Item>
-                <Form.Item >
-                    {successMessage && !this.state.isFirstLoad &&
-                      <div className="success-message">{successMessage}</div>
-                    }
-                    {errMessage && !this.state.isFirstLoad &&
-                      <div className="error-message">{errMessage}</div>
-                    }
                 </Form.Item>
                 <Form.Item validateStatus={emailError ? 'error' : ''} help={emailError || ''}>
                   {getFieldDecorator('email', {
@@ -86,6 +92,8 @@ class ForgetPasswordForm extends React.Component {
                     Nhận email
                   </Button>
                 </Form.Item>
+                </>
+                }
               </Form>
             </div>
             
