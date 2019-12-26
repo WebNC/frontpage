@@ -111,5 +111,5 @@ export const chatConstants = {
     CREATE_ROOM_FAILURE: 'CREATE_ROOM_FAILURE',
 }
 
-// export const API_URL = 'https://frontpage-api-1612384.herokuapp.com/'
-export const API_URL = 'http://localhost:3000/'
+export const API_URL = 'https://frontpage-api-1612384.herokuapp.com/'
+// export const API_URL = 'http://localhost:3000/'

@@ -16,16 +16,6 @@
     padding-left: 10px;
   }
   
-  .login-button-component {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0px 20% 0px 20%;
-    text-align: center;
-    margin: 0px 0px 20px 0px;
-  }
-  
   h1, h2, p{
     text-align: center;
   }

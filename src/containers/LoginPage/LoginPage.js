@@ -116,13 +116,13 @@ class LoginForm extends React.Component {
               </Button>
               <p>Bạn có thể đăng nhập với các tài khoản xã hội: </p>
               <div className="login-button-component">
-                <FacebookLogin
+                {/* <FacebookLogin
                   appId = "771279956617163"
                   fields="name,email,picture"
                   callback={this.responseFacebook}
                   textButton="Facebook"
                   cssClass="button-login-facebook"
-                />
+                /> */}
                 <GoogleLogin
                   clientId= "951194193712-20krm3fg807tvb7mqr4h080cakkg1msn.apps.googleusercontent.com"
                   buttonText="Google"
